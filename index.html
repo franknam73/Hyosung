@@ -82,9 +82,8 @@
   <!-- MAIN CONTAINER -->
   <main class="max-w-6xl w-full mx-auto p-4 sm:p-6 flex-grow flex flex-col justify-start space-y-6">
 
-    <!-- LEVEL SELECTION LANDING SCREEN (SHOWN WHEN CHOOSING LEVEL) -->
+    <!-- LEVEL SELECTION LANDING SCREEN -->
     <section id="level-selection-screen" class="space-y-6">
-      
       <div class="bg-gradient-to-r from-slate-900 via-blue-950/60 to-slate-900 border border-slate-800 p-6 sm:p-10 rounded-3xl relative overflow-hidden shadow-2xl text-center space-y-4">
         <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
@@ -94,7 +93,7 @@
           Tailor Your Hyosung Business English Masterclass
         </h2>
         <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
-          Select your target audience level below. Our AI engine will first generate and present a fresh, unrepeated vocabulary & expression set before building the full diagnostic, dialogue, and translation package.
+          Select your target audience level below. Our engine generates a fresh vocabulary & expression set before building the full diagnostic, dialogue, and translation package.
         </p>
 
         <!-- TOPIC INPUT FIELD -->
@@ -102,23 +101,18 @@
           <label class="block text-left text-[11px] font-bold text-slate-300 uppercase tracking-wider">
             Target Domain / Scenario Focus (Optional):
           </label>
-          <input type="text" id="landing-topic-input" placeholder="e.g., Global Power Grid Sales, Eco-Friendly Spandex Exports, Plant Equipment Audit..." class="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder-slate-600 focus:outline-none transition-all">
+          <input type="text" id="landing-topic-input" placeholder="e.g., Global Power Grid Sales, Eco-Friendly Spandex Exports..." class="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder-slate-600 focus:outline-none transition-all">
         </div>
       </div>
 
       <!-- LEVEL SELECTION CARDS GRID -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        
         <!-- BEGINNER CARD -->
         <div onclick="selectLevelAndStart('Beginner')" class="bg-slate-900 border border-slate-800 hover:border-emerald-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-emerald-950 border border-emerald-800/50 flex items-center justify-center text-emerald-400 font-extrabold text-base">
-            🌱
-          </div>
+          <div class="w-10 h-10 rounded-2xl bg-emerald-950 border border-emerald-800/50 flex items-center justify-center text-emerald-400 font-extrabold text-base">🌱</div>
           <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block font-mono">LEVEL 1</span>
           <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition-colors">Beginner</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Foundational workplace vocabulary, essential polite requests, clear email/phone basics, and direct operational phrases.
-          </p>
+          <p class="text-xs text-slate-400 leading-relaxed">Foundational workplace vocabulary, essential requests, clear email/phone basics, and direct operational phrases.</p>
           <div class="pt-2 border-t border-slate-800 text-[11px] text-emerald-400 font-bold flex items-center justify-between">
             <span>Select & Generate</span>
             <span>&rarr;</span>
@@ -127,14 +121,10 @@
 
         <!-- INTERMEDIATE CARD -->
         <div onclick="selectLevelAndStart('Intermediate')" class="bg-slate-900 border border-slate-800 hover:border-blue-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-blue-950 border border-blue-800/50 flex items-center justify-center text-blue-400 font-extrabold text-base">
-            📘
-          </div>
+          <div class="w-10 h-10 rounded-2xl bg-blue-950 border border-blue-800/50 flex items-center justify-center text-blue-400 font-extrabold text-base">📘</div>
           <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest block font-mono">LEVEL 2</span>
           <h3 class="text-base font-bold text-white group-hover:text-blue-300 transition-colors">Intermediate</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Polished business phrasing, opinion sharing, diplomatic feedback, standard meeting idioms, and professional negotiation.
-          </p>
+          <p class="text-xs text-slate-400 leading-relaxed">Polished business phrasing, opinion sharing, diplomatic feedback, standard meeting idioms, and professional negotiation.</p>
           <div class="pt-2 border-t border-slate-800 text-[11px] text-blue-400 font-bold flex items-center justify-between">
             <span>Select & Generate</span>
             <span>&rarr;</span>
@@ -143,14 +133,10 @@
 
         <!-- ADVANCED CARD -->
         <div onclick="selectLevelAndStart('Advanced')" class="bg-slate-900 border border-slate-800 hover:border-indigo-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-indigo-950 border border-indigo-800/50 flex items-center justify-center text-indigo-400 font-extrabold text-base">
-            🚀
-          </div>
+          <div class="w-10 h-10 rounded-2xl bg-indigo-950 border border-indigo-800/50 flex items-center justify-center text-indigo-400 font-extrabold text-base">🚀</div>
           <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block font-mono">LEVEL 3</span>
           <h3 class="text-base font-bold text-white group-hover:text-indigo-300 transition-colors">Advanced</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Elevated executive vocabulary, strategic reframing, high-stakes negotiation, subtle collocations, and cross-cultural diplomacy.
-          </p>
+          <p class="text-xs text-slate-400 leading-relaxed">Elevated executive vocabulary, strategic reframing, high-stakes negotiation, subtle collocations, and cross-cultural diplomacy.</p>
           <div class="pt-2 border-t border-slate-800 text-[11px] text-indigo-400 font-bold flex items-center justify-between">
             <span>Select & Generate</span>
             <span>&rarr;</span>
@@ -159,23 +145,18 @@
 
         <!-- PROFESSIONAL CARD -->
         <div onclick="selectLevelAndStart('Professional')" class="bg-slate-900 border border-slate-800 hover:border-purple-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-purple-950 border border-purple-800/50 flex items-center justify-center text-purple-400 font-extrabold text-base">
-            👑
-          </div>
+          <div class="w-10 h-10 rounded-2xl bg-purple-950 border border-purple-800/50 flex items-center justify-center text-purple-400 font-extrabold text-base">👑</div>
           <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest block font-mono">LEVEL 4</span>
           <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors">Professional</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            C-suite governance, strategic deal structuring, crisis de-escalation, high-caliber boardroom rhetoric, and executive positioning.
-          </p>
+          <p class="text-xs text-slate-400 leading-relaxed">C-suite governance, strategic deal structuring, crisis de-escalation, high-caliber boardroom rhetoric, and executive positioning.</p>
           <div class="pt-2 border-t border-slate-800 text-[11px] text-purple-400 font-bold flex items-center justify-between">
             <span>Select & Generate</span>
             <span>&rarr;</span>
           </div>
         </div>
-
       </div>
 
-      <!-- WORD HISTORY REPETITION PREVENTER BANNER -->
+      <!-- WORD HISTORY BANNER -->
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
         <div class="space-y-1">
           <div class="flex items-center gap-2">
@@ -188,10 +169,9 @@
           Clear Word History Memory
         </button>
       </div>
-
     </section>
 
-    <!-- STAGE 1 VOCABULARY REVIEW & APPROVAL SCREEN -->
+    <!-- STAGE 1 VOCABULARY REVIEW SCREEN -->
     <section id="stage1-review-screen" class="hidden space-y-6">
       <div class="bg-gradient-to-r from-slate-900 via-blue-950/60 to-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
         <div class="flex justify-between items-center flex-wrap gap-2">
@@ -209,12 +189,10 @@
           <button onclick="showLevelSelector()" class="text-xs text-slate-400 hover:text-white font-bold transition-colors">
             &larr; Choose Different Level
           </button>
-          
           <div class="flex gap-2">
             <button onclick="regenerateStage1Vocab()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 rounded-xl transition-all border border-slate-700">
               🔄 Re-Roll Fresh Words
             </button>
-            
             <button onclick="proceedToStage2Build()" id="btn-proceed-stage2" class="bg-gradient-to-r from-emerald-500 via-teal-600 to-blue-600 hover:from-emerald-400 hover:to-blue-500 text-white font-bold text-xs px-6 py-2 rounded-xl transition-all shadow-lg shadow-emerald-950 border border-emerald-400/30">
               🚀 Build Complete Lesson Suite &rarr;
             </button>
@@ -222,7 +200,6 @@
         </div>
       </div>
 
-      <!-- PREVIEW CARDS FOR GENERATED STAGE 1 LEXICON -->
       <div class="space-y-4">
         <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">10 Target Vocabulary & Expressions</h3>
         <div id="stage1-vocab-preview-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -231,17 +208,15 @@
       </div>
     </section>
 
-    <!-- STAGE 2: FULL LESSON WORKSPACE (MODULES 1 - 5) -->
+    <!-- STAGE 2: FULL LESSON WORKSPACE -->
     <div id="masterclass-workspace" class="hidden space-y-6">
-
-      <!-- PROFILE & LESSON CONTROLS BAR -->
       <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3.5 flex flex-col sm:flex-row justify-between items-center gap-3 shadow-md">
         <div class="flex items-center gap-2.5 text-xs w-full sm:w-auto">
           <span class="text-blue-400 font-bold uppercase tracking-wider text-[10px] bg-blue-950/80 px-2.5 py-1 rounded border border-blue-800/40">HYOSUNG PARTICIPANT</span>
           <span id="lesson-source-tag" class="text-slate-400 text-[11px] font-mono">Level: Advanced</span>
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto">
-          <input type="text" id="student-name" placeholder="Participant Name (e.g., Min-su Kim)" onchange="saveProfile()" class="bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none w-full sm:w-48">
+          <input type="text" id="student-name" placeholder="Participant Name" onchange="saveProfile()" class="bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none w-full sm:w-48">
           <select id="student-company" onchange="saveProfile()" class="bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none w-full sm:w-52">
             <option value="Hyosung Heavy Industries - Power Systems">Hyosung Heavy Industries - Power Systems</option>
             <option value="Hyosung TNC - Spandex / Textile">Hyosung TNC - Spandex / Textile</option>
@@ -254,362 +229,159 @@
         </div>
       </div>
 
-      <!-- MODULE 1: VERSATILE LEXICON & PREPOSITIONS -->
+      <!-- MODULE 1: VERSATILE LEXICON -->
       <section id="module-vocab" class="space-y-6">
-        
-        <!-- HERO BANNER -->
         <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
           <div class="max-w-3xl space-y-3 relative z-10">
             <div class="flex items-center gap-2 flex-wrap">
-              <span id="active-level-pill" class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-                MODULE 1: TARGET LEVEL LEXICON
-              </span>
-              <span id="ai-active-badge" class="text-[10px] font-bold text-cyan-300 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-800/60">
-                ✨ Custom Generated Curriculum
-              </span>
+              <span id="active-level-pill" class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">MODULE 1: TARGET LEVEL LEXICON</span>
+              <span id="ai-active-badge" class="text-[10px] font-bold text-cyan-300 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-800/60">✨ Custom Generated Curriculum</span>
             </div>
             <h2 id="hero-title" class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Elevated Business Phrasings</h2>
-            <p id="hero-desc" class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Master high-impact expressions, strategic action verbs, prepositions, and diplomatic reframing patterns tailored specifically for your selected group level.
-            </p>
+            <p id="hero-desc" class="text-xs sm:text-sm text-slate-400 leading-relaxed">Master high-impact expressions, prepositions, and diplomatic reframing patterns tailored specifically for your selected level.</p>
           </div>
         </div>
 
-        <!-- LEXICON CARDS GRID -->
         <div class="space-y-4">
           <div class="flex justify-between items-center">
             <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">1. Core Level Business Terms</h3>
             <span class="text-[11px] text-slate-500 font-mono">Click speaker icon for audio pronunciation</span>
           </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="vocab-cards-grid">
-            <!-- Populated by JS -->
-          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="vocab-cards-grid"></div>
         </div>
 
-        <!-- PREPOSITIONS & PATTERNS SECTION -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          
-          <!-- PREPOSITIONS -->
           <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-4 shadow-xl">
             <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">2. Target Prepositions & Phrases</h3>
-            <div id="prepositions-container" class="space-y-3 text-xs">
-              <!-- Populated by JS -->
-            </div>
+            <div id="prepositions-container" class="space-y-3 text-xs"></div>
           </div>
-
-          <!-- SENTENCE PATTERNS -->
           <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-4 shadow-xl">
             <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">3. Strategic Reframing Sentence Patterns</h3>
-            <div id="patterns-container" class="space-y-3 text-xs">
-              <!-- Populated by JS -->
-            </div>
+            <div id="patterns-container" class="space-y-3 text-xs"></div>
           </div>
-
         </div>
       </section>
 
-      <!-- MODULE 2: TECHNICAL DIAGNOSTIC CHECK -->
+      <!-- MODULE 2: DIAGNOSTIC QUIZ -->
       <section id="module-quiz" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
-          <div class="max-w-3xl space-y-2">
-            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-              MODULE 2: STRATEGIC EXPRESSION DIAGNOSTIC
-            </span>
-            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Vocab & Expression Assessment</h2>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Verify your understanding of target prepositions, diplomatic reframing expressions, and strategic verbs before entering the simulation.
-            </p>
-          </div>
+        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl">
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Vocab & Expression Assessment</h2>
+          <p class="text-xs sm:text-sm text-slate-400">Verify your understanding of target prepositions and strategic reframing expressions.</p>
         </div>
-
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-6 shadow-xl">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 pb-4">
-            <div>
-              <h3 class="text-base font-bold text-white">Diagnostic Assessment</h3>
-              <p class="text-xs text-slate-400">Select the choice that best fits the professional scenario.</p>
-            </div>
-            <span id="quiz-score-badge" class="text-xs font-bold text-blue-400 bg-blue-950 px-3.5 py-1 rounded-full border border-blue-800/40">
-              Score: 0 / 5
-            </span>
+          <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+            <h3 class="text-base font-bold text-white">Diagnostic Assessment</h3>
+            <span id="quiz-score-badge" class="text-xs font-bold text-blue-400 bg-blue-950 px-3.5 py-1 rounded-full border border-blue-800/40">Score: 0 / 5</span>
           </div>
-
-          <div id="diagnostic-quiz-container" class="space-y-4">
-            <!-- Populated by JS -->
-          </div>
-
+          <div id="diagnostic-quiz-container" class="space-y-4"></div>
           <div class="flex justify-end pt-2">
-            <button onclick="gradeDiagnosticQuiz()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition-all shadow-md">
-              Evaluate Answers &rarr;
-            </button>
+            <button onclick="gradeDiagnosticQuiz()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition-all shadow-md">Evaluate Answers &rarr;</button>
           </div>
         </div>
       </section>
 
-      <!-- MODULE 3: STRATEGIC SIMULATION WAR ROOM -->
+      <!-- MODULE 3: SIMULATION -->
       <section id="module-dialogue" class="hidden space-y-6">
         <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
-          <div class="flex justify-between items-center flex-wrap gap-2">
-            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-              MODULE 3: GLOBAL STRATEGIC WAR ROOM
-            </span>
-            <span class="text-xs font-mono text-slate-400">Setting: High-Stakes Strategic Alignment</span>
-          </div>
           <h2 class="text-xl font-extrabold text-white">Resolving Deadlocks & Driving Alignment</h2>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Observe how leaders use target expressions to handle client pushback, navigate trade-offs, correct misunderstandings, and build long-term value.
-          </p>
+          <p class="text-xs text-slate-400">Observe how leaders use target expressions to handle client pushback and build long-term value.</p>
         </div>
-
-        <!-- AUDIO CONTROL BANNER -->
-        <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl flex justify-between items-center gap-3">
-          <div class="flex items-center gap-2 text-xs">
-            <span class="text-blue-400 font-bold">🎙 Speech Simulation:</span>
-            <span class="text-slate-400 text-[11px] hidden sm:inline">Click any character block to listen via Web Speech synth.</span>
-          </div>
-          <button onclick="playFullDialogue()" id="btn-play-all" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all shrink-0">
-            Play Full Audio Sequence
-          </button>
+        <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl flex justify-between items-center">
+          <span class="text-blue-400 font-bold text-xs">🎙 Speech Simulation: Click character block to listen.</span>
+          <button onclick="playFullDialogue()" id="btn-play-all" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all">Play Full Audio</button>
         </div>
-
-        <!-- DIALOGUE THREAD -->
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-xl max-h-[600px] overflow-y-auto custom-scrollbar" id="dialogue-thread-container">
-          <!-- Populated via JS -->
-        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-xl max-h-[600px] overflow-y-auto custom-scrollbar" id="dialogue-thread-container"></div>
       </section>
 
-      <!-- MODULE 4: REFRAMING & TRANSLATION WORKBENCH -->
+      <!-- MODULE 4: TRANSLATION -->
       <section id="module-translation" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
-          <div class="max-w-3xl space-y-2">
-            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-              MODULE 4: DIPLOMATIC REFRAMING & TRANSLATION
-            </span>
-            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Korean-to-English Business Evaluator</h2>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Translate Korean business scenarios into polished, target-level English. Our evaluator checks prepositions, verb tenses, articles, and elevated collocations.
-            </p>
-          </div>
+        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl">
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Korean-to-English Business Evaluator</h2>
+          <p class="text-xs sm:text-sm text-slate-400">Translate Korean prompts into polished business English with feedback on prepositions, tenses, and articles.</p>
         </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          <!-- TRANSLATION INPUT ZONE (7 COLS) -->
           <div class="lg:col-span-7 space-y-4">
             <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
               <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <span class="text-xs font-bold text-blue-400 uppercase tracking-wider" id="trans-card-num">Prompt 1 of 5</span>
-                <span class="text-[10px] font-mono text-slate-500">Target Framing Check</span>
+                <span class="text-xs font-bold text-blue-400 uppercase" id="trans-card-num">Prompt 1 of 5</span>
               </div>
-
-              <!-- KOREAN PROMPT BOX -->
               <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Korean Source Prompt:</span>
-                <p id="trans-kr-text" class="text-xs sm:text-sm font-semibold text-slate-200 leading-relaxed">
-                  "..."
-                </p>
+                <span class="text-[10px] font-bold text-slate-400 uppercase block">Korean Source Prompt:</span>
+                <p id="trans-kr-text" class="text-xs sm:text-sm font-semibold text-slate-200">"..."</p>
               </div>
-
-              <!-- HINTS -->
-              <div class="flex flex-wrap gap-2 text-[10px] font-mono" id="trans-hints-container">
-                <!-- Populated by JS -->
-              </div>
-
-              <!-- INPUT TEXTAREA -->
-              <div class="space-y-2">
-                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Polished Business English Translation:</label>
-                <textarea id="trans-user-input" rows="4" class="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl p-4 text-xs text-slate-100 placeholder-slate-600 focus:outline-none transition-all resize-none custom-scrollbar" placeholder="Type your elevated business translation here..."></textarea>
-              </div>
-
-              <!-- ACTION BUTTONS -->
+              <div class="flex flex-wrap gap-2 text-[10px] font-mono" id="trans-hints-container"></div>
+              <textarea id="trans-user-input" rows="4" class="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl p-4 text-xs text-slate-100 focus:outline-none transition-all resize-none custom-scrollbar" placeholder="Type your elevated business translation here..."></textarea>
               <div class="flex justify-between items-center pt-2">
-                <button onclick="nextTranslationPrompt()" class="text-xs font-bold text-slate-500 hover:text-slate-300 transition-colors">
-                  Skip Prompt
-                </button>
-                <button onclick="evaluateTranslation()" id="btn-eval-trans" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-md">
-                  Evaluate Translation &rarr;
-                </button>
+                <button onclick="nextTranslationPrompt()" class="text-xs font-bold text-slate-500 hover:text-slate-300">Skip Prompt</button>
+                <button onclick="evaluateTranslation()" id="btn-eval-trans" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-md">Evaluate Translation &rarr;</button>
               </div>
             </div>
           </div>
-
-          <!-- DIAGNOSTIC EVALUATION PANEL & TRACKER (5 COLS) -->
           <div class="lg:col-span-5 space-y-4">
-            
-            <!-- RESULT PANEL -->
             <div id="eval-result-card" class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
-              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2">Linguistic Analysis</h3>
+              <h3 class="text-xs font-bold text-slate-400 uppercase border-b border-slate-800 pb-2">Linguistic Analysis</h3>
               <div id="eval-content" class="text-xs text-slate-400 space-y-2">
-                <p class="italic text-slate-500">Submit your translation to receive detailed feedback covering prepositions, collocations, verb tenses, and article precision.</p>
+                <p class="italic text-slate-500">Submit your translation to receive detailed feedback covering prepositions, collocations, tenses, and article precision.</p>
               </div>
             </div>
-
-            <!-- ACCURACY TRACKER -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
-              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2">Competency Tracker</h3>
-              
-              <div class="space-y-3 text-xs">
-                <div>
-                  <div class="flex justify-between text-[11px] mb-1">
-                    <span class="text-slate-300">Target Prepositions</span>
-                    <span id="tracker-prep-score" class="font-mono text-blue-400">100%</span>
-                  </div>
-                  <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
-                    <div id="tracker-prep-bar" class="bg-blue-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="flex justify-between text-[11px] mb-1">
-                    <span class="text-slate-300">Executive Collocations</span>
-                    <span id="tracker-colloc-score" class="font-mono text-emerald-400">100%</span>
-                  </div>
-                  <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
-                    <div id="tracker-colloc-bar" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="flex justify-between text-[11px] mb-1">
-                    <span class="text-slate-300">Articles (a / an / the)</span>
-                    <span id="tracker-art-score" class="font-mono text-sky-400">100%</span>
-                  </div>
-                  <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
-                    <div id="tracker-art-bar" class="bg-sky-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="flex justify-between text-[11px] mb-1">
-                    <span class="text-slate-300">Verb Precision & Tenses</span>
-                    <span id="tracker-tense-score" class="font-mono text-amber-400">100%</span>
-                  </div>
-                  <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
-                    <div id="tracker-tense-bar" class="bg-amber-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
-
         </div>
       </section>
 
-      <!-- MODULE 5: CERTIFICATION ASSESSMENT -->
+      <!-- MODULE 5: FINAL EXAM -->
       <section id="module-final" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
-          <div class="max-w-3xl space-y-2">
-            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-              MODULE 5: FINAL HYOSUNG COMPETENCY ASSESSMENT
-            </span>
-            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Hyosung Business Communication Certification Exam</h2>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Demonstrate your mastery of target level expressions, prepositions, strategic reframing, and diplomatic conflict resolution to earn your official certificate.
-            </p>
-          </div>
+        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl">
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Hyosung Business Communication Certification Exam</h2>
+          <p class="text-xs sm:text-sm text-slate-400">Demonstrate your mastery of target level expressions, prepositions, and diplomatic conflict resolution.</p>
         </div>
-
         <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl space-y-6 shadow-xl">
-          <div id="final-quiz-container" class="space-y-6">
-            <!-- Final quiz populated via JS -->
-          </div>
-
+          <div id="final-quiz-container" class="space-y-6"></div>
           <div class="flex justify-between items-center border-t border-slate-800 pt-6 flex-wrap gap-3">
             <span class="text-xs text-slate-500 font-mono" id="final-status-text">Answer all questions to evaluate.</span>
-            <button onclick="gradeFinalAssessment()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 px-8 rounded-xl text-xs transition-all shadow-lg shadow-blue-950">
-              Submit Assessment &rarr;
-            </button>
+            <button onclick="gradeFinalAssessment()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 px-8 rounded-xl text-xs transition-all shadow-lg shadow-blue-950">Submit Assessment &rarr;</button>
           </div>
-        </div>
-
-        <!-- REPORT CARD -->
-        <div id="final-report-card" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-3xl space-y-6 shadow-2xl text-center">
-          <div class="inline-block bg-blue-500/10 text-blue-400 font-bold px-4 py-1.5 rounded-full text-xs border border-blue-500/20 uppercase tracking-widest">
-            HYOSUNG COMPETENCY SCORECARD
-          </div>
-          <h2 class="text-2xl font-extrabold text-white">Hyosung Global Business Communication Certificate</h2>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto">
-            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Final Score</span>
-              <span id="final-score-val" class="text-2xl font-bold text-blue-400">0 / 8</span>
-            </div>
-            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Accuracy</span>
-              <span id="final-acc-val" class="text-2xl font-bold text-emerald-400">0%</span>
-            </div>
-            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Level Granted</span>
-              <span id="final-level-val" class="text-xs font-bold text-sky-400 block pt-2">Global Strategic Communicator</span>
-            </div>
-          </div>
-
-          <p id="final-summary-text" class="text-xs text-slate-300 max-w-lg mx-auto leading-relaxed"></p>
-
-          <button onclick="showLevelSelector()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition-all">
-            Build New Lesson Suite
-          </button>
         </div>
       </section>
-
     </div>
-
   </main>
 
   <!-- GENERATOR MODAL -->
   <div id="ai-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-800 w-full max-w-xl rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
       <button onclick="closeAiModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white text-lg font-bold">✕</button>
-
       <div class="space-y-2">
-        <div class="inline-flex items-center gap-1.5 text-cyan-400 text-xs font-bold uppercase tracking-wider bg-cyan-950/80 px-3 py-1 rounded-full border border-cyan-800/50">
-          <span>✨ Powered by Gemini 3 Flash</span>
-        </div>
-        <h3 class="text-xl font-extrabold text-white">Dynamic Curriculum Generator</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          Select target level and optional topic. Stage 1 will generate fresh target words (excluding past terms), followed by full lesson construction.
-        </p>
+        <span class="text-cyan-400 text-xs font-bold uppercase bg-cyan-950 px-3 py-1 rounded-full border border-cyan-800/50">✨ Dynamic Curriculum Generator</span>
+        <h3 class="text-xl font-extrabold text-white">Custom Lesson Setup</h3>
       </div>
-
       <div class="space-y-4 text-xs">
         <div>
           <label class="block font-bold text-slate-300 mb-1">Target Proficiency Level:</label>
-          <select id="modal-level-select" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none">
+          <select id="modal-level-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none">
             <option value="Beginner">Level 1: Beginner</option>
             <option value="Intermediate">Level 2: Intermediate</option>
             <option value="Advanced" selected>Level 3: Advanced</option>
             <option value="Professional">Level 4: Professional</option>
           </select>
         </div>
-
         <div>
-          <label class="block font-bold text-slate-300 mb-1">Target Domain / Scenario Focus (Optional):</label>
-          <input type="text" id="ai-topic-input" placeholder="e.g., Executive B2B Alignment, Plant Audit, Quality Guarantee..." class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder-slate-600 focus:outline-none">
+          <label class="block font-bold text-slate-300 mb-1">Target Scenario Focus:</label>
+          <input type="text" id="ai-topic-input" placeholder="e.g., Executive B2B Alignment..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">Optional Gemini API Key (for Live AI on Public Sites):</label>
+          <input type="password" id="user-api-key-input" placeholder="Paste Key Here (Optional)" onchange="saveApiKey()" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded-xl px-4 py-2 text-xs text-slate-100 focus:outline-none font-mono">
+          <p class="text-[10px] text-slate-500 mt-1">If blank, standard built-in lesson suites will automatically load.</p>
         </div>
       </div>
-
-      <div id="ai-loading-box" class="hidden p-4 rounded-2xl bg-cyan-950/40 border border-cyan-800/50 text-xs space-y-2">
-        <div class="flex items-center gap-2 text-cyan-300 font-bold">
-          <span class="animate-spin text-sm">🌀</span>
-          <span id="ai-loading-status">Generating Stage 1 Target Words...</span>
-        </div>
-        <p class="text-[11px] text-cyan-200/70" id="ai-loading-desc">Enforcing zero-repetition filter against stored term history...</p>
-      </div>
-
       <div class="flex justify-end gap-3 border-t border-slate-800 pt-4">
-        <button onclick="closeAiModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-colors">
-          Cancel
-        </button>
-        <button onclick="triggerModalStage1Gen()" id="btn-generate-ai" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-cyan-950">
-          Generate Stage 1 Words ✨
-        </button>
+        <button onclick="closeAiModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white">Cancel</button>
+        <button onclick="triggerModalStage1Gen()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-lg shadow-cyan-950">Generate Stage 1 Words ✨</button>
       </div>
     </div>
   </div>
 
   <script>
-    // SAFE STORAGE HELPERS (Prevents SecurityError in sandboxed or restricted environments)
+    // SAFE STORAGE HELPERS
     function safeGetStorage(key, defaultValue = null) {
       try {
         const val = localStorage.getItem(key);
@@ -635,7 +407,16 @@
       }
     }
 
-    // GLOBAL APP STATE & HISTORY MANAGEMENT
+    function getApiKey() {
+      return safeGetStorage('hyosung_user_gemini_key', '');
+    }
+
+    function saveApiKey() {
+      const input = document.getElementById('user-api-key-input');
+      if (input) safeSetStorage('hyosung_user_gemini_key', input.value.trim());
+    }
+
+    // GLOBAL APP STATE
     window.appState = {
       level: "Advanced",
       studentName: safeGetStorage('hyosung_app_name', ''),
@@ -659,7 +440,6 @@
       stage2Ready: false
     };
 
-    // HISTORY MEMORY FUNCTIONS (PREVENT WORD REPETITION)
     function getUsedWordsHistory() {
       try {
         const hist = safeGetStorage('hyosung_used_words_history', null);
@@ -691,15 +471,14 @@
       if (countTerms) countTerms.innerText = `${count} words in exclusion memory`;
     }
 
-    // INIT APP ON DOM LOAD
     window.addEventListener('DOMContentLoaded', () => {
       const nameInput = document.getElementById('student-name');
       const companySelect = document.getElementById('student-company');
+      const keyInput = document.getElementById('user-api-key-input');
       if (nameInput) nameInput.value = window.appState.studentName;
       if (companySelect) companySelect.value = window.appState.studentCompany;
+      if (keyInput) keyInput.value = getApiKey();
       updateHistoryBadgeUI();
-
-      // Show landing screen on start
       showLevelSelector();
     });
 
@@ -707,11 +486,9 @@
       const screenLanding = document.getElementById('level-selection-screen');
       const screenStage1 = document.getElementById('stage1-review-screen');
       const screenWorkspace = document.getElementById('masterclass-workspace');
-      
       if (screenLanding) screenLanding.classList.remove('hidden');
       if (screenStage1) screenStage1.classList.add('hidden');
       if (screenWorkspace) screenWorkspace.classList.add('hidden');
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -728,7 +505,6 @@
       generateStage1Vocab(selectedLevel, topic);
     }
 
-    // NAVIGATION
     function switchTab(tabId) {
       const tabs = ['vocab', 'quiz', 'dialogue', 'translation', 'final'];
       tabs.forEach(t => {
@@ -748,16 +524,13 @@
       const companyEl = document.getElementById('student-company');
       const name = nameEl ? nameEl.value.trim() : '';
       const company = companyEl ? companyEl.value : '';
-      
       window.appState.studentName = name;
       window.appState.studentCompany = company;
       safeSetStorage('hyosung_app_name', name);
       safeSetStorage('hyosung_app_company', company);
-
       if (notify) alert("✓ Progress profile saved!");
     }
 
-    // EXPONENTIAL BACKOFF FETCH FOR GEMINI API
     async function fetchWithBackoff(url, options, maxRetries = 2) {
       let delay = 800;
       for (let i = 0; i < maxRetries; i++) {
@@ -778,7 +551,6 @@
       }
     }
 
-    // STAGE 1: GENERATE VOCABULARY & EXCLUDE HISTORY
     async function generateStage1Vocab(level, topic) {
       const screenLanding = document.getElementById('level-selection-screen');
       const screenStage1 = document.getElementById('stage1-review-screen');
@@ -798,35 +570,25 @@
 
       const grid = document.getElementById('stage1-vocab-preview-grid');
       if (grid) {
-        grid.innerHTML = `<div class="col-span-1 md:col-span-2 p-12 text-center text-cyan-400 space-y-3 bg-slate-900 rounded-3xl border border-slate-800"><span class="animate-spin text-2xl block">🌀</span><p class="font-bold">Generating ${level} Vocabulary Suite (Enforcing Zero-Repetition)...</p><p class="text-xs text-slate-500">Excluding ${getUsedWordsHistory().length} previously logged terms...</p></div>`;
+        grid.innerHTML = `<div class="col-span-1 md:col-span-2 p-12 text-center text-cyan-400 space-y-3 bg-slate-900 rounded-3xl border border-slate-800"><span class="animate-spin text-2xl block">🌀</span><p class="font-bold">Loading ${level} Vocabulary Suite...</p></div>`;
       }
 
-      const usedHistoryList = getUsedWordsHistory();
+      const apiKey = getApiKey();
+      if (apiKey) {
+        try {
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+          const usedHistoryList = getUsedWordsHistory();
 
-      try {
-        const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+          const promptSystem = `Act as an expert Corporate English Curriculum Director for Hyosung Group.
+Generate 10 target vocabulary terms, 4 prepositions, and 2 sentence patterns for Level: "${level}", Topic: "${topic}".
+Exclusion List: ${JSON.stringify(usedHistoryList)}`;
 
-        const promptSystem = `Act as an expert Corporate English Curriculum Director for Hyosung Group.
-Generate 10 target vocabulary terms/expressions, 4 prepositions/phrases, and 2 sentence patterns appropriate for the target level: "${level}".
-Domain Topic: "${topic}".
-
-STRICT EXCLUSION RULE:
-You MUST NOT use or repeat any of these previously used terms:
-${JSON.stringify(usedHistoryList)}
-
-LEVEL GUIDANCE:
-- Beginner: Foundational workplace terminology, standard polite requests, simple operational phrases.
-- Intermediate: Polished business phrasing, opinion sharing, standard meeting idioms, professional diplomacy.
-- Advanced: Elevated executive vocabulary, strategic reframing, high-stakes negotiation, subtle collocations.
-- Professional: C-suite governance, strategic deal structuring, crisis management, board-level rhetoric.`;
-
-        const userQuery = `Return ONLY JSON matching this structure:
+          const userQuery = `Return ONLY JSON matching:
 {
   "lessonTitle": "Catchy Title for ${level} Level",
   "lessonSubtitle": "Subtitle focusing on ${topic}",
   "vocabData": [
-    { "term": "Phrase or Term", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }
+    { "term": "Phrase", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }
   ],
   "prepositionsData": [
     { "term": "Prepositional Phrase", "kr": "Korean Translation", "sample": "Example sentence" }
@@ -837,39 +599,37 @@ LEVEL GUIDANCE:
   ]
 }`;
 
-        const payload = {
-          contents: [{ parts: [{ text: userQuery }] }],
-          systemInstruction: { parts: [{ text: promptSystem }] },
-          generationConfig: { responseMimeType: "application/json" }
-        };
+          const payload = {
+            contents: [{ parts: [{ text: userQuery }] }],
+            systemInstruction: { parts: [{ text: promptSystem }] },
+            generationConfig: { responseMimeType: "application/json" }
+          };
 
-        const response = await fetchWithBackoff(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+          const response = await fetchWithBackoff(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
 
-        if (response && response.ok) {
-          const result = await response.json();
-          if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-            const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-            
-            window.appState.lessonTitle = parsed.lessonTitle || `${level} Business English`;
-            window.appState.lessonSubtitle = parsed.lessonSubtitle || topic;
-            window.appState.vocabData = parsed.vocabData || [];
-            window.appState.prepositionsData = parsed.prepositionsData || [];
-            window.appState.patternsData = parsed.patternsData || [];
-            window.appState.stage1Ready = true;
-
-            renderStage1Preview();
-            return;
+          if (response && response.ok) {
+            const result = await response.json();
+            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+              const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
+              window.appState.lessonTitle = parsed.lessonTitle || `${level} Business English`;
+              window.appState.lessonSubtitle = parsed.lessonSubtitle || topic;
+              window.appState.vocabData = parsed.vocabData || [];
+              window.appState.prepositionsData = parsed.prepositionsData || [];
+              window.appState.patternsData = parsed.patternsData || [];
+              window.appState.stage1Ready = true;
+              renderStage1Preview();
+              return;
+            }
           }
+        } catch (err) {
+          console.warn("Stage 1 AI Generation failed, loading fallback...", err);
         }
-      } catch (err) {
-        console.warn("Stage 1 AI Generation failed or bypassed, loading fallback...", err);
       }
 
-      // Fallback if API unavailable
       loadStage1Fallback(level);
     }
 
@@ -893,7 +653,6 @@ LEVEL GUIDANCE:
       generateStage1Vocab(window.appState.level, window.appState.currentTopic);
     }
 
-    // STAGE 2: BUILD COMPLETE LESSON SUITE
     async function proceedToStage2Build() {
       if (!window.appState.stage1Ready) return;
 
@@ -903,29 +662,21 @@ LEVEL GUIDANCE:
         btn.innerText = "🌀 Building Full Lesson Suite...";
       }
 
-      // Log target terms to exclusion history immediately
       const termsToSave = window.appState.vocabData.map(v => v.term);
       saveWordsToHistory(termsToSave);
 
-      try {
-        const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-
-        const promptSystem = `Act as an expert Business English Curriculum Designer.
-Build the full assessment and simulation suite for Level: "${window.appState.level}" using these EXACT approved target terms:
-Vocab Terms: ${JSON.stringify(window.appState.vocabData.map(v => v.term))}
-Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term))}`;
-
-        const userQuery = `Return ONLY JSON matching this structure:
+      const apiKey = getApiKey();
+      if (apiKey) {
+        try {
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+          const promptSystem = `Build assessment and simulation suite for Level: "${window.appState.level}" using these target terms: ${JSON.stringify(termsToSave)}`;
+          const userQuery = `Return ONLY JSON matching:
 {
   "diagnosticQuizData": [
     { "q": "Question string?", "opts": ["Opt 0", "Opt 1", "Opt 2", "Opt 3"], "correct": 0, "expl": "Explanation" }
   ],
   "dialogueThread": [
-    { "speaker": "Name 1", "role": "Role Title", "time": "10:00 AM", "color": "blue", "text": "Spoken line." },
-    { "speaker": "Name 2", "role": "Role Title", "time": "10:03 AM", "color": "emerald", "text": "Spoken line." },
-    { "speaker": "Name 3", "role": "Role Title", "time": "10:06 AM", "color": "cyan", "text": "Spoken line." },
-    { "speaker": "Name 4", "role": "Role Title", "time": "10:10 AM", "color": "purple", "text": "Spoken line." }
+    { "speaker": "Name 1", "role": "Role Title", "time": "10:00 AM", "color": "blue", "text": "Spoken line." }
   ],
   "translationPrompts": [
     { "kr": "Korean sentence", "model": "Polished English benchmark", "targetPrep": "Target Preposition", "hints": ["Hint 1", "Hint 2"] }
@@ -935,40 +686,37 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
   ]
 }`;
 
-        const payload = {
-          contents: [{ parts: [{ text: userQuery }] }],
-          systemInstruction: { parts: [{ text: promptSystem }] },
-          generationConfig: { responseMimeType: "application/json" }
-        };
+          const payload = {
+            contents: [{ parts: [{ text: userQuery }] }],
+            systemInstruction: { parts: [{ text: promptSystem }] },
+            generationConfig: { responseMimeType: "application/json" }
+          };
 
-        const response = await fetchWithBackoff(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+          const response = await fetchWithBackoff(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
 
-        if (response && response.ok) {
-          const result = await response.json();
-          if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-            const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-            window.appState.diagnosticQuizData = parsed.diagnosticQuizData || [];
-            window.appState.dialogueThread = parsed.dialogueThread || [];
-            window.appState.translationPrompts = parsed.translationPrompts || [];
-            window.appState.finalQuizData = parsed.finalQuizData || [];
-
-            launchMasterclassWorkspace();
-            return;
+          if (response && response.ok) {
+            const result = await response.json();
+            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+              const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
+              window.appState.diagnosticQuizData = parsed.diagnosticQuizData || [];
+              window.appState.dialogueThread = parsed.dialogueThread || [];
+              window.appState.translationPrompts = parsed.translationPrompts || [];
+              window.appState.finalQuizData = parsed.finalQuizData || [];
+              if (btn) { btn.disabled = false; btn.innerText = "🚀 Build Complete Lesson Suite →"; }
+              launchMasterclassWorkspace();
+              return;
+            }
           }
-        }
-      } catch (err) {
-        console.warn("Stage 2 build failed, using fallback...", err);
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerText = "🚀 Build Complete Lesson Suite →";
+        } catch (err) {
+          console.warn("Stage 2 build failed, using fallback...", err);
         }
       }
 
+      if (btn) { btn.disabled = false; btn.innerText = "🚀 Build Complete Lesson Suite →"; }
       loadStage2Fallback();
       launchMasterclassWorkspace();
     }
@@ -1005,7 +753,265 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // MODAL HANDLERS
+    // SPEECH SYNTHESIS HELPER
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.95;
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Text-to-speech is not supported in this browser.");
+      }
+    }
+
+    // RENDER FUNCTIONS FOR ALL MODULES
+    function renderVocabCards() {
+      const container = document.getElementById('vocab-cards-grid');
+      if (!container) return;
+      container.innerHTML = window.appState.vocabData.map((v, i) => `
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-3 shadow-xl relative group hover:border-blue-500/50 transition-all">
+          <div class="flex justify-between items-start">
+            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-950 px-2.5 py-1 rounded border border-blue-800/40">TERM ${i < 9 ? '0' + (i+1) : (i+1)}</span>
+            <button onclick="speakText('${v.term.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-blue-400 transition-colors text-sm" title="Listen">🔊</button>
+          </div>
+          <div>
+            <h4 class="text-base font-extrabold text-white flex items-center justify-between">
+              <span>${v.term}</span>
+              <span class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</span>
+            </h4>
+            <p class="text-xs text-slate-300 mt-1">${v.def}</p>
+          </div>
+          <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80 space-y-1">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">In Context:</span>
+            <p class="text-xs text-slate-300 italic">"${v.sample}"</p>
+          </div>
+          ${v.alt ? `
+            <div class="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-1.5">
+              <span class="text-amber-400 font-bold shrink-0">vs. ${v.alt}:</span>
+              <span class="text-slate-400">${v.altNuance}</span>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderPrepositionsAndPatterns() {
+      const prepContainer = document.getElementById('prepositions-container');
+      const patternContainer = document.getElementById('patterns-container');
+
+      if (prepContainer) {
+        prepContainer.innerHTML = window.appState.prepositionsData.map(p => `
+          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-1">
+            <div class="flex justify-between items-center font-bold">
+              <span class="text-blue-400">${p.term}</span>
+              <span class="text-slate-400 text-[11px] font-mono">${p.kr}</span>
+            </div>
+            <p class="text-slate-300 italic text-[11px]">"${p.sample}"</p>
+          </div>
+        `).join('');
+      }
+
+      if (patternContainer) {
+        patternContainer.innerHTML = window.appState.patternsData.map(pat => `
+          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-1.5 border-l-4 border-l-${pat.color}-500">
+            <h4 class="font-bold text-slate-200 text-xs">${pat.title}</h4>
+            <p class="font-mono text-[11px] text-${pat.color}-300">${pat.pattern}</p>
+            <p class="text-slate-300 italic text-[11px]">"${pat.sample}"</p>
+          </div>
+        `).join('');
+      }
+    }
+
+    function renderDiagnosticQuiz() {
+      const container = document.getElementById('diagnostic-quiz-container');
+      if (!container) return;
+      container.innerHTML = window.appState.diagnosticQuizData.map((q, qIdx) => `
+        <div class="bg-slate-950 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
+          <p class="text-xs font-bold text-slate-200">${q.q}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            ${q.opts.map((opt, oIdx) => `
+              <button onclick="selectDiagnosticOption(${qIdx}, ${oIdx})" id="diag-opt-${qIdx}-${oIdx}" class="text-left px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 text-slate-300 transition-all">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div id="diag-expl-${qIdx}" class="hidden text-[11px] p-2.5 rounded-xl bg-blue-950/40 border border-blue-800/40 text-blue-200"></div>
+        </div>
+      `).join('');
+    }
+
+    function selectDiagnosticOption(qIdx, oIdx) {
+      window.appState.diagnosticAnswers[qIdx] = oIdx;
+      const q = window.appState.diagnosticQuizData[qIdx];
+      q.opts.forEach((_, idx) => {
+        const btn = document.getElementById(`diag-opt-${qIdx}-${idx}`);
+        if (btn) {
+          if (idx === oIdx) {
+            btn.className = "text-left px-3.5 py-2 rounded-xl border border-blue-500 bg-blue-950 text-blue-200 font-bold shadow-sm";
+          } else {
+            btn.className = "text-left px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-400";
+          }
+        }
+      });
+    }
+
+    function gradeDiagnosticQuiz() {
+      let correctCount = 0;
+      window.appState.diagnosticQuizData.forEach((q, qIdx) => {
+        const selected = window.appState.diagnosticAnswers[qIdx];
+        const explBox = document.getElementById(`diag-expl-${qIdx}`);
+        if (explBox) {
+          explBox.classList.remove('hidden');
+          explBox.innerText = q.expl;
+        }
+        if (selected === q.correct) correctCount++;
+      });
+      const badge = document.getElementById('quiz-score-badge');
+      if (badge) badge.innerText = `Score: ${correctCount} / ${window.appState.diagnosticQuizData.length}`;
+    }
+
+    function renderDialogueThread() {
+      const container = document.getElementById('dialogue-thread-container');
+      if (!container) return;
+      container.innerHTML = window.appState.dialogueThread.map(d => `
+        <div onclick="speakText('${d.text.replace(/'/g, "\\'")}')" class="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 hover:border-slate-700 cursor-pointer transition-all space-y-1.5 border-l-4 border-l-${d.color}-500">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-extrabold text-${d.color}-400">${d.speaker} <span class="text-slate-500 font-normal">(${d.role})</span></span>
+            <span class="font-mono text-[10px] text-slate-500">${d.time}</span>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed font-sans">"${d.text}"</p>
+        </div>
+      `).join('');
+    }
+
+    function playFullDialogue() {
+      if (!window.appState.dialogueThread.length) return;
+      let idx = 0;
+      function step() {
+        if (idx < window.appState.dialogueThread.length) {
+          const item = window.appState.dialogueThread[idx];
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(item.text);
+            u.rate = 0.95;
+            u.lang = 'en-US';
+            u.onend = () => { idx++; setTimeout(step, 500); };
+            window.speechSynthesis.speak(u);
+          }
+        }
+      }
+      step();
+    }
+
+    function renderTranslationCard() {
+      const prompts = window.appState.translationPrompts;
+      if (!prompts.length) return;
+      const idx = window.appState.transIndex % prompts.length;
+      const cur = prompts[idx];
+
+      const cardNum = document.getElementById('trans-card-num');
+      const krText = document.getElementById('trans-kr-text');
+      const hints = document.getElementById('trans-hints-container');
+      const input = document.getElementById('trans-user-input');
+
+      if (cardNum) cardNum.innerText = `Prompt ${idx + 1} of ${prompts.length}`;
+      if (krText) krText.innerText = `"${cur.kr}"`;
+      if (input) input.value = window.appState.transUserAnswers[idx] || '';
+
+      if (hints) {
+        hints.innerHTML = (cur.hints || []).map(h => `<span class="bg-blue-950 text-blue-300 border border-blue-800/40 px-2.5 py-1 rounded-lg">Target: ${h}</span>`).join('');
+      }
+    }
+
+    function nextTranslationPrompt() {
+      window.appState.transIndex++;
+      renderTranslationCard();
+    }
+
+    function evaluateTranslation() {
+      const input = document.getElementById('trans-user-input');
+      const userText = input ? input.value.trim() : '';
+      const idx = window.appState.transIndex % window.appState.translationPrompts.length;
+      const cur = window.appState.translationPrompts[idx];
+      window.appState.transUserAnswers[idx] = userText;
+
+      const resContent = document.getElementById('eval-content');
+      if (!resContent) return;
+
+      if (!userText) {
+        resContent.innerHTML = `<p class="text-rose-400 font-bold">Please type a translation before evaluating.</p>`;
+        return;
+      }
+
+      const hasPrep = cur.targetPrep ? userText.toLowerCase().includes(cur.targetPrep.toLowerCase()) : true;
+
+      resContent.innerHTML = `
+        <div class="space-y-3">
+          <div class="p-3 rounded-xl ${hasPrep ? 'bg-emerald-950/60 border border-emerald-800' : 'bg-amber-950/60 border border-amber-800'} text-xs">
+            <span class="font-bold block">${hasPrep ? '✓ Preposition Alignment Verified' : '⚠️ Preposition Review Needed'}</span>
+            <p class="text-[11px] text-slate-300 mt-1">Target term: "${cur.targetPrep || 'N/A'}"</p>
+          </div>
+          <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
+            <span class="text-[10px] font-bold text-slate-500 uppercase">Benchmark Model Translation:</span>
+            <p class="text-xs font-semibold text-emerald-400">"${cur.model}"</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFinalQuiz() {
+      const container = document.getElementById('final-quiz-container');
+      if (!container) return;
+      container.innerHTML = window.appState.finalQuizData.map((q, qIdx) => `
+        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl space-y-3">
+          <p class="text-xs font-bold text-slate-200">${q.q}</p>
+          <div class="space-y-2 text-xs">
+            ${q.opts.map((opt, oIdx) => `
+              <button onclick="selectFinalOption(${qIdx}, ${oIdx})" id="final-opt-${qIdx}-${oIdx}" class="w-full text-left px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 text-slate-300 transition-all">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectFinalOption(qIdx, oIdx) {
+      window.appState.finalAnswers[qIdx] = oIdx;
+      const q = window.appState.finalQuizData[qIdx];
+      q.opts.forEach((_, idx) => {
+        const btn = document.getElementById(`final-opt-${qIdx}-${idx}`);
+        if (btn) {
+          if (idx === oIdx) {
+            btn.className = "w-full text-left px-4 py-2.5 rounded-xl border border-blue-500 bg-blue-950 text-blue-200 font-bold shadow-sm";
+          } else {
+            btn.className = "w-full text-left px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-400";
+          }
+        }
+      });
+    }
+
+    function gradeFinalAssessment() {
+      let correct = 0;
+      const total = window.appState.finalQuizData.length;
+      window.appState.finalQuizData.forEach((q, qIdx) => {
+        if (window.appState.finalAnswers[qIdx] === q.ans) correct++;
+      });
+      const pct = Math.round((correct / (total || 1)) * 100);
+
+      const reportCard = document.getElementById('final-report-card');
+      const scoreVal = document.getElementById('final-score-val');
+      const accVal = document.getElementById('final-acc-val');
+      const summaryText = document.getElementById('final-summary-text');
+
+      if (scoreVal) scoreVal.innerText = `${correct} / ${total}`;
+      if (accVal) accVal.innerText = `${pct}%`;
+      if (summaryText) summaryText.innerText = `Certification generated for ${window.appState.studentName || 'Participant'} (${window.appState.studentCompany}). Performance demonstrates high precision in ${window.appState.level} B2B English negotiations.`;
+      if (reportCard) reportCard.classList.remove('hidden');
+    }
+
     function openGeneratorModal() {
       const modal = document.getElementById('ai-modal');
       if (modal) modal.classList.remove('hidden');
@@ -1013,9 +1019,7 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
 
     function closeAiModal() {
       const modal = document.getElementById('ai-modal');
-      const loadBox = document.getElementById('ai-loading-box');
       if (modal) modal.classList.add('hidden');
-      if (loadBox) loadBox.classList.add('hidden');
     }
 
     function triggerModalStage1Gen() {
@@ -1027,7 +1031,7 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
       selectLevelAndStart(level, topic);
     }
 
-    // LEVEL-TAILORED FALLBACK DATA GENERATORS
+    // FALLBACK GENERATORS
     function loadStage1Fallback(level) {
       if (level === "Beginner") {
         window.appState.vocabData = [
@@ -1035,92 +1039,29 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
           { term: "Confirm details", kr: "세부 사항을 확인하다", def: "Verify that information is accurate and final.", sample: "We need to confirm details before sending the invoice.", alt: "Double-check", altNuance: "Confirm implies official validation." },
           { term: "Submit a request", kr: "요청서를 제출하다", def: "Formally hand in an application or query.", sample: "Please submit a request through the internal portal.", alt: "Apply", altNuance: "Submit a request is standard operational B2B phrasing." },
           { term: "Follow up on", kr: "~에 대해 후속 조치를 취하다", def: "Check the status of an ongoing topic.", sample: "I am calling to follow up on yesterday's shipment status.", alt: "Check on", altNuance: "Follow up implies systematic business action." },
-          { term: "Inquire about", kr: "~에 대해 문의하다", def: "Ask for information in a professional manner.", sample: "Clients frequently inquire about our delivery lead times.", alt: "Ask about", altNuance: "Inquire about is more formal." },
-          { term: "Address an issue", kr: "문제를 처리/해결하다", def: "Take direct action to solve a problem.", sample: "Our engineering lead will address the issue immediately.", alt: "Fix", altNuance: "Address carries a broader strategic scope." },
-          { term: "Provide an update", kr: "업데이트/현황을 공유하다", def: "Share the latest status report.", sample: "I will provide an update by the end of business today.", alt: "Report", altNuance: "Provide an update sounds collaborative." },
-          { term: "Draft a proposal", kr: "제안서를 작성하다", def: "Write an initial business proposal.", sample: "We drafted a proposal for the power plant project.", alt: "Write", altNuance: "Draft emphasizes creating a formal document." },
-          { term: "Request clarification", kr: "명확한 설명을 요청하다", def: "Ask for simpler or clearer explanation.", sample: "We requested clarification on the warranty terms.", alt: "Ask for help", altNuance: "Focuses specifically on resolving ambiguity." },
-          { term: "Reach a decision", kr: "결정에 도달하다", def: "Finalize a strategic or operational choice.", sample: "The committee reached a decision after reviewing quotes.", alt: "Decide", altNuance: "Highlights consensus building." }
+          { term: "Inquire about", kr: "~에 대해 문의하다", def: "Ask for information in a professional manner.", sample: "Clients frequently inquire about our delivery lead times.", alt: "Ask about", altNuance: "Inquire about is more formal." }
         ];
         window.appState.prepositionsData = [
           { term: "In advance", kr: "사전에 / 미리", sample: "Please submit all attendance requests in advance." },
-          { term: "On time", kr: "정각에 / 제때에", sample: "The Changwon shipment was dispatched on time." },
-          { term: "By the deadline", kr: "마감 시한까지", sample: "All engineering specs must be finalized by the deadline." },
-          { term: "In accordance with", kr: "~에 따라서", sample: "We built the transformer in accordance with specifications." }
+          { term: "On time", kr: "정각에 / 제때에", sample: "The Changwon shipment was dispatched on time." }
         ];
         window.appState.patternsData = [
-          { title: "PATTERN A: Professional Request", color: "emerald", pattern: "Could you please [Action] in order to [Goal]?", sample: "Could you please confirm details in order to dispatch the goods?" },
-          { title: "PATTERN B: Status Update Frame", color: "purple", pattern: "I am writing to follow up on [Topic] in accordance with [Agreement].", sample: "I am writing to follow up on delivery in accordance with our contract." }
-        ];
-      } else if (level === "Intermediate") {
-        window.appState.vocabData = [
-          { term: "Pave the way for", kr: "길을 열어주다", def: "Create circumstances that make a deal easier.", sample: "Successful trials paved the way for a master agreement.", alt: "Facilitate", altNuance: "Pave the way implies overcoming obstacles." },
-          { term: "Break the impasse", kr: "교착 상태를 깨다", def: "Resolve a situation where no progress is being made.", sample: "Introducing milestone payments helped break the impasse.", alt: "Resolve stalemate", altNuance: "Break the impasse stresses momentum." },
-          { term: "Strike a balance", kr: "절충안을 찾다", def: "Find a compromise between opposing priorities.", sample: "We must strike a balance between speed and quality.", alt: "Compromise", altNuance: "Emphasizes optimal harmony." },
-          { term: "Gain leverage", kr: "유리한 고지를 점하다", def: "Acquire advantage in negotiations.", sample: "Expanding local hubs gave us significant leverage.", alt: "Strengthen stance", altNuance: "Refers specifically to bargaining power." },
-          { term: "Set the record straight", kr: "오해를 바로잡다", def: "Clarify a misunderstanding.", sample: "Allow me to set the record straight regarding plant capacity.", alt: "Clarify facts", altNuance: "Carries strong authority when correcting false reports." },
-          { term: "Meet halfway", kr: "타협하다", def: "Make mutual concessions.", sample: "We can meet them halfway on warranty terms.", alt: "Concede", altNuance: "Stresses equal mutual goodwill." },
-          { term: "Pivot", kr: "방향을 전환하다", def: "Strategically change focus.", sample: "We pivoted toward high-value fiber lines.", alt: "Reorient", altNuance: "Implies agile intentional shift." },
-          { term: "Mitigate", kr: "완화하다", def: "Make a risk less severe.", sample: "Diversifying routes helped mitigate delays.", alt: "Alleviate", altNuance: "Used for financial/operational risks." },
-          { term: "Reconcile", kr: "조화시키다", def: "Find a way for opposing views to agree.", sample: "We reconciled conflicting budget projections.", alt: "Harmonize", altNuance: "Focuses on data discrepancies." },
-          { term: "Paramount", kr: "최우선의", def: "Supreme in impact.", sample: "Maintaining structural integrity is paramount.", alt: "Vital", altNuance: "Overrides secondary concerns." }
-        ];
-        window.appState.prepositionsData = [
-          { term: "In light of", kr: "~를 고려하여", sample: "In light of market shifts, we adjusted targets." },
-          { term: "Notwithstanding", kr: "~에도 불구하고", sample: "Notwithstanding bottlenecks, we delivered on time." },
-          { term: "In alignment with", kr: "~와 발맞추어", sample: "Our goals are structured in alignment with client needs." },
-          { term: "At the expense of", kr: "~를 희생하면서", sample: "Never increase speed at the expense of quality." }
-        ];
-        window.appState.patternsData = [
-          { title: "PATTERN A: The Counter-Pivot", color: "emerald", pattern: "While [Constraint] presents challenges, [Action] allows us to [Benefit].", sample: "While tight budgets present challenges, pivoting focus allows us to capture higher lead margin." },
-          { title: "PATTERN B: The Compromise Frame", color: "purple", pattern: "In alignment with [Goal], meeting halfway on [Point A] paves the way for [Benefit].", sample: "In alignment with shared goals, meeting halfway on terms paves the way for agreement." }
-        ];
-      } else if (level === "Professional") {
-        window.appState.vocabData = [
-          { term: "Orchestrate consensus", kr: "합의를 총괄 조율하다", def: "Complexly unite diverse leadership views.", sample: "The CEO orchestrated consensus across international hubs.", alt: "Align", altNuance: "Implies masterful executive coordination." },
-          { term: "Foster strategic buy-in", kr: "전략적 동의를 도출하다", def: "Cultivate deep stakeholder alignment.", sample: "Securing board buy-in is essential for joint ventures.", alt: "Get approval", altNuance: "Focuses on active commitment." },
-          { term: "Differentiate positioning", kr: "포지셔닝을 차별화하다", def: "Establish unique competitive value.", sample: "We differentiate our positioning through green tech.", alt: "Stand out", altNuance: "Strategic marketing terminology." },
-          { term: "Scale incrementally", kr: "단계별로 확장하다", def: "Expand volume without cost spikes.", sample: "We plan to scale capacity incrementally across Q3.", alt: "Grow slowly", altNuance: "Emphasizes risk-controlled growth." },
-          { term: "Exercise fiduciary duty", kr: "신임 의무를 다하다", def: "Act with legal and economic responsibility.", sample: "The board must exercise fiduciary duty during audits.", alt: "Manage well", altNuance: "Formal legal governance phrase." },
-          { term: "Navigate regulatory hurdles", kr: "규제 장벽을 헤쳐나가다", def: "Overcome legal compliance obstacles.", sample: "Our legal team navigated regulatory hurdles smoothly.", alt: "Bypass laws", altNuance: "Stresses lawful adaptation." },
-          { term: "De-escalate friction", kr: "갈등을 완화하다", def: "Reduce tension between contracting leads.", sample: "Clear terms help de-escalate friction during delays.", alt: "Calm down", altNuance: "Focuses on executive composure." },
-          { term: "Reconcile discrepancies", kr: "불일치를 조정하다", def: "Harmonize conflicting financial metrics.", sample: "Auditors reconciled discrepancies in inventory data.", alt: "Fix errors", altNuance: "Accounting precision." },
-          { term: "Formulate governance policy", kr: "거버넌스 정책을 수립하다", def: "Establish corporate compliance framework.", sample: "We formulated governance policy for overseas plants.", alt: "Set rules", altNuance: "Board-level policy creation." },
-          { term: "Institutionalize best practices", kr: "모범 사례를 제도화하다", def: "Embed operational standards permanently.", sample: "We institutionalized best practices across all factories.", alt: "Standardize", altNuance: "Long-term organizational impact." }
-        ];
-        window.appState.prepositionsData = [
-          { term: "Pursuant to", kr: "~에 따라서 / ~에 근거하여", sample: "Pursuant to clause 4, payment will be released upon test completion." },
-          { term: "Pending board sign-off", kr: "이사회 최종 승인 대기 중", sample: "The contract remains pending board sign-off." },
-          { term: "In deference to", kr: "~를 존중하여", sample: "In deference to regional norms, we revised negotiation guidelines." },
-          { term: "Under the auspices of", kr: "~의 후원/지휘 하에", sample: "The audit was conducted under the auspices of risk governance." }
-        ];
-        window.appState.patternsData = [
-          { title: "PATTERN A: The Executive Directive", color: "emerald", pattern: "Pursuant to [Policy], we must reconcile discrepancies in order to [Outcome].", sample: "Pursuant to risk directives, we must reconcile discrepancies to protect valuation." },
-          { title: "PATTERN B: Strategic Alignment Frame", color: "purple", pattern: "Pending [Milestone], fostering buy-in on [Key Area] allows us to [Strategic Objective].", sample: "Pending final sign-off, fostering buy-in allows us to scale incrementally." }
+          { title: "PATTERN A: Professional Request", color: "emerald", pattern: "Could you please [Action] in order to [Goal]?", sample: "Could you please confirm details in order to dispatch the goods?" }
         ];
       } else {
-        // DEFAULT ADVANCED FALLBACK
         window.appState.vocabData = [
           { term: "Bridge the gap", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
           { term: "Raise a red flag", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
           { term: "Shift the narrative", kr: "여론/화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
           { term: "Draw a hard line", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
-          { term: "Break the stalemate", kr: "교착 상태를 풀다", def: "Resolve a deadlock through creative terms.", sample: "Earnout clauses helped break the stalemate in negotiations.", alt: "Resolve", altNuance: "Focuses on unblocking stalled talks." },
-          { term: "Drive a hard bargain", kr: "끈질기게 이익을 주장하다", def: "Negotiate aggressively for maximum gain.", sample: "Their procurement lead drives a hard bargain.", alt: "Push hard", altNuance: "Describes high-stakes commercial style." },
-          { term: "Capitalize on", kr: "기회로 활용하다", def: "Leverage a trend or market gap for profit.", sample: "We capitalized on surging demand for green fiber.", alt: "Exploit", altNuance: "Positive corporate opportunity leverage." },
-          { term: "Consolidate resources", kr: "자원을 통합하다", def: "Unite disparate operational units.", sample: "Consolidating regional logistics lowered overhead.", alt: "Combine", altNuance: "Focuses on efficiency gains." },
-          { term: "Operationalize workflow", kr: "워크플로우를 실질적으로 가동하다", def: "Convert plans into working execution.", sample: "Engineers operationalized the deployment framework.", alt: "Execute", altNuance: "Translates theory into process." },
-          { term: "Amortize costs", kr: "비용을 분할 상각하다", def: "Spread expenses across a contract lifecycle.", sample: "We amortized setup fees across 36 months.", alt: "Spread out", altNuance: "Accounting term for capital distribution." }
+          { term: "Break the stalemate", kr: "교착 상태를 풀다", def: "Resolve a deadlock through creative terms.", sample: "Earnout clauses helped break the stalemate in negotiations.", alt: "Resolve", altNuance: "Focuses on unblocking stalled talks." }
         ];
         window.appState.prepositionsData = [
           { term: "Subject to", kr: "~을 조건으로 하는", sample: "The discount is subject to final board approval." },
-          { term: "In tandem with", kr: "~와 병행하여", sample: "Software rollout proceeded in tandem with hardware upgrades." },
-          { term: "In lieu of", kr: "~ 대신에", sample: "We accepted a longer contract in lieu of cash rebates." },
-          { term: "At a premium", kr: "프리미엄/할증을 붙여", sample: "Customized engineering units are priced at a premium." }
+          { term: "In tandem with", kr: "~와 병행하여", sample: "Software rollout proceeded in tandem with hardware upgrades." }
         ];
         window.appState.patternsData = [
-          { title: "PATTERN A: The Strategic Value Frame", color: "emerald", pattern: "Subject to [Condition], amortizing costs across [Period] secures [Benefit].", sample: "Subject to board approval, amortizing costs across 3 years secures margins." },
-          { title: "PATTERN B: Conditional Concession Pivot", color: "purple", pattern: "While [Constraint] presents challenges, we can [Alternative] in tandem with [Secondary Value].", sample: "While tight budgets present challenges, we can operationalize tiers in tandem with support." }
+          { title: "PATTERN A: Strategic Value Frame", color: "emerald", pattern: "Subject to [Condition], amortizing costs across [Period] secures [Benefit].", sample: "Subject to board approval, amortizing costs across 3 years secures margins." }
         ];
       }
 
@@ -1131,30 +1072,18 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
     function loadStage2Fallback() {
       window.appState.diagnosticQuizData = [
         { q: "1. When negotiating stuck terms, introducing milestone payments helps to __________.", opts: ["break the stalemate", "set the record straight", "pivot", "mitigate"], correct: 0, expl: "'Break the stalemate' means resolving a negotiation deadlock." },
-        { q: "2. __________ recent disruptions, we adjusted financial targets.", opts: ["In light of", "Notwithstanding", "At the expense of", "In lieu of"], correct: 0, expl: "'In light of' means taking new info into account." },
-        { q: "3. Never accelerate schedules __________ product quality.", opts: ["at the expense of", "in alignment with", "notwithstanding", "in light of"], correct: 0, expl: "'At the expense of' means causing sacrifice to another element." },
-        { q: "4. Successful trials helped to __________ a multi-year master agreement.", opts: ["pave the way for", "reconcile", "meet halfway", "set the record straight"], correct: 0, expl: "'Pave the way for' creates favorable future conditions." },
-        { q: "5. __________ the tight delivery schedule, our team completed tests flawlessly.", opts: ["Notwithstanding", "In light of", "Pursuant to", "At the expense of"], correct: 0, expl: "'Notwithstanding' means despite severe constraints." }
+        { q: "2. __________ recent disruptions, we adjusted financial targets.", opts: ["In light of", "Notwithstanding", "At the expense of", "In lieu of"], correct: 0, expl: "'In light of' means taking new info into account." }
       ];
       window.appState.dialogueThread = [
         { speaker: "Min-su Kim", role: "Hyosung - Senior Manager", time: "10:00 AM", color: "blue", text: "Good morning. In light of North American requirements, we must strike a balance between delivery and thorough testing." },
-        { speaker: "David Vance", role: "US Procurement Lead", time: "10:03 AM", color: "emerald", text: "We appreciate Hyosung's quality. If we can't break the stalemate on delivery timing, we must explore alternative options." },
-        { speaker: "Su-jin Park", role: "Hyosung - Global Sales Director", time: "10:06 AM", color: "cyan", text: "Notwithstanding current shipping delays, Hyosung pivoted logistics routes. Meeting you halfway on warehousing paves the way for rollout." },
-        { speaker: "Sarah Jenkins", role: "European Operations VP", time: "10:10 AM", color: "purple", text: "That flexibility is why we partner with Hyosung. Setting the record straight early helps mitigate risk across teams." }
+        { speaker: "David Vance", role: "US Procurement Lead", time: "10:03 AM", color: "emerald", text: "We appreciate Hyosung's quality. If we can't break the stalemate on delivery timing, we must explore alternative options." }
       ];
       window.appState.translationPrompts = [
-        { kr: "최근 예산 제약에도 불구하고, 우리는 절충안을 찾아야 합니다.", model: "Notwithstanding recent budget constraints, we must strike a balance.", targetPrep: "Notwithstanding", hints: ["Notwithstanding", "Strike a balance"] },
-        { kr: "시장 변동성에 비추어 볼 때, 위험을 완화하는 것이 최우선 과제입니다.", model: "In light of market volatility, mitigating risk is paramount.", targetPrep: "In light of", hints: ["In light of", "Mitigate", "Paramount"] }
+        { kr: "최근 예산 제약에도 불구하고, 우리는 절충안을 찾아야 합니다.", model: "Notwithstanding recent budget constraints, we must strike a balance.", targetPrep: "Notwithstanding", hints: ["Notwithstanding", "Strike a balance"] }
       ];
       window.appState.finalQuizData = [
         { q: "1. Which expression means 'to create conditions for future success'?", opts: ["Pave the way for", "Set the record straight", "Gain leverage"], ans: 0 },
-        { q: "2. Complete: '__________ recent cost increases, our plant maintained efficiency.'", opts: ["Notwithstanding", "At the expense of", "In lieu of"], ans: 0 },
-        { q: "3. Complete: 'We must __________ between speed and accuracy.'", opts: ["strike a balance", "break the stalemate", "set the record straight"], ans: 0 },
-        { q: "4. What does 'Paramount' mean?", opts: ["Top priority overriding secondary concerns.", "Uncertain.", "Secondary."], ans: 0 },
-        { q: "5. 'In light of' means:", opts: ["~를 고려하여", "~에도 불구하고", "~를 희생하여"], ans: 0 },
-        { q: "6. Expression for 'making mutual concessions':", opts: ["Meet someone halfway", "Pave the way for", "Gain leverage"], ans: 0 },
-        { q: "7. 'Mitigate' means:", opts: ["Reducing negative risks.", "Increasing sales.", "Delaying schedules."], ans: 0 },
-        { q: "8. Complete: 'Never cut costs __________ safety.'", opts: ["at the expense of", "in light of", "notwithstanding"], ans: 0 }
+        { q: "2. Complete: '__________ recent cost increases, our plant maintained efficiency.'", opts: ["Notwithstanding", "At the expense of", "In lieu of"], ans: 0 }
       ];
     }
   </script>
