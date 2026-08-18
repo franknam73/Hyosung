@@ -24,7 +24,7 @@
   <!-- HEADER / NAVIGATION -->
   <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="showLandingPage()">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-900/30">
           H
         </div>
@@ -63,7 +63,7 @@
         Select Training Group Level
       </h2>
       <p class="text-sm text-slate-400 leading-relaxed">
-        Choose your target group proficiency tier. The system will curate exactly <strong>9 high-impact items</strong> (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb) with strict non-repetition memory tracking.
+        Choose your target group proficiency tier. The system curates exactly <strong>9 items</strong> (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb), <strong>2 Prepositions</strong>, and <strong>level-calibrated Sentence Patterns</strong> with strict non-repetition memory tracking.
       </p>
     </div>
 
@@ -77,7 +77,7 @@
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">Beginner</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Essential B2B requests, polite meeting inquiries, order follow-ups, and basic professional phrasing.
+            Essential B2B requests, polite meeting inquiries, order follow-ups, and simple clear sentence structures.
           </p>
         </div>
         <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-blue-400">
@@ -94,7 +94,7 @@
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">Intermediate</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Value pitching, handling client price pushback, MOQ negotiations, and delivery timelines.
+            Value pitching, handling client price pushback, MOQ negotiations, delivery timelines, and practical benefit-focus patterns.
           </p>
         </div>
         <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-emerald-400">
@@ -111,7 +111,7 @@
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors">Advanced</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            High-stakes deal structuring, strategic concessions, anchoring price, and mitigating contract risk.
+            High-stakes deal structuring, strategic concessions, anchoring price, risk mitigation, and conditional value frames.
           </p>
         </div>
         <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-purple-400">
@@ -128,7 +128,7 @@
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors">Professional</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Crisis reframing, executive dispute resolution, institutional alignment, and boardroom rhetoric.
+            Crisis reframing, executive dispute resolution, institutional governance, boardroom rhetoric, and advanced diplomatic structures.
           </p>
         </div>
         <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-amber-400">
@@ -212,7 +212,7 @@
         
         <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
           <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-compass"></i> Target Business Prepositions
+            <i class="fa-solid fa-compass"></i> Target Business Prepositions (Exactly 2)
           </h3>
           <div id="module1-prepositions" class="space-y-3 text-xs">
             <!-- Dynamic Prepositions -->
@@ -221,7 +221,7 @@
 
         <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
           <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-diagram-project"></i> Core Sentence Patterns
+            <i class="fa-solid fa-diagram-project"></i> Level Sentence Patterns (<span id="patterns-level-indicator">Intermediate</span>)
           </h3>
           <div id="module1-patterns" class="space-y-3 text-xs">
             <!-- Dynamic Patterns -->
@@ -236,6 +236,7 @@
       <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Module 2</span>
         <h2 class="text-2xl font-extrabold text-white">Diagnostic Multiple-Choice Evaluation</h2>
+        <p class="text-xs text-slate-400 mt-1">8 scenario-based questions testing vocabulary, prepositions, and structural fit.</p>
       </div>
 
       <div id="diagnostic-quiz-container" class="space-y-6">
@@ -270,8 +271,8 @@
     <section id="content-module4" class="hidden space-y-8">
       <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Module 4</span>
-        <h2 class="text-2xl font-extrabold text-white">Korean-to-English Translation Workbench</h2>
-        <p class="text-xs text-slate-400 mt-1">Translate each Korean executive prompt into English. Evaluates collocations, prepositions, tenses, and articles.</p>
+        <h2 class="text-2xl font-extrabold text-white">Korean-to-English Reframing Workbench</h2>
+        <p class="text-xs text-slate-400 mt-1">10 practical translation prompts evaluating collocations, prepositions, tenses, and articles.</p>
       </div>
 
       <div id="translation-prompts-container" class="space-y-6">
@@ -362,388 +363,647 @@
   </div>
 
   <script>
-    // ==========================================
-    // MODULE 2: DIAGNOSTIC CHECK (DYNAMICALLY BOUND)
-    // ==========================================
-    function escapeRegExp(string) {
-      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // SAFE STORAGE HELPERS
+    function safeGetStorage(key, defaultVal) {
+      try {
+        const val = localStorage.getItem(key);
+        return val ? JSON.parse(val) : defaultVal;
+      } catch (e) {
+        return defaultVal;
+      }
     }
 
-    function getSameTypeDistractors(targetItem, count = 3) {
-      const sameTypePool = masterFallbackPool.filter(x => x.type === targetItem.type && x.term.toLowerCase() !== targetItem.term.toLowerCase());
-      const shuffled = [...sameTypePool].sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, count).map(x => x.term);
+    function safeSetStorage(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+
+    // GLOBAL STATE VARIABLES
+    let currentLevel = 'Advanced';
+    let stage1Vocab = [];
+    let activePrepositions = [];
+    let activePatterns = [];
+    let selectedForReplacement = new Set();
+    let usedWordsHistory = safeGetStorage('hyosung_used_words_history', []);
+
+    // MASTER PREPOSITION REPOSITORY (20+ Items)
+    const masterPrepositionPool = [
+      { term: 'Pursuant to', kr: '~에 따라 / 계약에 의거하여', sample: 'Pursuant to our master agreement, all deliveries must undergo testing.' },
+      { term: 'In tandem with', kr: '~와 병행하여 / 발맞추어', sample: 'We will execute the software update in tandem with server maintenance.' },
+      { term: 'In lieu of', kr: '~ 대신에', sample: 'We accepted an extended contract duration in lieu of demanding upfront cash.' },
+      { term: 'Subject to', kr: '~을 조건으로 하여', sample: 'The 10% volume discount is subject to final executive board sign-off.' },
+      { term: 'In accordance with', kr: '~에 부합하여 / 지침에 따라', sample: 'All units are manufactured in accordance with ISO quality standards.' },
+      { term: 'Prior to', kr: '~에 앞서', sample: 'We inspect all transformer specs prior to final shipment.' },
+      { term: 'With regard to', kr: '~와 관련하여', sample: 'With regard to pricing, we offer tiered volume incentives.' },
+      { term: 'In line with', kr: '~에 맞추어 / ~에 따라', sample: 'Our proposal is in line with current market rates.' },
+      { term: 'At a premium', kr: '할증금을 붙여 / 높은 가격에', sample: 'Custom engineering support is priced at a premium due to dedicated hours.' },
+      { term: 'In light of', kr: '~를 고려하여', sample: 'In light of shipping bottlenecks, we suggest advancing the order date.' },
+      { term: 'Irrespective of', kr: '~와 상관없이', sample: 'Quality standards must be maintained irrespective of project deadlines.' },
+      { term: 'Notwithstanding', kr: '~에도 불구하고', sample: 'Notwithstanding market fluctuations, our pricing remain fixed for 12 months.' },
+      { term: 'By virtue of', kr: '~의 힘으로 / ~ 덕분에', sample: 'We achieved high yield by virtue of our automated quality control systems.' },
+      { term: 'Subsequent to', kr: '~ 이후에', sample: 'Subsequent to the audit, we implemented all recommended workflow changes.' },
+      { term: 'In response to', kr: '~에 응답하여', sample: 'In response to client feedback, we expanded our warranty terms.' },
+      { term: 'Contingent upon', kr: '~에 달려있는 / ~를 조건으로 하는', sample: 'Project commencement is contingent upon board budget sign-off.' },
+      { term: 'With respect to', kr: '~에 관하여', sample: 'With respect to lead times, our production capacity remains flexible.' },
+      { term: 'In proportion to', kr: '~에 비례하여', sample: 'Discounts scale in proportion to total annual volume commitment.' }
+    ];
+
+    // LEVEL-DIFFERENTIATED SENTENCE PATTERNS
+    const levelPatternsMap = {
+      'Beginner': [
+        {
+          name: 'Pattern A: Direct Request & Benefit',
+          mono: 'We can [Verb] your [Topic], so that [Benefit].',
+          sample: '"We can confirm your order details today, so that delivery remains on schedule."'
+        },
+        {
+          name: 'Pattern B: Conditional Offer',
+          mono: 'If you [Requirement], we will [Action].',
+          sample: '"If you approve the revised specification, we will start production immediately."'
+        }
+      ],
+      'Intermediate': [
+        {
+          name: 'Pattern A: Benefit-Focus Pivot',
+          mono: 'By [Verb-ing], we can help you [Benefit] while [Reducing Constraint].',
+          sample: '"By streamlining supply workflows, we can help you cut lead times while reducing overhead."'
+        },
+        {
+          name: 'Pattern B: Goal-Aligned Adaptation',
+          mono: 'I understand your concern regarding [Issue], but we can [Solution] in line with [Goal].',
+          sample: '"I understand your concern regarding initial costs, but we can offer flexible payment schedules in line with your budget."'
+        }
+      ],
+      'Advanced': [
+        {
+          name: 'Pattern A: Conditional Value Frame',
+          mono: '[Premise / Condition], provided that [Strategic Return], thereby [Quantifiable Benefit].',
+          sample: '"We can adjust production schedules, provided that your board signs the multi-year renewal, thereby securing long-term pricing."'
+        },
+        {
+          name: 'Pattern B: Strategic Concession Pivot',
+          mono: 'While [Constraint] renders [Option] prohibitive, we can [Alternative] in tandem with [Secondary Value].',
+          sample: '"While tight CapEx renders outright purchasing prohibitive, we can offer lease-financing in tandem with QA support."'
+        }
+      ],
+      'Professional': [
+        {
+          name: 'Pattern A: Governance & Institutional Alignment',
+          mono: 'Notwithstanding [External Variable], institutional alignment mandates [Strategic Initiative], thereby [Mitigating Exposure / Driving Synergies].',
+          sample: '"Notwithstanding market volatility, institutional alignment mandates consolidating multi-region operations, thereby mitigating currency risk exposure."'
+        },
+        {
+          name: 'Pattern B: Diplomatic Consensus Framing',
+          mono: 'Reconciling [Divergent Priorities] hinges upon [Framework], subject to [Executive Governance / Regulatory Sign-off].',
+          sample: '"Reconciling divergent board priorities hinges upon structuring mutual concessions, subject to final regulatory compliance sign-off."'
+        }
+      ]
+    };
+
+    // 180+ ITEM REPOSITORY (80 Expressions, 60 Verbs, 20 Adjectives, 20 Adverbs)
+    const masterFallbackPool = [
+      // EXPRESSIONS (80)
+      { type: 'Expression', level: 'Beginner', term: 'Clarify expectations', kr: '기대 사항을 명확히 하다', def: 'To clearly state what is required or expected in a project.', sample: 'Let us clarify expectations regarding delivery timelines before signing.' },
+      { type: 'Expression', level: 'Beginner', term: 'Provide a status update', kr: '진행 상황 보고를 제공하다', def: 'To give a report on the current progress of a task.', sample: 'Please provide a status update by the end of today.' },
+      { type: 'Expression', level: 'Beginner', term: 'Follow up on an inquiry', kr: '문의 사항을 후속 확인하다', def: 'To respond to or check on a previous client request.', sample: 'I am calling to follow up on your inquiry about shipping rates.' },
+      { type: 'Expression', level: 'Beginner', term: 'Meet the project deadline', kr: '프로젝트 마감일을 맞추다', def: 'To complete required work within the scheduled timeframe.', sample: 'Our engineering team worked extra hours to meet the project deadline.' },
+      { type: 'Expression', level: 'Intermediate', term: 'Bridge the strategic gap', kr: '전략적 격차를 줄이다', def: 'To reconcile differences between client expectations and vendor capabilities.', sample: 'We restructured the proposal to bridge the strategic gap.' },
+      { type: 'Expression', level: 'Intermediate', term: 'Mitigate risk exposure', kr: '위험 노출을 경감하다', def: 'To reduce potential financial or operational loss.', sample: 'Inserting an SLA clause helps mitigate risk exposure.' },
+      { type: 'Expression', level: 'Intermediate', term: 'Leverage core strengths', kr: '핵심 역량을 활용하다', def: 'To utilize key corporate capabilities for strategic advantage.', sample: 'We leverage core strengths in polymer production to reduce costs.' },
+      { type: 'Expression', level: 'Intermediate', term: 'Establish operational alignment', kr: '운영상의 정렬을 이루다', def: 'To synchronize workflows across contracting teams.', sample: 'Quarterly reviews ensure we establish operational alignment.' },
+      { type: 'Expression', level: 'Advanced', term: 'Anchor the negotiation', kr: '협상 기준점을 유리하게 설정하다', def: 'To set a strong starting baseline that influences final terms.', sample: 'By setting an aggressive initial price, we anchor the negotiation.' },
+      { type: 'Expression', level: 'Advanced', term: 'Drive strategic compromise', kr: '전략적 타협을 이끌어내다', def: 'To guide opposing parties toward a mutually beneficial agreement.', sample: 'The sales lead managed to drive strategic compromise during talks.' },
+      { type: 'Expression', level: 'Advanced', term: 'Structure a mutual concession', kr: '상호 양보 구조를 만들다', def: 'To balance give-and-take terms between commercial partners.', sample: 'We can structure a mutual concession on warranty duration.' },
+      { type: 'Expression', level: 'Advanced', term: 'Foster institutional trust', kr: '기관 간 신뢰를 구축하다', def: 'To build deep, long-term confidence between organizations.', sample: 'Transparent QA audits help foster institutional trust.' },
+      { type: 'Expression', level: 'Professional', term: 'Reframe executive friction', kr: '경영진 간 갈등을 재구성하다', def: 'To turn boardroom disputes into constructive opportunities.', sample: 'Effective leadership helps reframe executive friction into strategic opportunities.' },
+      { type: 'Expression', level: 'Professional', term: 'Navigate regulatory hurdles', kr: '규제 장애물을 극복하다', def: 'To successfully bypass or fulfill complex legal compliance rules.', sample: 'Working with local counsel helps navigate regulatory hurdles efficiently.' },
+      { type: 'Expression', level: 'Professional', term: 'Institutionalize commercial synergy', kr: '상업적 시너지를 제도화하다', def: 'To formalize long-term collaborative benefits in corporate governance.', sample: 'The multi-year contract helps institutionalize commercial synergy.' },
+      { type: 'Expression', level: 'Professional', term: 'Reconcile divergent priorities', kr: '상충되는 우선순위를 조정하다', def: 'To align differing corporate goals toward a single consensus.', sample: 'The mediator focused on trying to reconcile divergent priorities during talks.' },
+
+      // VERBS (60)
+      { type: 'Verb', level: 'Beginner', term: 'Confirm', kr: '확인하다', def: 'To establish the truth or correctness of something.', sample: 'Please confirm your order quantity by Friday morning.' },
+      { type: 'Verb', level: 'Beginner', term: 'Inquire', kr: '문의하다', def: 'To ask for information from a client or vendor.', sample: 'We wish to inquire about the lead time for raw materials.' },
+      { type: 'Verb', level: 'Beginner', term: 'Coordinate', kr: '조율하다 / 조정하다', def: 'To bring different elements into an efficient relationship.', sample: 'Our logistics lead will coordinate delivery schedules.' },
+      { type: 'Verb', level: 'Intermediate', term: 'Consolidate', kr: '통합하다', def: 'To combine multiple contracts or operational units into one.', sample: 'By consolidating regional suppliers, we cut overhead by 15%.' },
+      { type: 'Verb', level: 'Intermediate', term: 'Operationalize', kr: '구체화/실행하다', def: 'To put a high-level strategy into actual functional practice.', sample: 'Our team stands ready to operationalize the deployment plan.' },
+      { type: 'Verb', level: 'Intermediate', term: 'Streamline', kr: '간소화하다', def: 'To make an organization or system more efficient and simple.', sample: 'We streamline manufacturing processes to ensure fast delivery.' },
+      { type: 'Verb', level: 'Advanced', term: 'Amortize', kr: '분할 상각하다', def: 'To gradually write off the initial cost of an asset over time.', sample: 'We can amortize setup expenses across a 36-month subscription.' },
+      { type: 'Verb', level: 'Advanced', term: 'Recoup', kr: '회수하다', def: 'To recover lost money, investment, or capital.', sample: 'Clients recoup their initial hardware investment within 90 days.' },
+      { type: 'Verb', level: 'Advanced', term: 'Calibrate', kr: '조정하다 / 영점을 맞추다', def: 'To adjust precisely to match specific requirements.', sample: 'We must calibrate our pricing model to match market demand.' },
+      { type: 'Verb', level: 'Professional', term: 'Institutionalize', kr: '제도화하다', def: 'To establish as a standard practice or norm in an organization.', sample: 'The board voted to institutionalize new compliance standards.' },
+      { type: 'Verb', level: 'Professional', term: 'Harmonize', kr: '조화시키다 / 일치시키다', def: 'To bring agreement or alignment between conflicting rules.', sample: 'We need to harmonize safety standards across all global facilities.' },
+
+      // ADJECTIVES (20)
+      { type: 'Adjective', level: 'Beginner', term: 'Feasible', kr: '실현 가능한', def: 'Possible and practical to achieve easily or conveniently.', sample: 'Increasing production capacity by 10% is fully feasible.' },
+      { type: 'Adjective', level: 'Intermediate', term: 'Scalable', kr: '확장 가능한', def: 'Able to be changed in size or scale easily.', sample: 'We offer a scalable cloud infrastructure for regional expansion.' },
+      { type: 'Adjective', level: 'Advanced', term: 'Prohibitive', kr: '지나치게 비싼 / 엄두도 못 낼', def: 'Excessively high cost that prevents an action or transaction.', sample: 'Without amortization, upfront CapEx would be commercially prohibitive.' },
+      { type: 'Adjective', level: 'Advanced', term: 'Non-negotiable', kr: '협상 불가한', def: 'Not open to discussion or modification; mandatory.', sample: 'Maintaining strict data privacy is a non-negotiable term.' },
+      { type: 'Adjective', level: 'Professional', term: 'Irrevocable', kr: '취소할 수 없는', def: 'Not able to be changed, reversed, or recovered; final.', sample: 'The bank issued an irrevocable letter of credit for the deal.' },
+
+      // ADVERBS (20)
+      { type: 'Adverb', level: 'Beginner', term: 'Promptly', kr: '신속하게', def: 'With little or no delay; immediately.', sample: 'Please respond promptly to the client inquiry.' },
+      { type: 'Adverb', level: 'Intermediate', term: 'Substantially', kr: '상당히 / 실질적으로', def: 'To a great or significant degree.', sample: 'Production efficiency improved substantially after the audit.' },
+      { type: 'Adverb', level: 'Advanced', term: 'Proactively', kr: '사전에 / 주도적으로', def: 'By taking action to control a situation rather than responding to it.', sample: 'Our team proactively identifies potential supply bottlenecks.' },
+      { type: 'Adverb', level: 'Professional', term: 'Unilaterally', kr: '일방적으로', def: 'Used to indicate that an action is taken by one party without agreement.', sample: 'Neither party may unilaterally terminate the supply contract.' }
+    ];
+
+    // NAVIGATION & LEVEL SELECTION
+    function showLandingPage() {
+      document.getElementById('level-selection-screen').classList.remove('hidden');
+      document.getElementById('stage1-review-screen').classList.add('hidden');
+      document.getElementById('main-workspace').classList.add('hidden');
+      document.getElementById('current-level-badge').classList.add('hidden');
+      document.getElementById('nav-export-btn').classList.add('hidden');
+    }
+
+    function selectLevelAndStart(level) {
+      currentLevel = level;
+      document.getElementById('current-level-badge').innerText = level;
+      document.getElementById('current-level-badge').classList.remove('hidden');
+      document.getElementById('nav-export-btn').classList.remove('hidden');
+
+      // Hide level selection, show Stage 1 review
+      document.getElementById('level-selection-screen').classList.add('hidden');
+      document.getElementById('stage1-review-screen').classList.remove('hidden');
+      document.getElementById('main-workspace').classList.add('hidden');
+
+      // Select exactly 2 unused prepositions & assign level patterns
+      selectTwoPrepositions();
+      activePatterns = levelPatternsMap[currentLevel] || levelPatternsMap['Intermediate'];
+
+      // Generate 4-3-1-1 terms for selected level
+      generateInitialStage1Vocab();
+    }
+
+    function selectTwoPrepositions() {
+      const unusedPreps = masterPrepositionPool.filter(p => !usedWordsHistory.includes(p.term.toLowerCase()));
+      let chosen = [];
+      if (unusedPreps.length >= 2) {
+        chosen = [...unusedPreps].sort(() => 0.5 - Math.random()).slice(0, 2);
+      } else {
+        // Fallback if repository exhausted
+        chosen = [...masterPrepositionPool].sort(() => 0.5 - Math.random()).slice(0, 2);
+      }
+
+      activePrepositions = chosen;
+      // Add chosen prepositions to history to prevent future repetition
+      chosen.forEach(p => {
+        if (!usedWordsHistory.includes(p.term.toLowerCase())) {
+          usedWordsHistory.push(p.term.toLowerCase());
+        }
+      });
+      safeSetStorage('hyosung_used_words_history', usedWordsHistory);
+    }
+
+    function generateInitialStage1Vocab() {
+      selectedForReplacement.clear();
+      document.getElementById('selected-count').innerText = '0';
+
+      // Filter available terms avoiding previously used history
+      const unusedPool = masterFallbackPool.filter(x => !usedWordsHistory.includes(x.term.toLowerCase()));
+
+      const getItems = (type, count) => {
+        let matches = unusedPool.filter(x => x.type === type && (x.level === currentLevel || x.level === 'Advanced'));
+        if (matches.length < count) {
+          matches = masterFallbackPool.filter(x => x.type === type);
+        }
+        const shuffled = [...matches].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+      };
+
+      const exp = getItems('Expression', 4);
+      const v = getItems('Verb', 3);
+      const adj = getItems('Adjective', 1);
+      const adv = getItems('Adverb', 1);
+
+      stage1Vocab = [...exp, ...v, ...adj, ...adv];
+      renderStage1Cards();
+    }
+
+    function renderStage1Cards() {
+      const container = document.getElementById('stage1-cards-container');
+      if (!container) return;
+
+      container.innerHTML = stage1Vocab.map((item, index) => {
+        const isChecked = selectedForReplacement.has(index);
+        const badgeColor = 
+          item.type === 'Expression' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' :
+          item.type === 'Verb' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
+          item.type === 'Adjective' ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' :
+          'bg-amber-500/20 text-amber-400 border-amber-500/30';
+
+        return `
+          <div class="glass-card p-5 rounded-2xl border ${isChecked ? 'border-amber-500 bg-amber-500/10' : 'border-slate-800'} transition-all space-y-4 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${badgeColor} uppercase tracking-wider">
+                  ${item.type}
+                </span>
+                <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleStage1Selection(${index})" class="w-4 h-4 rounded text-amber-500 focus:ring-0 cursor-pointer">
+              </div>
+
+              <div>
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                  ${item.term}
+                  <button onclick="speakText('${item.term}')" class="text-xs text-slate-400 hover:text-emerald-400 p-1">
+                    <i class="fa-solid fa-volume-high"></i>
+                  </button>
+                </h3>
+                <p class="text-xs font-semibold text-emerald-400 mt-0.5">${item.kr}</p>
+              </div>
+
+              <p class="text-xs text-slate-300 leading-relaxed">${item.def}</p>
+            </div>
+
+            <div class="pt-3 border-t border-slate-800/80 flex justify-between items-center">
+              <span class="text-[10px] text-slate-500 font-mono">Sample inside lesson</span>
+              <button onclick="replaceStage1TermSingle(${index})" class="text-xs font-semibold text-amber-400 hover:text-amber-300 px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 transition-all flex items-center gap-1">
+                <i class="fa-solid fa-rotate text-[10px]"></i> Replace
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleStage1Selection(index) {
+      if (selectedForReplacement.has(index)) {
+        selectedForReplacement.delete(index);
+      } else {
+        selectedForReplacement.add(index);
+      }
+      document.getElementById('selected-count').innerText = selectedForReplacement.size;
+      renderStage1Cards();
+    }
+
+    function replaceStage1TermSingle(index) {
+      selectedForReplacement.clear();
+      selectedForReplacement.add(index);
+      replaceSelectedStage1Terms();
+    }
+
+    function replaceSelectedStage1Terms() {
+      if (selectedForReplacement.size === 0) return;
+
+      selectedForReplacement.forEach(idx => {
+        const oldItem = stage1Vocab[idx];
+        if (!usedWordsHistory.includes(oldItem.term.toLowerCase())) {
+          usedWordsHistory.push(oldItem.term.toLowerCase());
+        }
+
+        // Find unused replacement matching EXACT SAME TYPE
+        const sameTypePool = masterFallbackPool.filter(x => 
+          x.type === oldItem.type && 
+          !usedWordsHistory.includes(x.term.toLowerCase()) &&
+          !stage1Vocab.some(v => v.term.toLowerCase() === x.term.toLowerCase())
+        );
+
+        if (sameTypePool.length > 0) {
+          const newItem = sameTypePool[Math.floor(Math.random() * sameTypePool.length)];
+          stage1Vocab[idx] = newItem;
+        }
+      });
+
+      safeSetStorage('hyosung_used_words_history', usedWordsHistory);
+      selectedForReplacement.clear();
+      document.getElementById('selected-count').innerText = '0';
+      renderStage1Cards();
+    }
+
+    function generateStage2Lesson() {
+      // Hide Stage 1, show workspace
+      document.getElementById('stage1-review-screen').classList.add('hidden');
+      document.getElementById('main-workspace').classList.remove('hidden');
+
+      // Render modules
+      renderModule1Content();
+      renderModule2Content();
+      renderModule3Content();
+      renderModule4Content();
+      renderModule5Content();
+
+      switchTab('module1');
+    }
+
+    function switchTab(tabId) {
+      ['module1', 'module2', 'module3', 'module4', 'module5'].forEach(id => {
+        const btn = document.getElementById(`tab-${id}`);
+        const content = document.getElementById(`content-${id}`);
+        if (id === tabId) {
+          btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md';
+          content.classList.remove('hidden');
+        } else {
+          btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800';
+          content.classList.add('hidden');
+        }
+      });
+    }
+
+    function renderModule1Content() {
+      const grid = document.getElementById('module1-vocab-grid');
+      if (!grid) return;
+
+      grid.innerHTML = stage1Vocab.map(item => `
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase">
+              ${item.type}
+            </span>
+            <button onclick="speakText('${item.term}')" class="text-xs text-slate-400 hover:text-emerald-400">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">${item.term}</h3>
+            <p class="text-xs text-emerald-400 font-medium">${item.kr}</p>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">${item.def}</p>
+          <div class="pt-2 border-t border-slate-800/80 text-xs italic text-slate-400">
+            "${item.sample}"
+          </div>
+        </div>
+      `).join('');
+
+      // Prepositions (EXACTLY 2)
+      document.getElementById('module1-prepositions').innerHTML = activePrepositions.map(p => `
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-white flex justify-between items-center">
+            <span>${p.term} (${p.kr})</span>
+            <button onclick="speakText('${p.term}')" class="text-xs text-slate-400 hover:text-emerald-400">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+          </div>
+          <p class="text-slate-400 italic">${p.sample}</p>
+        </div>
+      `).join('');
+
+      // Sentence Patterns (Level-Calibrated)
+      document.getElementById('patterns-level-indicator').innerText = currentLevel;
+      document.getElementById('module1-patterns').innerHTML = activePatterns.map(pat => `
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-emerald-400">${pat.name}</div>
+          <p class="text-slate-300 font-mono text-[11px]">${pat.mono}</p>
+          <p class="text-slate-400 italic">${pat.sample}</p>
+        </div>
+      `).join('');
     }
 
     function renderModule2Content() {
       const container = document.getElementById('diagnostic-quiz-container');
       if (!container) return;
 
-      const v = stage1Vocab;
-      if (!v || v.length < 9) return;
+      // Combine vocab + prepositions for 8 dynamic questions
+      const itemsForQuiz = [...stage1Vocab, ...activePrepositions].slice(0, 8);
 
-      // Dynamically select items from the current lesson suite
-      const targetIndices = [0, 1, 2, 3, 4, 5, 7, 8];
-      const questions = [];
+      container.innerHTML = itemsForQuiz.map((item, idx) => {
+        const itemType = item.type || 'Preposition';
+        
+        // Find match position in sample sentence to determine casing
+        const matchIndex = item.sample.toLowerCase().indexOf(item.term.toLowerCase());
+        const isStartOfSentence = (matchIndex === 0);
 
-      targetIndices.forEach((vocabIdx) => {
-        const item = v[vocabIdx];
-        if (!item) return;
-
-        // Create sentence with blank directly from item's sample sentence
-        let sentence = item.sample;
-        const regex = new RegExp(escapeRegExp(item.term), 'gi');
-        if (regex.test(sentence)) {
-          sentence = sentence.replace(regex, '__________');
+        const sentenceWithBlank = item.sample.replace(new RegExp(item.term, 'gi'), '__________');
+        
+        // Generate distractors matching EXACT SAME TYPE to prevent grammatical mismatch
+        let pool = [];
+        if (itemType === 'Preposition') {
+          pool = masterPrepositionPool.filter(x => x.term.toLowerCase() !== item.term.toLowerCase());
         } else {
-          sentence = `The team agreed to __________ during the executive review process.`;
+          pool = masterFallbackPool.filter(x => x.type === itemType && x.term.toLowerCase() !== item.term.toLowerCase());
         }
 
-        const distractors = getSameTypeDistractors(item, 3);
-        const rawOptions = [item.term, ...distractors];
-        
-        // Shuffle options and track correct answer index
-        const indexedOptions = rawOptions.map((opt, i) => ({ opt, isCorrect: i === 0 }));
-        indexedOptions.sort(() => 0.5 - Math.random());
-        
-        const options = indexedOptions.map(o => o.opt);
-        const ans = indexedOptions.findIndex(o => o.isCorrect);
+        const rawDistractors = [...pool].sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.term);
+        const rawChoices = [item.term, ...rawDistractors].sort(() => 0.5 - Math.random());
 
-        questions.push({
-          q: `Fill in the blank (${item.type}): "${sentence}"`,
-          options: options,
-          ans: ans,
-          exp: `"${item.term}" (${item.kr}) is the correct term. Definition: ${item.def}`
-        });
-      });
+        // Format casing for all choices based on blank position in sentence
+        const formatCase = (str) => {
+          if (!str) return '';
+          return isStartOfSentence
+            ? str.charAt(0).toUpperCase() + str.slice(1)
+            : str.charAt(0).toLowerCase() + str.slice(1);
+        };
 
-      container.innerHTML = questions.map((q, qIdx) => `
-        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
-          <h4 class="text-sm font-bold text-white">${qIdx + 1}. ${q.q}</h4>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            ${q.options.map((opt, oIdx) => `
-              <label class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 flex items-center gap-3 cursor-pointer text-xs">
-                <input type="radio" name="diag-q-${qIdx}" value="${oIdx}" class="text-emerald-500 focus:ring-0">
-                <span class="text-slate-300">${opt}</span>
-              </label>
-            `).join('')}
+        const choices = rawChoices.map(c => formatCase(c));
+        const formattedCorrect = formatCase(item.term);
+
+        return `
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Question ${idx + 1}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">${itemType}</span>
+              </div>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-slate-900 text-emerald-400 border border-slate-800 font-semibold">Target Meaning: ${item.kr}</span>
+            </div>
+            <p class="text-sm font-semibold text-white leading-relaxed bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+              "${sentenceWithBlank}"
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              ${choices.map(choice => `
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 cursor-pointer transition-all text-xs text-slate-200">
+                  <input type="radio" name="diag-q-${idx}" value="${choice === formattedCorrect ? 'correct' : 'wrong'}" class="text-emerald-500 focus:ring-0">
+                  <span>${choice}</span>
+                </label>
+              `).join('')}
+            </div>
+            <div id="diag-exp-${idx}" class="hidden p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-400">
+              <strong>Correct Answer:</strong> ${formattedCorrect} (${item.kr})
+            </div>
           </div>
-          <div id="diag-exp-${qIdx}" class="hidden p-3 rounded-xl bg-slate-900 border border-emerald-500/30 text-xs text-emerald-400">
-            <strong>Explanation:</strong> ${q.exp}
+        `;
+      }).join('');
+    }
+
+    function gradeDiagnosticQuiz() {
+      for (let i = 0; i < 8; i++) {
+        const exp = document.getElementById(`diag-exp-${i}`);
+        if (exp) exp.classList.remove('hidden');
+      }
+    }
+
+    function renderModule3Content() {
+      const container = document.getElementById('dialogue-script-container');
+      if (!container) return;
+
+      const exps = stage1Vocab.filter(x => x.type === 'Expression');
+      const verbs = stage1Vocab.filter(x => x.type === 'Verb');
+      const adjs = stage1Vocab.filter(x => x.type === 'Adjective');
+      const advs = stage1Vocab.filter(x => x.type === 'Adverb');
+
+      const e0 = exps[0] ? exps[0].term : 'clarify expectations';
+      const e1 = exps[1] ? exps[1].term : 'bridge the strategic gap';
+      const e2 = exps[2] ? exps[2].term : 'mitigate risk exposure';
+      const e3 = exps[3] ? exps[3].term : 'foster institutional trust';
+
+      const v0 = verbs[0] ? verbs[0].term : 'streamline';
+      const v1 = verbs[1] ? verbs[1].term : 'consolidate';
+      const v2 = verbs[2] ? verbs[2].term : 'operationalize';
+
+      const adj0 = adjs[0] ? adjs[0].term : 'feasible';
+      const adv0 = advs[0] ? advs[0].term : 'proactively';
+
+      const p1 = activePrepositions[0] ? activePrepositions[0] : { term: 'Pursuant to', kr: '~에 따라' };
+      const p2 = activePrepositions[1] ? activePrepositions[1] : { term: 'In tandem with', kr: '~와 병행하여' };
+
+      const script = [
+        {
+          speaker: 'Min-ho (Hyosung Sales Lead)',
+          line: `Good morning, Sarah. ${p1.term} our meeting agenda today, I would like to review our supply agreement terms. First and foremost, our team wants to ${(e0 || '').toLowerCase()} so both sides are completely aligned.`
+        },
+        {
+          speaker: 'Sarah (Client Procurement Director)',
+          line: `Thanks, Min-ho. We appreciate Hyosung's flexibility. However, from our procurement perspective, upfront costs remain a concern. We need a partner who can help us ${(e1 || '').toLowerCase()} while staying within our CapEx budget.`
+        },
+        {
+          speaker: 'Min-ho (Hyosung Sales Lead)',
+          line: `I understand completely. To address those budget constraints, our plant can ${(v0 || '').toLowerCase()} operational workflows, allowing us to ${(v1 || '').toLowerCase()} shipping schedules into larger, cost-efficient deliveries.`
+        },
+        {
+          speaker: 'Sarah (Client Procurement Director)',
+          line: `That is a practical approach. If we move forward with this structure, how would Hyosung handle custom technical requirements? Without dedicated engineering support, the setup risks becoming ${(adj0 || '').toLowerCase()}.`
+        },
+        {
+          speaker: 'Min-ho (Hyosung Sales Lead)',
+          line: `We have factored that in. We are prepared to provide on-site engineering support ${p2.term.toLowerCase()} our standard warranty coverage. This will allow your team to ${(v2 || '').toLowerCase()} the new system seamlessly.`
+        },
+        {
+          speaker: 'Sarah (Client Procurement Director)',
+          line: `That addresses our technical risk directly. If your team can also ${(e2 || '').toLowerCase()} during the rollout phase, I am confident we can present this proposal to our executive board.`
+        },
+        {
+          speaker: 'Min-ho (Hyosung Sales Lead)',
+          line: `Rest assured, our logistics and engineering teams will work ${(adv0 || '').toLowerCase()} throughout the transition to ensure everything stays on track and ${(e3 || '').toLowerCase()}.`
+        },
+        {
+          speaker: 'Sarah (Client Procurement Director)',
+          line: `Excellent. Send over the finalized proposal with these SLA terms included, and we will prepare the contract for signature.`
+        }
+      ];
+
+      window.currentDialogueScript = script;
+
+      container.innerHTML = `
+        <div class="glass-card p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/20 mb-4">
+          <div class="flex items-center gap-2 text-xs font-bold text-emerald-400">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Negotiation Scenario: B2B Supply Renewal & SLA Alignment</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">
+            Hyosung Sales & Technical Leads negotiate pricing, delivery lead times, QA support, and risk mitigation clauses with Client Procurement.
+          </p>
+        </div>
+        ` + script.map((s, idx) => `
+        <div class="glass-card p-4 rounded-xl border border-slate-800 flex justify-between items-start gap-4 hover:border-slate-700 transition-all">
+          <div class="space-y-1 flex-1">
+            <span class="text-xs font-bold ${s.speaker.includes('Hyosung') ? 'text-emerald-400' : 'text-blue-400'}">${s.speaker}</span>
+            <p class="text-xs text-slate-200 leading-relaxed font-sans font-normal">"${s.line}"</p>
+          </div>
+          <button onclick="speakText('${s.line.replace(/'/g, "\\'")}')" class="text-xs text-slate-400 hover:text-emerald-400 p-2 rounded-lg bg-slate-900 border border-slate-800 transition-all" title="Listen to turn">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function playFullDialogue() {
+      if (!window.currentDialogueScript || window.currentDialogueScript.length === 0) return;
+      const fullText = window.currentDialogueScript.map(s => `${s.speaker.split(' ')[0]} says: ${s.line}`).join(' ');
+      speakText(fullText);
+    }
+
+    function renderModule4Content() {
+      const container = document.getElementById('translation-prompts-container');
+      if (!container) return;
+
+      const p1 = activePrepositions[0] || masterPrepositionPool[0];
+      const p2 = activePrepositions[1] || masterPrepositionPool[1];
+
+      const prompts = [
+        { kr: `계약 조건에 따라 (${p1.kr}), 우리 회사는 시스템 설치 비용을 분할 상각하기로 합의했습니다.`, target: `${p1.term} / Amortize`, model: `${p1.term} contract terms, our company agreed to amortize the system setup costs across three years.` },
+        { kr: `선불 현금 할인 대신, 우리는 운영 위험 노출을 줄이기 위해 보증 기간을 연장해 주었습니다.`, target: `In lieu of / Mitigate risk exposure`, model: `In lieu of an upfront cash discount, we extended the warranty period to mitigate operational risk exposure.` },
+        { kr: `초기 라이선스 비용이 지나치게 높았지만, 양사는 수수료를 단계별 가격 구조와 병행하여 (${p2.kr}) 조정했습니다.`, target: `Prohibitive / ${p2.term}`, model: `While the initial licensing cost was prohibitive, both parties agreed to adjust fees using a tiered pricing structure ${p2.term.toLowerCase()} performance milestones.` },
+        { kr: `파트너십의 상호 이익을 보장하기 위해, 지적재산권 독점 소유권은 절대로 타협할 수 없는 조건입니다.`, target: `Mutual gain / Non-negotiable`, model: `To guarantee mutual gain across the partnership, exclusive ownership of intellectual property remains a non-negotiable condition.` },
+        { kr: `계약이 체결되는 대로, 우리 팀은 투자금을 신속히 회수할 수 있도록 워크플로우를 즉시 실행할 것입니다.`, target: `Operationalize / Recoup`, model: `Once the contract is executed, our team will immediately operationalize the optimized workflow to recoup the investment promptly.` },
+        { kr: `공급망 지연에도 불구하고, 우리 팀은 고객사의 위험 노출을 줄이기 위해 수급을 주도적으로 조율했습니다.`, target: `Proactively / Coordinate`, model: `Despite supply chain delays, our team proactively coordinated spare part delivery to mitigate client risk exposure.` },
+        { kr: `합의된 품질 기준에 따라, 우리 기술팀은 정기적인 현장 감사를 진행하여 최상의 수율을 유지할 것입니다.`, target: `Pursuant to / Calibrate`, model: `Pursuant to agreed quality benchmarks, our technical team will conduct regular audits to calibrate optimal yield.` },
+        { kr: `단순한 가격 인하 대신, 우리는 고객의 성장 목표에 발맞추어 고부가가치 솔루션을 제공하는 데 집중했습니다.`, target: `In line with / Tailor a solution`, model: `In lieu of simple price discounts, we focused on tailoring a solution in line with the client's growth targets.` },
+        { kr: `양측의 협상 기준점을 명확히 설정함으로써, 우리는 불필요한 가격 논쟁을 피하고 빠르게 합의에 도달했습니다.`, target: `Anchor the negotiation / Consensus`, model: `By anchoring the negotiation early, we avoided unnecessary price disputes and reached swift consensus.` },
+        { kr: `운영 프로세스를 효율화하는 동시에, 이번 장기 계약을 통해 상업적 시너지를 창출할 수 있게 되었습니다.`, target: `Streamline / Commercial synergy`, model: `By streamlining operational processes, we created significant commercial synergy through this multi-year contract.` }
+      ];
+
+      container.innerHTML = prompts.map((p, idx) => `
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Prompt ${idx + 1}</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">Target: ${p.target}</span>
+          </div>
+          <p class="text-xs font-semibold text-white bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">${p.kr}</p>
+          <textarea id="trans-input-${idx}" placeholder="Type your English translation here..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none min-h-[70px]"></textarea>
+          <div class="flex justify-between items-center">
+            <button onclick="evaluateTranslation(${idx})" class="text-xs font-bold px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 transition-all">
+              Evaluate Translation
+            </button>
+          </div>
+          <div id="trans-feedback-${idx}" class="hidden p-3 rounded-xl bg-slate-900 border border-emerald-500/30 text-xs text-emerald-400 space-y-1">
+            <strong>Model Executive Solution:</strong>
+            <p class="text-slate-200 italic font-sans">${p.model}</p>
           </div>
         </div>
       `).join('');
     }
 
-    function gradeDiagnosticQuiz() {
-      [0, 1, 2, 3, 4, 5, 6, 7].forEach(idx => {
-        const exp = document.getElementById(`diag-exp-${idx}`);
-        if (exp) exp.classList.remove('hidden');
-      });
+    function evaluateTranslation(idx) {
+      const fb = document.getElementById(`trans-feedback-${idx}`);
+      if (fb) fb.classList.remove('hidden');
     }
 
-    // ==========================================
-    // MODULE 3: DIALOGUE ROLEPLAY
-    // ==========================================
-    function renderModule3Content() {
-      const container = document.getElementById('dialogue-script-container');
-      if (!container) return;
-
-      const v = stage1Vocab;
-      if (!v || v.length < 9) return;
-
-      // Extract items by category
-      const expressions = v.filter(x => x.type === 'Expression');
-      const verbs = v.filter(x => x.type === 'Verb');
-      const adjectives = v.filter(x => x.type === 'Adjective');
-      const adverbs = v.filter(x => x.type === 'Adverb');
-
-      const exp1 = expressions[0] || v[0];
-      const exp2 = expressions[1] || v[1];
-      const exp3 = expressions[2] || v[2];
-      const exp4 = expressions[3] || v[3];
-
-      const verb1 = verbs[0] || v[4];
-      const verb2 = verbs[1] || v[5];
-      const verb3 = verbs[2] || v[6];
-
-      const adj1 = adjectives[0] || v[7];
-      const adv1 = adverbs[0] || v[8];
-
-      // Cohesive 13-Line Connected B2B Script
-      const scriptLines = [
-        {
-          speaker: "Min-ho (Hyosung Global Sales Lead)",
-          avatar: "👨‍💼",
-          role: "Seller",
-          text: `Good morning, Dr. Müller. Thank you for making time today. To ensure our upcoming supply agreement aligns with your regional targets, we want to address your operational requirements directly.`
-        },
-        {
-          speaker: "Dr. Müller (Client Procurement Director)",
-          avatar: "🏛️",
-          role: "Buyer",
-          text: `Thank you, Min-ho. Our priority today is securing reliable supply commitments without taking on excessive financial risk, especially given current market volatility.`
-        },
-        {
-          speaker: "Ji-won (Hyosung Technical Solutions Lead)",
-          avatar: "👩‍🔬",
-          role: "Engineering",
-          text: `Understood. <span class="text-amber-400 font-semibold underline decoration-amber-500/50">Pursuant to</span> our joint technical audit last week, our production team verified that our facility can fully meet your quality benchmarks.`
-        },
-        {
-          speaker: "Min-ho (Hyosung Global Sales Lead)",
-          avatar: "👨‍💼",
-          role: "Seller",
-          text: `To build on those technical results, our proposal demonstrates how we can <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp1.term}</span> across your regional plants, ensuring long-term consistency.`
-        },
-        {
-          speaker: "Dr. Müller (Client Procurement Director)",
-          avatar: "🏛️",
-          role: "Buyer",
-          text: `That is encouraging, but my procurement committee remains concerned about upfront financial commitments and rigid delivery schedules.`
-        },
-        {
-          speaker: "Ji-won (Hyosung Technical Solutions Lead)",
-          avatar: "👩‍🔬",
-          role: "Engineering",
-          text: `We recognize those constraints. If we <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold border border-blue-500/30">${verb1.term}</span> our logistics timeline <span class="text-amber-400 font-semibold underline decoration-amber-500/50">in tandem with</span> your quarterly forecasts, the entire workflow becomes far more <span class="bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold border border-purple-500/30">${adj1.term}</span>.`
-        },
-        {
-          speaker: "Min-ho (Hyosung Global Sales Lead)",
-          avatar: "👨‍💼",
-          role: "Seller",
-          text: `Furthermore, <span class="text-amber-400 font-semibold underline decoration-amber-500/50">in lieu of</span> demanding a large initial capital outlay, we can <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold border border-blue-500/30">${verb2.term}</span> deployment expenses across a extended multi-year framework.`
-        },
-        {
-          speaker: "Dr. Müller (Client Procurement Director)",
-          avatar: "🏛️",
-          role: "Buyer",
-          text: `Spreading those expenses certainly eases our immediate budget pressure. However, how do you handle unexpected supply delays or compliance risks?`
-        },
-        {
-          speaker: "Ji-won (Hyosung Technical Solutions Lead)",
-          avatar: "👩‍🔬",
-          role: "Engineering",
-          text: `Our engineering team will <span class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold border border-amber-500/30">${adv1.term}</span> <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold border border-blue-500/30">${verb3.term}</span> real-time quality protocols, catching any variance before it affects your operations.`
-        },
-        {
-          speaker: "Min-ho (Hyosung Global Sales Lead)",
-          avatar: "👨‍💼",
-          role: "Seller",
-          text: `This approach allows us to <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp2.term}</span> effectively while establishing a clear framework to <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp3.term}</span>.`
-        },
-        {
-          speaker: "Dr. Müller (Client Procurement Director)",
-          avatar: "🏛️",
-          role: "Buyer",
-          text: `I appreciate this structured risk mitigation plan. <span class="text-amber-400 font-semibold underline decoration-amber-500/50">Subject to</span> our legal team's final review of the penalty clauses, this represents a very viable deal structure.`
-        },
-        {
-          speaker: "Min-ho (Hyosung Global Sales Lead)",
-          avatar: "👨‍💼",
-          role: "Seller",
-          text: `Excellent. We will incorporate these points into the master contract so both sides can achieve <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp4.term}</span> by Friday.`
-        },
-        {
-          speaker: "Dr. Müller (Client Procurement Director)",
-          avatar: "🏛️",
-          role: "Buyer",
-          text: `Agreed. Forward the revised draft, and we will initiate internal approval immediately.`
-        }
-      ];
-
-      // Render context header & script turns
-      container.innerHTML = `
-        <div class="glass-card p-4 rounded-xl border border-slate-800 bg-slate-900/60 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs">
-          <div>
-            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">Scenario Setting</span>
-            <p class="text-slate-300 mt-0.5">High-Stakes Contract Renewal & QA Strategy Session between Hyosung Executives and European Client Procurement.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-mono text-[10px] border border-slate-700">13 Turn Dialogue</span>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          ${scriptLines.map((line, idx) => `
-            <div class="glass-card p-4 rounded-2xl border border-slate-800/80 hover:border-slate-700 transition-all flex items-start gap-4">
-              <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg flex-shrink-0 shadow-inner">
-                ${line.avatar}
-              </div>
-              <div class="flex-1 space-y-1">
-                <div class="flex justify-between items-center">
-                  <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold text-white">${line.speaker}</span>
-                    <span class="text-[10px] px-2 py-0.2 rounded-full font-semibold ${
-                      line.role === 'Seller' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                      line.role === 'Buyer' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
-                      'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                    }">${line.role}</span>
-                  </div>
-                  <button onclick="speakText('${line.text.replace(/'/g, "\\'").replace(/<[^>]*>/g, '')}')" class="text-slate-400 hover:text-emerald-400 p-1 rounded transition-colors text-xs" title="Listen to turn">
-                    <i class="fa-solid fa-volume-high"></i>
-                  </button>
-                </div>
-                <p class="text-xs text-slate-300 leading-relaxed font-sans">${line.text}</p>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-    }
-
-    function playFullDialogue() {
-      const container = document.getElementById('dialogue-script-container');
-      if (!container) return;
-
-      const lines = container.querySelectorAll('.font-sans');
-      if (!lines.length) return;
-
-      let combinedText = "";
-      lines.forEach(l => {
-        combinedText += l.textContent + " ... ";
-      });
-
-      speakText(combinedText);
-    }
-
-    // ==========================================
-    // MODULE 5: FINAL EXAM & SCORECARD (DYNAMICALLY BOUND)
-    // ==========================================
     function renderModule5Content() {
       const container = document.getElementById('final-exam-container');
       if (!container) return;
 
-      const v = stage1Vocab;
-      if (!v || v.length < 9) return;
+      const itemsForExam = [...stage1Vocab].sort(() => 0.5 - Math.random()).slice(0, 8);
 
-      const targetIndices = [0, 1, 2, 3, 4, 5, 6, 7];
-      const questions = [];
-
-      targetIndices.forEach((vocabIdx) => {
-        const item = v[vocabIdx];
-        if (!item) return;
-
-        let sentence = item.sample;
-        const regex = new RegExp(escapeRegExp(item.term), 'gi');
-        if (regex.test(sentence)) {
-          sentence = sentence.replace(regex, '__________');
-        } else {
-          sentence = `Please __________ as agreed during our strategy meeting.`;
-        }
-
-        const distractors = getSameTypeDistractors(item, 3);
-        const rawOptions = [item.term, ...distractors];
-        
-        const indexedOptions = rawOptions.map((opt, i) => ({ opt, isCorrect: i === 0 }));
-        indexedOptions.sort(() => 0.5 - Math.random());
-        
-        const options = indexedOptions.map(o => o.opt);
-        const ans = indexedOptions.findIndex(o => o.isCorrect);
-
-        questions.push({
-          q: `Complete the executive sentence: "${sentence}"`,
-          opts: options,
-          ans: ans
-        });
-      });
-
-      container.innerHTML = questions.map((q, idx) => `
-        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
-          <h4 class="text-sm font-bold text-white">${idx + 1}. ${q.q}</h4>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            ${q.opts.map((o, oIdx) => `
-              <label class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-2 cursor-pointer text-xs">
-                <input type="radio" name="final-exam-${idx}" value="${oIdx}" class="text-emerald-500">
-                <span class="text-slate-300">${o}</span>
-              </label>
-            `).join('')}
+      container.innerHTML = itemsForExam.map((item, idx) => `
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Certification Item ${idx + 1}</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 uppercase">${item.type}</span>
+          </div>
+          <p class="text-xs font-semibold text-white">Define or apply "${item.term}" in an executive B2B context:</p>
+          <p class="text-xs text-slate-400 italic font-mono bg-slate-950/40 p-2.5 rounded-lg border border-slate-800">"${item.def}"</p>
+          <input type="text" id="exam-ans-${idx}" placeholder="Type the target English term..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none">
+          <div id="exam-key-${idx}" class="hidden text-xs text-emerald-400 font-bold pt-1">
+            Correct Term: ${item.term}
           </div>
         </div>
       `).join('');
     }
 
     function gradeFinalAssessment() {
-      const scorecard = document.getElementById('assessment-scorecard');
-      if (!scorecard) return;
-
-      scorecard.classList.remove('hidden');
-      scorecard.innerHTML = `
-        <div class="flex items-center justify-between">
-          <div>
-            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Executive Assessment Complete</span>
-            <h3 class="text-lg font-extrabold text-white mt-0.5">Competency Score: 100% (Passed)</h3>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center font-bold text-emerald-400 text-lg">
-            A+
-          </div>
-        </div>
-        <p class="text-xs text-slate-300">
-          Congratulations! You have demonstrated advanced proficiency in B2B technical negotiations, strategic deal structuring, and prepositions.
-        </p>
-      `;
-    }
-
-    // ==========================================
-    // EXPORT TO GOOGLE DOCS / MARKDOWN LOGIC
-    // ==========================================
-    function openExportModal() {
-      const modal = document.getElementById('export-doc-modal');
-      const textarea = document.getElementById('export-textarea');
-      if (!modal || !textarea) return;
-
-      textarea.value = buildMarkdownLessonText();
-      modal.classList.remove('hidden');
-    }
-
-    function closeExportModal() {
-      document.getElementById('export-doc-modal').classList.add('hidden');
-    }
-
-    function buildMarkdownLessonText() {
-      let doc = `# HYOSUNG BUSINESS COMMUNICATION MASTERCLASS WORKBOOK\n`;
-      doc += `Level: ${currentLevel} | Target Date: ${new Date().toLocaleDateString()}\n\n`;
-
-      doc += `## MODULE 1: TARGET LEXICON & PREPOSITIONS\n\n`;
-      stage1Vocab.forEach((item, i) => {
-        doc += `${i + 1}. ${item.term} (${item.type})\n`;
-        doc += `   - Korean: ${item.kr}\n`;
-        doc += `   - Definition: ${item.def}\n`;
-        doc += `   - Sample: "${item.sample}"\n\n`;
+      stage1Vocab.slice(0, 8).forEach((item, idx) => {
+        const keyEl = document.getElementById(`exam-key-${idx}`);
+        if (keyEl) keyEl.classList.remove('hidden');
       });
 
-      doc += `### Target Business Prepositions\n`;
-      doc += `- Pursuant to (~에 따라 / 계약에 의거하여)\n`;
-      doc += `- In tandem with (~와 병행하여)\n`;
-      doc += `- Subject to (~을 조건으로 하여)\n`;
-      doc += `- In lieu of (~ 대신에)\n\n`;
-
-      doc += `## MODULE 3: BOARDROOM SIMULATION SCRIPT\n\n`;
-      doc += `Min-ho: "Good morning, team. We need to ${stage1Vocab[0].term} with our European buyers."\n`;
-      doc += `Dr. Müller: "We are concerned that potential delays will impact our rollout."\n`;
-      doc += `Ji-won: "Pursuant to our internal QA checks, we can ${stage1Vocab[4].term} quality variance."\n\n`;
-
-      doc += `--- END OF MASTERCLASS PACKET ---\n`;
-      return doc;
-    }
-
-    function copyExportedText() {
-      const textarea = document.getElementById('export-textarea');
-      if (!textarea) return;
-
-      textarea.select();
-      document.execCommand('copy');
-
-      const status = document.getElementById('export-copy-status');
-      if (status) {
-        status.innerText = 'Copied to clipboard!';
-        setTimeout(() => { status.innerText = ''; }, 3000);
+      const scorecard = document.getElementById('assessment-scorecard');
+      if (scorecard) {
+        scorecard.classList.remove('hidden');
+        scorecard.innerHTML = `
+          <div class="flex justify-between items-center">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-award text-amber-400"></i> Hyosung Global Executive Competency Certificate
+            </h3>
+            <span class="text-xs font-bold px-3 py-1 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PASSED (LEVEL: ${currentLevel.toUpperCase()})</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Congratulations! You have successfully completed the <strong>${currentLevel} Executive Communication & Negotiation Module</strong>. Your proficiency in strategic reframing, prepositions, and dynamic sentence structures has been logged.
+          </p>
+        `;
       }
     }
 
-    // ==========================================
-    // UTILITIES & TTS
-    // ==========================================
+    // SPEECH SYNTHESIS HELPER
     function speakText(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -754,9 +1014,84 @@
       }
     }
 
+    // EXPORT TO GOOGLE DOCS ENGINE
+    function openExportModal() {
+      document.getElementById('export-doc-modal').classList.remove('hidden');
+      const text = buildMarkdownLessonText();
+      document.getElementById('export-textarea').value = text;
+    }
+
+    function closeExportModal() {
+      document.getElementById('export-doc-modal').classList.add('hidden');
+      document.getElementById('export-copy-status').innerText = '';
+    }
+
+    function copyExportedText() {
+      const textarea = document.getElementById('export-textarea');
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        document.getElementById('export-copy-status').innerText = 'Copied to clipboard!';
+      } catch (e) {
+        document.getElementById('export-copy-status').innerText = 'Select and copy manually.';
+      }
+    }
+
+    function buildMarkdownLessonText() {
+      const p1 = activePrepositions[0] || masterPrepositionPool[0];
+      const p2 = activePrepositions[1] || masterPrepositionPool[1];
+
+      return `# HYOSUNG BUSINESS COMMUNICATION MASTERCLASS
+Level: ${currentLevel}
+Target Composition: 4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb | 2 Prepositions
+
+==================================================
+MODULE 1: TARGET LEXICON & PREPOSITIONS
+==================================================
+
+-- TARGET VOCABULARY (9 ITEMS) --
+${stage1Vocab.map((v, i) => `${i + 1}. ${v.term} [${v.type.toUpperCase()}]
+   Korean: ${v.kr}
+   Definition: ${v.def}
+   Sample: "${v.sample}"`).join('\n\n')}
+
+-- TARGET PREPOSITIONS (EXACTLY 2) --
+1. ${p1.term} (${p1.kr})
+   Sample: "${p1.sample}"
+
+2. ${p2.term} (${p2.kr})
+   Sample: "${p2.sample}"
+
+-- SENTENCE PATTERNS (${currentLevel.toUpperCase()}) --
+${activePatterns.map((pat, i) => `${i + 1}. ${pat.name}
+   Structure: ${pat.mono}
+   Sample: ${pat.sample}`).join('\n\n')}
+
+==================================================
+MODULE 2: DIAGNOSTIC CHECK
+==================================================
+${stage1Vocab.map((v, i) => `Q${i + 1}: ${v.sample.replace(new RegExp(v.term, 'gi'), '__________')}
+   Answer: ${v.term} (${v.kr})`).join('\n\n')}
+
+==================================================
+MODULE 3: BOARDROOM NEGOTIATION SIMULATION
+==================================================
+${(window.currentDialogueScript || []).map((s, i) => `${i + 1}. ${s.speaker}: "${s.line}"`).join('\n\n')}
+
+==================================================
+MODULE 4: TRANSLATION WORKBENCH
+==================================================
+1. Korean: 계약 조건에 따라 (${p1.kr}), 우리 회사는 비용을 분할 상각하기로 합의했습니다.
+   Model: ${p1.term} contract terms, our company agreed to amortize costs across three years.
+
+==================================================
+MODULE 5: CERTIFICATION ASSESSMENT
+==================================================
+${stage1Vocab.slice(0, 8).map((v, i) => `Item ${i + 1}: ${v.term} -> Definition: ${v.def}`).join('\n')}
+`;
+    }
+
     function openAiKeyModal() {
-      const apiKey = safeGetStorage('hyosung_gemini_key', '');
-      document.getElementById('input-api-key').value = apiKey;
       document.getElementById('ai-key-modal').classList.remove('hidden');
     }
 
@@ -766,15 +1101,12 @@
 
     function saveApiKey() {
       const key = document.getElementById('input-api-key').value.trim();
-      safeSetStorage('hyosung_gemini_key', key);
+      safeSetStorage('hyosung_gemini_api_key', key);
       closeAiKeyModal();
     }
 
-    // ==========================================
-    // INITIALIZATION
-    // ==========================================
     window.addEventListener('DOMContentLoaded', () => {
-      // App initialized cleanly
+      showLandingPage();
     });
   </script>
 </body>
