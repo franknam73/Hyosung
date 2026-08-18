@@ -182,16 +182,20 @@
         </div>
         <h2 id="stage1-title-text" class="text-xl font-extrabold text-white">Target Vocabulary & Expression Package</h2>
         <p class="text-xs text-slate-400 leading-relaxed">
-          Review the generated expressions and prepositions below. When satisfied, click "Build Full Interactive Lesson Package" to construct the diagnostic quiz, strategic simulation, translation workbench, and final certification exam around these terms.
+          Review the generated terms below. You can check any specific words you want to replace, or click "Replace Selected" / "Replace This Word" on an individual card. Replaced terms are automatically saved to exclusion memory to prevent repetition.
         </p>
 
         <div class="flex justify-between items-center pt-2 flex-wrap gap-3 border-t border-slate-800">
           <button onclick="showLevelSelector()" class="text-xs text-slate-400 hover:text-white font-bold transition-colors">
             &larr; Choose Different Level
           </button>
-          <div class="flex gap-2">
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="replaceSelectedStage1Terms()" id="btn-replace-selected" class="bg-amber-600/30 hover:bg-amber-600/50 text-amber-300 text-xs font-bold px-4 py-2 rounded-xl transition-all border border-amber-500/40 hidden flex items-center gap-1.5">
+              <span>🔄 Replace Selected</span>
+              <span id="selected-count-badge" class="bg-amber-950 text-amber-300 font-mono text-[10px] px-2 py-0.5 rounded-full border border-amber-700/50">0</span>
+            </button>
             <button onclick="regenerateStage1Vocab()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 rounded-xl transition-all border border-slate-700">
-              🔄 Re-Roll Fresh Words
+              🔄 Re-Roll All 10 Words
             </button>
             <button onclick="proceedToStage2Build()" id="btn-proceed-stage2" class="bg-gradient-to-r from-emerald-500 via-teal-600 to-blue-600 hover:from-emerald-400 hover:to-blue-500 text-white font-bold text-xs px-6 py-2 rounded-xl transition-all shadow-lg shadow-emerald-950 border border-emerald-400/30">
               🚀 Build Complete Lesson Suite &rarr;
@@ -201,7 +205,12 @@
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">10 Target Vocabulary & Expressions</h3>
+        <div class="flex justify-between items-center flex-wrap gap-2">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">10 Target Vocabulary & Expressions (Select items to swap)</h3>
+          <button onclick="toggleSelectAllStage1()" class="text-[11px] text-slate-400 hover:text-white font-mono underline transition-colors">
+            Select All / Deselect All
+          </button>
+        </div>
         <div id="stage1-vocab-preview-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Populated by JS -->
         </div>
@@ -437,7 +446,8 @@
       trackerScores: { prep: 100, colloc: 100, art: 100, tense: 100 },
       finalAnswers: {},
       stage1Ready: false,
-      stage2Ready: false
+      stage2Ready: false,
+      selectedStage1Indices: new Set()
     };
 
     function getUsedWordsHistory() {
@@ -636,17 +646,207 @@ Exclusion List: ${JSON.stringify(usedHistoryList)}`;
     function renderStage1Preview() {
       const grid = document.getElementById('stage1-vocab-preview-grid');
       if (!grid) return;
-      grid.innerHTML = window.appState.vocabData.map((v, i) => `
-        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-2 shadow-md border-t-2 border-t-blue-500">
-          <div class="flex justify-between items-start">
-            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-950 px-2 py-0.5 rounded border border-blue-800/40">TERM ${i < 9 ? '0' + (i+1) : (i+1)}</span>
-            <span class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</span>
+
+      if (!window.appState.selectedStage1Indices) {
+        window.appState.selectedStage1Indices = new Set();
+      }
+
+      grid.innerHTML = window.appState.vocabData.map((v, i) => {
+        const isSelected = window.appState.selectedStage1Indices.has(i);
+        return `
+          <div class="bg-slate-900 border ${isSelected ? 'border-amber-500 bg-amber-950/10 ring-1 ring-amber-500/50' : 'border-slate-800'} p-5 rounded-2xl space-y-2 shadow-md border-t-2 border-t-blue-500 relative transition-all">
+            <div class="flex justify-between items-start gap-2">
+              <label class="flex items-center gap-2 cursor-pointer text-[11px] font-mono text-slate-300">
+                <input type="checkbox" onchange="toggleStage1Selection(${i})" ${isSelected ? 'checked' : ''} class="rounded border-slate-700 text-amber-500 focus:ring-amber-500 bg-slate-950 w-4 h-4">
+                <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-950 px-2 py-0.5 rounded border border-blue-800/40">TERM ${i < 9 ? '0' + (i+1) : (i+1)}</span>
+              </label>
+              
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</span>
+                <button onclick="replaceStage1TermSingle(${i})" class="text-[10px] bg-slate-800 hover:bg-amber-900/60 hover:text-amber-300 text-slate-300 px-2 py-1 rounded border border-slate-700 hover:border-amber-500/50 transition-all shrink-0" title="Excludes this word & replaces it">
+                  🔄 Replace
+                </button>
+              </div>
+            </div>
+            
+            <h4 class="text-base font-extrabold text-white">${v.term}</h4>
+            <p class="text-xs text-slate-300">${v.def}</p>
+            <p class="text-[11px] text-slate-400 italic bg-slate-950 p-2.5 rounded-xl border border-slate-800">"${v.sample}"</p>
           </div>
-          <h4 class="text-base font-extrabold text-white">${v.term}</h4>
-          <p class="text-xs text-slate-300">${v.def}</p>
-          <p class="text-[11px] text-slate-400 italic bg-slate-950 p-2.5 rounded-xl border border-slate-800">"${v.sample}"</p>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+
+      updateReplaceSelectedButtonUI();
+    }
+
+    function toggleStage1Selection(index) {
+      if (!window.appState.selectedStage1Indices) {
+        window.appState.selectedStage1Indices = new Set();
+      }
+      if (window.appState.selectedStage1Indices.has(index)) {
+        window.appState.selectedStage1Indices.delete(index);
+      } else {
+        window.appState.selectedStage1Indices.add(index);
+      }
+      renderStage1Preview();
+    }
+
+    function toggleSelectAllStage1() {
+      if (!window.appState.selectedStage1Indices) {
+        window.appState.selectedStage1Indices = new Set();
+      }
+      if (window.appState.selectedStage1Indices.size === window.appState.vocabData.length) {
+        window.appState.selectedStage1Indices.clear();
+      } else {
+        window.appState.vocabData.forEach((_, i) => window.appState.selectedStage1Indices.add(i));
+      }
+      renderStage1Preview();
+    }
+
+    function updateReplaceSelectedButtonUI() {
+      const btn = document.getElementById('btn-replace-selected');
+      const badge = document.getElementById('selected-count-badge');
+      const count = window.appState.selectedStage1Indices ? window.appState.selectedStage1Indices.size : 0;
+      if (btn) {
+        if (count > 0) {
+          btn.classList.remove('hidden');
+        } else {
+          btn.classList.add('hidden');
+        }
+      }
+      if (badge) badge.innerText = count;
+    }
+
+    function replaceStage1TermSingle(index) {
+      replaceSelectedStage1Terms([index]);
+    }
+
+    async function replaceSelectedStage1Terms(explicitIndices = null) {
+      const targetIndices = explicitIndices || Array.from(window.appState.selectedStage1Indices || []);
+      if (!targetIndices.length) return;
+
+      const level = window.appState.level;
+      const topic = window.appState.currentTopic;
+
+      // 1. Collect terms being replaced & log them into exclusion memory immediately
+      const wordsToExclude = targetIndices.map(i => window.appState.vocabData[i]?.term).filter(Boolean);
+      saveWordsToHistory(wordsToExclude);
+
+      // Show indicator
+      const grid = document.getElementById('stage1-vocab-preview-grid');
+      if (grid) {
+        grid.style.opacity = '0.6';
+      }
+
+      const count = targetIndices.length;
+      const apiKey = getApiKey();
+
+      if (apiKey) {
+        try {
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+          const usedHistoryList = getUsedWordsHistory();
+
+          const promptSystem = `Act as an expert Corporate English Curriculum Director for Hyosung Group.
+Generate EXACTLY ${count} NEW target vocabulary terms for Level: "${level}", Topic: "${topic}".
+STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringify(usedHistoryList)}`;
+
+          const userQuery = `Return ONLY JSON array matching:
+[
+  ${Array(count).fill(`{ "term": "Phrase", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }`).join(',\n')}
+]`;
+
+          const payload = {
+            contents: [{ parts: [{ text: userQuery }] }],
+            systemInstruction: { parts: [{ text: promptSystem }] },
+            generationConfig: { responseMimeType: "application/json" }
+          };
+
+          const response = await fetchWithBackoff(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (response && response.ok) {
+            const result = await response.json();
+            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+              const newTerms = JSON.parse(result.candidates[0].content.parts[0].text);
+              if (Array.isArray(newTerms) && newTerms.length === count) {
+                targetIndices.forEach((vocabIdx, arrayIdx) => {
+                  window.appState.vocabData[vocabIdx] = newTerms[arrayIdx];
+                });
+                if (window.appState.selectedStage1Indices) window.appState.selectedStage1Indices.clear();
+                if (grid) grid.style.opacity = '1';
+                renderStage1Preview();
+                return;
+              }
+            }
+          }
+        } catch (err) {
+          console.warn("API term replacement failed, utilizing level fallback pool...", err);
+        }
+      }
+
+      // Offline / Fallback Replacement Engine
+      const fallbackPools = {
+        "Beginner": [
+          { term: "Clarify specifications", kr: "사양을 명확히 하다", def: "Explain technical or order details clearly.", sample: "Please clarify specifications before placing the factory order.", alt: "Explain", altNuance: "Clarify focuses on eliminating confusion." },
+          { term: "Verify dimensions", kr: "치수를 검증하다", def: "Check physical measurements against design plans.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
+          { term: "Arrange a call", kr: "통화를 주선하다", def: "Set up a phone or video discussion.", sample: "I will arrange a call with our technical lead tomorrow.", alt: "Schedule", altNuance: "Arrange includes setting up contact logistics." },
+          { term: "Process an order", kr: "주문을 처리하다", def: "Execute administrative steps to fulfill a request.", sample: "Our logistics team will process the order immediately.", alt: "Handle", altNuance: "Process follows formal corporate procedures." },
+          { term: "Review feedback", kr: "피드백을 검토하다", def: "Examine client remarks to improve results.", sample: "We will review client feedback during our weekly meeting.", alt: "Read", altNuance: "Review implies systematic analysis." }
+        ],
+        "Intermediate": [
+          { term: "Reconcile differences", kr: "견해차를 조정하다", def: "Resolve conflicting viewpoints between teams.", sample: "We met to reconcile differences regarding delivery schedules.", alt: "Settle", altNuance: "Reconcile stresses finding common ground." },
+          { term: "Alleviate concerns", kr: "우려를 완화하다", def: "Reduce anxiety or worry regarding a project.", sample: "Providing weekly status reports helped alleviate client concerns.", alt: "Ease", altNuance: "Alleviate is standard corporate phrasing." },
+          { term: "Streamline operations", kr: "운영을 효율화하다", def: "Simplify processes to eliminate inefficiency.", sample: "Automating inventory tracking will streamline plant operations.", alt: "Simplify", altNuance: "Streamline focuses on speed and flow." },
+          { term: "Mitigate risks", kr: "위험을 줄이다", def: "Lessen potential damage or loss.", sample: "Dual-sourcing materials helps mitigate supply chain risks.", alt: "Reduce", altNuance: "Mitigate is risk-management terminology." },
+          { term: "Leverage advantages", kr: "이점을 활용하다", def: "Use competitive strengths effectively.", sample: "We must leverage our global distribution network.", alt: "Use", altNuance: "Leverage implies maximizing strategic value." }
+        ],
+        "Advanced": [
+          { term: "Unilateral condition", kr: "일방적 조건", def: "A term imposed by one party without mutual debate.", sample: "We rejected the buyer's unilateral condition on price caps.", alt: "One-sided rule", altNuance: "Unilateral is legal/contractual phrasing." },
+          { term: "Prohibitive expenses", kr: "엄두도 못 낼 비용", def: "Costs so high that they prevent execution.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
+          { term: "Non-negotiable mandate", kr: "타협 불가한 지침", def: "An unalterable requirement set by leadership.", sample: "Zero-defect quality remains a non-negotiable mandate.", alt: "Strict rule", altNuance: "Mandate highlights corporate governance authority." },
+          { term: "Preempt delays", kr: "지연을 선제적으로 방지하다", def: "Take early action to prevent future schedule bottlenecks.", sample: "Pre-clearing customs documents helps preempt shipping delays.", alt: "Prevent", altNuance: "Preempt emphasizes strategic proactive action." },
+          { term: "Cultivate alignment", kr: "전략적 조율을 도모하다", def: "Nurture shared goals across international divisions.", sample: "Regional directors met to cultivate alignment on pricing.", alt: "Agree", altNuance: "Cultivate implies ongoing relationship building." }
+        ],
+        "Professional": [
+          { term: "Fiduciary responsibility", kr: "선관주의 의무", def: "A legal obligation to act in the company's best interest.", sample: "The board fulfilled its fiduciary responsibility by auditing expenditure.", alt: "Duty", altNuance: "Fiduciary is official corporate law terminology." },
+          { term: "Institutional alignment", kr: "기관적 얼라인먼트", def: "Harmonizing goals across disparate enterprise divisions.", sample: "Cross-border mergers require deep institutional alignment.", alt: "Agreement", altNuance: "Institutional alignment refers to macro organization." },
+          { term: "Strategic hedging posture", kr: "전략적 헤징 태세", def: "Positioning assets to protect against macro volatility.", sample: "Maintaining multi-currency reserves reflects our strategic hedging posture.", alt: "Safety plan", altNuance: "Hedging posture is C-suite financial jargon." },
+          { term: "Value creation leverage", kr: "가치 창출 레버리지", def: "Strategic assets that multiply commercial return.", sample: "Proprietary green technology gives us immense value creation leverage.", alt: "Advantage", altNuance: "Focuses on multiplier effects on capital." }
+        ]
+      };
+
+      const pool = fallbackPools[level] || fallbackPools["Advanced"];
+      const usedHistory = getUsedWordsHistory();
+      const currentTermsInVocab = window.appState.vocabData.map(v => v.term.toLowerCase());
+
+      const validPool = pool.filter(item => 
+        !usedHistory.includes(item.term.toLowerCase()) && 
+        !currentTermsInVocab.includes(item.term.toLowerCase())
+      );
+
+      targetIndices.forEach((vocabIdx, arrayIdx) => {
+        if (validPool[arrayIdx]) {
+          window.appState.vocabData[vocabIdx] = validPool[arrayIdx];
+        } else {
+          // Generate a dynamic placeholder term if the fallback pool runs dry
+          const randId = Math.floor(Math.random() * 900) + 100;
+          window.appState.vocabData[vocabIdx] = {
+            term: `Optimize Framework #${randId}`,
+            kr: "프레임워크 최적화",
+            def: "Refine corporate operational workflows for maximum efficiency.",
+            sample: "We must optimize our operational framework before expanding internationally.",
+            alt: "Improve",
+            altNuance: "Optimize means achieving peak efficiency."
+          };
+        }
+      });
+
+      if (window.appState.selectedStage1Indices) window.appState.selectedStage1Indices.clear();
+      if (grid) grid.style.opacity = '1';
+      renderStage1Preview();
     }
 
     function regenerateStage1Vocab() {
