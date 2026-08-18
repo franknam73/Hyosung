@@ -828,24 +828,55 @@
       const container = document.getElementById('diagnostic-quiz-container');
       if (!container) return;
 
+      const v = stage1Vocab;
       const questions = [
         {
-          q: `Which phrase best completes: "Our engineering team met with procurement to __________ regarding delivery timelines for the Changwon plant"?`,
-          options: [stage1Vocab[0].term, "unilateral mandate", "prohibitive fee", "liquidated damages"],
+          q: `Which term best completes: "Our leadership team met with regional representatives to __________ regarding contract terms"?`,
+          options: [v[0] ? v[0].term : "Reconcile differences", "unilateral mandate", "prohibitive fee", "liquidated damages"],
           ans: 0,
-          exp: `${stage1Vocab[0].term} means to resolve conflicting viewpoints or align on schedules.`
+          exp: `${v[0] ? v[0].term : "This expression"} fits best as it addresses the need to align perspectives and resolve conflicting points.`
         },
         {
-          q: `Which action verb fits: "To __________ potential supply chain disputes, we activated dual-sourcing protocols early"?`,
-          options: ["amortize", stage1Vocab[4].term, "solicit", "subsidize"],
+          q: `Which phrase best fits: "Weekly status reports helped __________ regarding project milestone deadlines"?`,
+          options: ["amortize costs", v[1] ? v[1].term : "Alleviate concerns", "scope creep", "at a discount"],
           ans: 1,
-          exp: `${stage1Vocab[4].term} means to prevent or preempt problems proactively.`
+          exp: `${v[1] ? v[1].term : "This expression"} means reducing anxiety or worry regarding project risks.`
         },
         {
-          q: `Choose the correct preposition: "All factory testing results were approved __________ contract specifications."`,
+          q: `Which action verb fits best: "To __________ potential delivery delays, the factory activated backup lines early"?`,
+          options: ["solicit", "subsidize", v[4] ? v[4].term : "Preempt", "disburse"],
+          ans: 2,
+          exp: `${v[4] ? v[4].term : "This verb"} refers to taking proactive action to prevent an issue before it occurs.`
+        },
+        {
+          q: `Choose the correct business preposition: "All factory quality testing results were approved __________ contract specifications."`,
           options: ["in lieu of", "pursuant to", "subject to", "at a premium"],
           ans: 1,
           exp: `"Pursuant to" means in accordance or compliance with contractual terms.`
+        },
+        {
+          q: `Select the term that fits: "Automating inventory tracking will help __________ across all global logistics hubs."`,
+          options: [v[2] ? v[2].term : "Streamline operations", "unilateral condition", "ballpark figure", "trade barrier"],
+          ans: 0,
+          exp: `${v[2] ? v[2].term : "This term"} emphasizes optimizing processes to eliminate inefficiency.`
+        },
+        {
+          q: `Which descriptor accurately fits: "Due to high safety standards, adhering to zero-defect protocols remains __________."`,
+          options: ["prohibitive", "inadvertent", v[7] ? v[7].term : "Non-negotiable", "subsidized"],
+          ans: 2,
+          exp: `${v[7] ? v[7].term : "This term"} describes mandatory requirements that cannot be compromised.`
+        },
+        {
+          q: `Choose the correct prepositional phrase: "We offered extended warranty coverage __________ an upfront price reduction."`,
+          options: ["pursuant to", "in lieu of", "subject to", "in tandem with"],
+          ans: 1,
+          exp: `"In lieu of" means in place of or as a substitute for something else.`
+        },
+        {
+          q: `Which adverb best completes: "Our engineering division __________ updated the firmware before dispatching the equipment"?`,
+          options: ["unilaterally", "prohibitively", v[8] ? v[8].term : "Proactively", "inadvertently"],
+          ans: 2,
+          exp: `${v[8] ? v[8].term : "This adverb"} highlights taking initiative in advance rather than reacting later.`
         }
       ];
 
@@ -868,7 +899,7 @@
     }
 
     function gradeDiagnosticQuiz() {
-      [0, 1, 2].forEach(idx => {
+      [0, 1, 2, 3, 4, 5, 6, 7].forEach(idx => {
         const exp = document.getElementById(`diag-exp-${idx}`);
         if (exp) exp.classList.remove('hidden');
       });
@@ -919,6 +950,17 @@
       const container = document.getElementById('translation-prompts-container');
       if (!container) return;
 
+      const v = stage1Vocab;
+      const term0 = v[0] ? v[0].term : 'Reconcile differences';
+      const term1 = v[1] ? v[1].term : 'Alleviate concerns';
+      const term2 = v[2] ? v[2].term : 'Streamline operations';
+      const term3 = v[3] ? v[3].term : 'Mitigate risks';
+      const term4 = v[4] ? v[4].term : 'Clarify';
+      const term5 = v[5] ? v[5].term : 'Verify';
+      const term6 = v[6] ? v[6].term : 'Coordinate';
+      const term7 = v[7] ? v[7].term : 'Accurate';
+      const term8 = v[8] ? v[8].term : 'Promptly';
+
       const prompts = [
         {
           kr: "규제 당국의 최종 승인을 받는 조건으로, 우리 회사는 계약에 의거하여 인프라 구축을 진행하기로 합의했습니다.",
@@ -927,8 +969,48 @@
         },
         {
           kr: "우리는 새로운 생산 공정을 효율화함으로써 배송 기간을 단축하고 고객의 우려를 완화했습니다.",
-          target: `${stage1Vocab[2] ? stage1Vocab[2].term : 'Streamline'} / ${stage1Vocab[1] ? stage1Vocab[1].term : 'Alleviate concerns'}`,
-          model: `By streamlining our new production process, we reduced delivery lead times and alleviated client concerns.`
+          target: `${term2} / ${term1}`,
+          model: `By focusing on how to ${term2.toLowerCase()}, we reduced delivery lead times and managed to ${term1.toLowerCase()}.`
+        },
+        {
+          kr: "품질 보증 체크를 실시하여 출하 전 발생할 수 있는 잠재적 위험을 줄였습니다.",
+          target: `Prior to / ${term3}`,
+          model: `Prior to dispatch, our technical team executed QA checks to ${term3.toLowerCase()}.`
+        },
+        {
+          kr: "가격 할인 대신에, 우리는 모든 추가 주문에 대해 무료 기술 지원을 제공하기로 합의했습니다.",
+          target: "In lieu of / After-sales technical support",
+          model: "In lieu of a price discount, we agreed to provide complimentary after-sales technical support for all additional orders."
+        },
+        {
+          kr: "새로운 스마트 센서를 기존 그리드에 통합함과 동시에, 가동률을 극대화했습니다.",
+          target: `In tandem with / ${term5}`,
+          model: `In tandem with integrating smart sensors into the existing grid, engineers worked to ${term5.toLowerCase()} operational uptime.`
+        },
+        {
+          kr: "계약 조건에 대한 명확한 설명을 요청한 후, 우리는 구매 계약서를 최종 작성했습니다.",
+          target: `${term4} / Finalize`,
+          model: `After asking the legal counsel to ${term4.toLowerCase()} the contract conditions, we finalized the purchase agreement.`
+        },
+        {
+          kr: "생산 일정을 각 부서와 조율하여 납기 지연을 방지했습니다.",
+          target: `${term6} / Lead time`,
+          model: `We worked to ${term6.toLowerCase()} production schedules across departments to prevent lead time delays.`
+        },
+        {
+          kr: "모든 단일 제품이 엄격한 표준에 맞추어 제작되었음을 신속하게 검증해야 합니다.",
+          target: `In line with / ${term8}`,
+          model: `We must ${term8.toLowerCase()} ${term5.toLowerCase()} that every single unit is manufactured in line with stringent quality standards.`
+        },
+        {
+          kr: "할인된 가격으로 원자재를 공급하는 조건으로, 3년 장기 공급 계약을 체결했습니다.",
+          target: "At a discount / Subject to",
+          model: "Subject to a three-year long-term supply agreement, we offered to supply raw materials at a discount."
+        },
+        {
+          kr: "이견을 조정하고 공정한 협상 결과를 도출하기 위해, 양사 임원진이 긴급 회의를 소집했습니다.",
+          target: `${term0} / Equitably`,
+          model: `Executive leaders convened an urgent meeting to ${term0.toLowerCase()} and structure terms equitably.`
         }
       ];
 
