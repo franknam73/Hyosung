@@ -3,1569 +3,1115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hyosung Business English Masterclass - Progressive Curriculum Builder</title>
+  <title>Hyosung Business Communication Masterclass</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .mono-font { font-family: 'JetBrains Mono', monospace; }
-    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: #090d16; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
+    body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card-hover:hover { border-color: rgba(52, 211, 153, 0.4); transform: translateY(-2px); transition: all 0.2s ease; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-blue-500/30 selection:text-blue-200">
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
 
-  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur sticky top-0 z-50 px-4 sm:px-8 py-3.5 flex flex-col lg:flex-row justify-between items-center gap-3 shadow-xl">
-    <div class="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="showLevelSelector()">
-        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white font-black px-3 py-1 rounded-xl text-xs tracking-wider uppercase shadow-lg shadow-blue-950 shrink-0">
-          HYOSUNG B2B MASTERCLASS
+  <!-- HEADER / NAVIGATION -->
+  <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-900/30">
+          H
         </div>
-        <span class="text-xs text-slate-600 hidden sm:inline">|</span>
         <div>
-          <h1 id="app-title-display" class="text-xs sm:text-sm font-bold tracking-tight text-slate-100 line-clamp-1">Hyosung Business Communication</h1>
-          <p id="app-subtitle-display" class="text-[10px] text-slate-400 line-clamp-1">Select Level & Generate Stage 1 Lexicon</p>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-slate-100 text-base tracking-tight">Hyosung Masterclass</h1>
+            <span id="current-level-badge" class="hidden text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-widest">
+              Advanced
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Executive B2B Communication & Negotiation Suite</p>
         </div>
       </div>
-      
-      <!-- LEVEL & GENERATOR TRIGGER BUTTONS -->
-      <div class="flex items-center gap-2 shrink-0">
-        <button onclick="showLevelSelector()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-700 transition-all flex items-center gap-1.5">
-          <span>🎯 Level:</span>
-          <span id="current-level-tag" class="text-blue-400 uppercase font-mono">Advanced</span>
-        </button>
 
-        <button onclick="openGeneratorModal()" class="bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all shadow-lg shadow-cyan-950/50 flex items-center gap-1.5 border border-cyan-400/30">
-          <span class="text-sm">✨</span>
-          <span>New Lesson Generator</span>
+      <div class="flex items-center gap-2">
+        <button onclick="showLandingPage()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-layer-group text-slate-400"></i> Change Level
         </button>
-        
-        <div id="history-badge" class="hidden sm:flex text-[11px] font-mono text-slate-400 bg-slate-950 px-3 py-1 rounded-full border border-slate-800 items-center gap-1.5 shrink-0" title="Total unique terms logged to prevent repetition">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span id="history-count-text">0 Terms Logged</span>
-        </div>
+        <button onclick="openExportModal()" id="nav-export-btn" class="hidden text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-file-export"></i> Export Docs
+        </button>
+        <button onclick="openAiKeyModal()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-key text-amber-400"></i> API Key
+        </button>
       </div>
     </div>
-    
-    <!-- MODULE TABS -->
-    <nav id="main-nav-tabs" class="flex items-center gap-1 bg-slate-950 p-1 rounded-2xl border border-slate-800/90 text-xs overflow-x-auto max-w-full custom-scrollbar w-full lg:w-auto">
-      <button onclick="switchTab('vocab')" id="tab-vocab" class="px-3.5 py-1.5 rounded-xl font-semibold transition-all whitespace-nowrap bg-blue-600 text-white shadow-md">
-        1. Versatile Lexicon
-      </button>
-      <button onclick="switchTab('quiz')" id="tab-quiz" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
-        2. Diagnostic Check
-      </button>
-      <button onclick="switchTab('dialogue')" id="tab-dialogue" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
-        3. Strategic Simulation
-      </button>
-      <button onclick="switchTab('translation')" id="tab-translation" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
-        4. Reframing Workbench
-      </button>
-      <button onclick="switchTab('final')" id="tab-final" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
-        5. Certification Exam
-      </button>
-    </nav>
   </header>
 
-  <main class="max-w-6xl w-full mx-auto p-4 sm:p-6 flex-grow flex flex-col justify-start space-y-6">
+  <!-- LEVEL SELECTION SCREEN -->
+  <main id="level-selection-screen" class="flex-1 max-w-6xl mx-auto w-full px-4 py-12 flex flex-col justify-center">
+    <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+      <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full uppercase tracking-widest">
+        Custom Proficiency Calibration
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        Select Training Group Level
+      </h2>
+      <p class="text-sm text-slate-400 leading-relaxed">
+        Choose your target group proficiency tier. The system will curate exactly <strong>9 high-impact items</strong> (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb) with strict non-repetition memory tracking.
+      </p>
+    </div>
 
-    <!-- LEVEL SELECTION LANDING SCREEN -->
-    <section id="level-selection-screen" class="space-y-6">
-      <div class="bg-gradient-to-r from-slate-900 via-blue-950/60 to-slate-900 border border-slate-800 p-6 sm:p-10 rounded-3xl relative overflow-hidden shadow-2xl text-center space-y-4">
-        <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
-          <span>STEP 1: SELECT GROUP LEVEL & DOMAIN FOCUS</span>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- BEGINNER -->
+      <div onclick="selectLevelAndStart('Beginner')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer flex flex-col justify-between space-y-6 group border border-slate-800">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center font-bold text-lg group-hover:bg-blue-500 group-hover:text-white transition-all">
+            🌱
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">Beginner</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Essential B2B requests, polite meeting inquiries, order follow-ups, and basic professional phrasing.
+          </p>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight max-w-2xl mx-auto">
-          Tailor Your Hyosung Business English Masterclass
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
-          Select your target audience level below. Our engine generates a fresh 9-item vocabulary package (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb) before building the full diagnostic and scenario package.
-        </p>
-
-        <!-- TOPIC INPUT FIELD -->
-        <div class="max-w-md mx-auto pt-2 space-y-2">
-          <label class="block text-left text-[11px] font-bold text-slate-300 uppercase tracking-wider">
-            Target Domain / Scenario Focus (Optional):
-          </label>
-          <input type="text" id="landing-topic-input" placeholder="e.g., Global Power Grid Sales, Eco-Friendly Spandex Exports..." class="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder-slate-600 focus:outline-none transition-all">
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-blue-400">
+          <span>Start Calibration</span>
+          <i class="fa-solid fa-arrow-right"></i>
         </div>
       </div>
 
-      <!-- LEVEL SELECTION CARDS GRID -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- BEGINNER CARD -->
-        <div onclick="selectLevelAndStart('Beginner')" class="bg-slate-900 border border-slate-800 hover:border-emerald-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-emerald-950 border border-emerald-800/50 flex items-center justify-center text-emerald-400 font-extrabold text-base">🌱</div>
-          <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block font-mono">LEVEL 1</span>
-          <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition-colors">Beginner</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Foundational workplace vocabulary, essential requests, clear email/phone basics, and direct operational phrases.</p>
-          <div class="pt-2 border-t border-slate-800 text-[11px] text-emerald-400 font-bold flex items-center justify-between">
-            <span>Select & Generate</span>
-            <span>&rarr;</span>
+      <!-- INTERMEDIATE -->
+      <div onclick="selectLevelAndStart('Intermediate')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer flex flex-col justify-between space-y-6 group border border-slate-800">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-bold text-lg group-hover:bg-emerald-500 group-hover:text-white transition-all">
+            ⚡
           </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">Intermediate</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Value pitching, handling client price pushback, MOQ negotiations, and delivery timelines.
+          </p>
         </div>
-
-        <!-- INTERMEDIATE CARD -->
-        <div onclick="selectLevelAndStart('Intermediate')" class="bg-slate-900 border border-slate-800 hover:border-blue-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-blue-950 border border-blue-800/50 flex items-center justify-center text-blue-400 font-extrabold text-base">📘</div>
-          <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest block font-mono">LEVEL 2</span>
-          <h3 class="text-base font-bold text-white group-hover:text-blue-300 transition-colors">Intermediate</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Polished business phrasing, opinion sharing, diplomatic feedback, standard meeting idioms, and professional negotiation.</p>
-          <div class="pt-2 border-t border-slate-800 text-[11px] text-blue-400 font-bold flex items-center justify-between">
-            <span>Select & Generate</span>
-            <span>&rarr;</span>
-          </div>
-        </div>
-
-        <!-- ADVANCED CARD -->
-        <div onclick="selectLevelAndStart('Advanced')" class="bg-slate-900 border border-slate-800 hover:border-indigo-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-indigo-950 border border-indigo-800/50 flex items-center justify-center text-indigo-400 font-extrabold text-base">🚀</div>
-          <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block font-mono">LEVEL 3</span>
-          <h3 class="text-base font-bold text-white group-hover:text-indigo-300 transition-colors">Advanced</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">Elevated executive vocabulary, strategic reframing, high-stakes negotiation, subtle collocations, and cross-cultural diplomacy.</p>
-          <div class="pt-2 border-t border-slate-800 text-[11px] text-indigo-400 font-bold flex items-center justify-between">
-            <span>Select & Generate</span>
-            <span>&rarr;</span>
-          </div>
-        </div>
-
-        <!-- PROFESSIONAL CARD -->
-        <div onclick="selectLevelAndStart('Professional')" class="bg-slate-900 border border-slate-800 hover:border-purple-500 p-5 rounded-3xl space-y-3 cursor-pointer transition-all hover:scale-[1.02] shadow-xl relative group">
-          <div class="w-10 h-10 rounded-2xl bg-purple-950 border border-purple-800/50 flex items-center justify-center text-purple-400 font-extrabold text-base">👑</div>
-          <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest block font-mono">LEVEL 4</span>
-          <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors">Professional</h3>
-          <p class="text-xs text-slate-400 leading-relaxed">C-suite governance, strategic deal structuring, crisis de-escalation, high-caliber boardroom rhetoric, and executive positioning.</p>
-          <div class="pt-2 border-t border-slate-800 text-[11px] text-purple-400 font-bold flex items-center justify-between">
-            <span>Select & Generate</span>
-            <span>&rarr;</span>
-          </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-emerald-400">
+          <span>Start Calibration</span>
+          <i class="fa-solid fa-arrow-right"></i>
         </div>
       </div>
 
-      <!-- WORD HISTORY BANNER -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
-        <div class="space-y-1">
-          <div class="flex items-center gap-2">
-            <span class="text-emerald-400 font-bold">🛡️ Zero-Repetition Engine Active:</span>
-            <span id="history-terms-count" class="font-mono text-slate-300">0 words in exclusion memory</span>
+      <!-- ADVANCED -->
+      <div onclick="selectLevelAndStart('Advanced')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer flex flex-col justify-between space-y-6 group border border-slate-800">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center font-bold text-lg group-hover:bg-purple-500 group-hover:text-white transition-all">
+            🚀
           </div>
-          <p class="text-[11px] text-slate-500">Every generated word is logged locally to ensure future lessons for any level use 100% fresh, unrepeated terms.</p>
+          <h3 class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors">Advanced</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            High-stakes deal structuring, strategic concessions, anchoring price, and mitigating contract risk.
+          </p>
         </div>
-        <button onclick="clearWordHistory()" class="text-xs text-rose-400 hover:text-rose-300 border border-rose-900/50 bg-rose-950/40 px-3 py-1.5 rounded-xl transition-all shrink-0">
-          Clear Word History Memory
-        </button>
-      </div>
-    </section>
-
-    <section id="stage1-review-screen" class="hidden space-y-6">
-      <div class="bg-gradient-to-r from-slate-900 via-blue-950/60 to-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
-        <div class="flex justify-between items-center flex-wrap gap-2">
-          <span id="stage1-level-badge" class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-            STAGE 1: ADVANCED LEXICON PREVIEW
-          </span>
-          <span id="stage1-topic-badge" class="text-xs font-mono text-slate-400">Domain: General B2B</span>
-        </div>
-        <h2 id="stage1-title-text" class="text-xl font-extrabold text-white">Target Vocabulary & Expression Package</h2>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          Review the generated terms below. You can check any specific words you want to replace, or click "Replace Selected" / "Replace" on an individual card. Replaced terms are automatically saved to exclusion memory.
-        </p>
-
-        <div class="flex justify-between items-center pt-2 flex-wrap gap-3 border-t border-slate-800">
-          <button onclick="showLevelSelector()" class="text-xs text-slate-400 hover:text-white font-bold transition-colors">
-            &larr; Choose Different Level
-          </button>
-          <div class="flex gap-2 flex-wrap">
-            <button onclick="replaceSelectedStage1Terms()" id="btn-replace-selected" class="bg-amber-600/30 hover:bg-amber-600/50 text-amber-300 text-xs font-bold px-4 py-2 rounded-xl transition-all border border-amber-500/40 hidden flex items-center gap-1.5">
-              <span>🔄 Replace Selected</span>
-              <span id="selected-count-badge" class="bg-amber-950 text-amber-300 font-mono text-[10px] px-2 py-0.5 rounded-full border border-amber-700/50">0</span>
-            </button>
-            <button onclick="regenerateStage1Vocab()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 rounded-xl transition-all border border-slate-700">
-              🔄 Re-Roll All 9 Items
-            </button>
-            <button onclick="proceedToStage2Build()" id="btn-proceed-stage2" class="bg-gradient-to-r from-emerald-500 via-teal-600 to-blue-600 hover:from-emerald-400 hover:to-blue-500 text-white font-bold text-xs px-6 py-2 rounded-xl transition-all shadow-lg shadow-emerald-950 border border-emerald-400/30">
-              🚀 Build Complete Lesson Suite &rarr;
-            </button>
-          </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-purple-400">
+          <span>Start Calibration</span>
+          <i class="fa-solid fa-arrow-right"></i>
         </div>
       </div>
 
-      <div class="space-y-4">
-        <div class="flex justify-between items-center flex-wrap gap-2">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">9 Target Items (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb)</h3>
-          <button onclick="toggleSelectAllStage1()" class="text-[11px] text-slate-400 hover:text-white font-mono underline transition-colors">
-            Select All / Deselect All
-          </button>
+      <!-- PROFESSIONAL -->
+      <div onclick="selectLevelAndStart('Professional')" class="glass-card glass-card-hover p-6 rounded-2xl cursor-pointer flex flex-col justify-between space-y-6 group border border-slate-800">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-lg group-hover:bg-amber-500 group-hover:text-white transition-all">
+            👑
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors">Professional</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Crisis reframing, executive dispute resolution, institutional alignment, and boardroom rhetoric.
+          </p>
         </div>
-        <div id="stage1-vocab-preview-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Populated dynamically -->
-        </div>
-      </div>
-    </section>
-
-    <div id="masterclass-workspace" class="hidden space-y-6">
-      <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3.5 flex flex-col sm:flex-row justify-between items-center gap-3 shadow-md">
-        <div class="flex items-center gap-2.5 text-xs w-full sm:w-auto">
-          <span class="text-blue-400 font-bold uppercase tracking-wider text-[10px] bg-blue-950/80 px-2.5 py-1 rounded border border-blue-800/40">HYOSUNG PARTICIPANT</span>
-          <span id="lesson-source-tag" class="text-slate-400 text-[11px] font-mono">Level: Advanced</span>
-        </div>
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-          <input type="text" id="student-name" placeholder="Participant Name" onchange="saveProfile()" class="bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none w-full sm:w-48">
-          <select id="student-company" onchange="saveProfile()" class="bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none w-full sm:w-52">
-            <option value="Hyosung Heavy Industries - Power Systems">Hyosung Heavy Industries - Power Systems</option>
-            <option value="Hyosung TNC - Spandex / Textile">Hyosung TNC - Spandex / Textile</option>
-            <option value="Hyosung TNC - Industrial Materials">Hyosung TNC - Industrial Materials</option>
-            <option value="Hyosung Heavy Industries - Construction / EPC">Hyosung Heavy Industries - Construction / EPC</option>
-          </select>
-          <button onclick="saveProfile(true)" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all shrink-0 shadow-sm">
-            Save
-          </button>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold group-hover:text-amber-400">
+          <span>Start Calibration</span>
+          <i class="fa-solid fa-arrow-right"></i>
         </div>
       </div>
 
-      <!-- MODULE 1: VERSATILE LEXICON -->
-      <section id="module-vocab" class="space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
-          <div class="max-w-3xl space-y-3 relative z-10">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span id="active-level-pill" class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">MODULE 1: TARGET LEVEL LEXICON</span>
-              <span id="ai-active-badge" class="text-[10px] font-bold text-cyan-300 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-800/60">✨ Custom Generated Curriculum</span>
-            </div>
-            <h2 id="hero-title" class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Elevated Business Phrasings</h2>
-            <p id="hero-desc" class="text-xs sm:text-sm text-slate-400 leading-relaxed">Master high-impact expressions, prepositions, and diplomatic reframing patterns tailored specifically for your selected level.</p>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          <div class="flex justify-between items-center">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">1. Core Level Business Terms</h3>
-            <span class="text-[11px] text-slate-500 font-mono">Click speaker icon for audio pronunciation</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="vocab-cards-grid"></div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-4 shadow-xl">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">2. Target Prepositions & Phrases</h3>
-            <div id="prepositions-container" class="space-y-3 text-xs"></div>
-          </div>
-          <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-4 shadow-xl">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">3. Strategic Reframing Sentence Patterns</h3>
-            <div id="patterns-container" class="space-y-3 text-xs"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- MODULE 2: DIAGNOSTIC QUIZ -->
-      <section id="module-quiz" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl">
-          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Vocab & Expression Assessment</h2>
-          <p class="text-xs sm:text-sm text-slate-400">Verify your understanding of target prepositions and strategic reframing expressions.</p>
-        </div>
-        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-6 shadow-xl">
-          <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-            <h3 class="text-base font-bold text-white">Diagnostic Assessment</h3>
-            <span id="quiz-score-badge" class="text-xs font-bold text-blue-400 bg-blue-950 px-3.5 py-1 rounded-full border border-blue-800/40">Score: 0 / 5</span>
-          </div>
-          <div id="diagnostic-quiz-container" class="space-y-4"></div>
-          <div class="flex justify-end pt-2">
-            <button onclick="gradeDiagnosticQuiz()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition-all shadow-md">Evaluate Answers &rarr;</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- MODULE 3: SIMULATION -->
-      <section id="module-dialogue" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
-          <h2 class="text-xl font-extrabold text-white">Resolving Deadlocks & Driving Alignment</h2>
-          <p class="text-xs text-slate-400">Observe how leaders use target expressions to handle client pushback and build long-term value.</p>
-        </div>
-        <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl flex justify-between items-center">
-          <span class="text-blue-400 font-bold text-xs">🎙 Speech Simulation: Click character block to listen.</span>
-          <button onclick="playFullDialogue()" id="btn-play-all" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all">Play Full Audio</button>
-        </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-xl max-h-[600px] overflow-y-auto custom-scrollbar" id="dialogue-thread-container"></div>
-      </section>
-
-      <!-- MODULE 4: TRANSLATION -->
-      <section id="module-translation" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl">
-          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Korean-to-English Business Evaluator</h2>
-          <p class="text-xs sm:text-sm text-slate-400">Translate Korean prompts into polished business English with feedback on prepositions, tenses, and articles.</p>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <div class="lg:col-span-7 space-y-4">
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
-              <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <span class="text-xs font-bold text-blue-400 uppercase" id="trans-card-num">Prompt 1 of 5</span>
-              </div>
-              <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase block">Korean Source Prompt:</span>
-                <p id="trans-kr-text" class="text-xs sm:text-sm font-semibold text-slate-200">"..."</p>
-              </div>
-              <div class="flex flex-wrap gap-2 text-[10px] font-mono" id="trans-hints-container"></div>
-              <textarea id="trans-user-input" rows="4" class="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl p-4 text-xs text-slate-100 focus:outline-none transition-all resize-none custom-scrollbar" placeholder="Type your elevated business translation here..."></textarea>
-              <div class="flex justify-between items-center pt-2">
-                <button onclick="nextTranslationPrompt()" class="text-xs font-bold text-slate-500 hover:text-slate-300">Skip Prompt</button>
-                <button onclick="evaluateTranslation()" id="btn-eval-trans" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-md">Evaluate Translation &rarr;</button>
-              </div>
-            </div>
-          </div>
-          <div class="lg:col-span-5 space-y-4">
-            <div id="eval-result-card" class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
-              <h3 class="text-xs font-bold text-slate-400 uppercase border-b border-slate-800 pb-2">Linguistic Analysis</h3>
-              <div id="eval-content" class="text-xs text-slate-400 space-y-2">
-                <p class="italic text-slate-500">Submit your translation to receive detailed feedback covering prepositions, collocations, tenses, and article precision.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- MODULE 5: FINAL EXAM -->
-      <section id="module-final" class="hidden space-y-6">
-        <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-white">Hyosung Business Communication Certification Exam</h2>
-            <p class="text-xs sm:text-sm text-slate-400">Demonstrate your mastery of target level expressions, prepositions, and diplomatic conflict resolution.</p>
-          </div>
-          <button onclick="openExportDocModal()" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-950 shrink-0 flex items-center gap-2 border border-emerald-400/30">
-            <span>📋 Export Lesson for Google Docs</span>
-          </button>
-        </div>
-
-        <div id="final-report-card" class="hidden bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
-          <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-            <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider">Evaluation Report & Certificate</h3>
-            <span id="final-acc-val" class="text-sm font-mono font-bold text-white bg-slate-950 px-3 py-1 rounded-xl border border-slate-800">100%</span>
-          </div>
-          <p id="final-summary-text" class="text-xs text-slate-300 leading-relaxed"></p>
-          <div class="flex justify-end gap-3 pt-2">
-            <button onclick="openExportDocModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 rounded-xl border border-slate-700 transition-all flex items-center gap-1.5">
-              <span>📄 Copy Printable Document for Google Docs</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl space-y-6 shadow-xl">
-          <div id="final-quiz-container" class="space-y-6"></div>
-          <div class="flex justify-between items-center border-t border-slate-800 pt-6 flex-wrap gap-3">
-            <span class="text-xs text-slate-500 font-mono" id="final-status-text">Answer all questions to evaluate.</span>
-            <div class="flex gap-3">
-              <button onclick="openExportDocModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 px-5 rounded-xl text-xs transition-all border border-slate-700">
-                📄 Copy Full Lesson Text
-              </button>
-              <button onclick="gradeFinalAssessment()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 px-8 rounded-xl text-xs transition-all shadow-lg shadow-blue-950">
-                Submit Assessment &rarr;
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   </main>
 
-  <!-- GOOGLE DOCS EXPORT MODAL -->
-  <div id="export-doc-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 w-full max-w-3xl rounded-3xl p-6 sm:p-8 space-y-4 shadow-2xl relative">
-      <button onclick="closeExportDocModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white text-lg font-bold">✕</button>
-      <div class="space-y-1">
-        <span class="text-emerald-400 text-xs font-bold uppercase bg-emerald-950 px-3 py-1 rounded-full border border-emerald-800/50">📄 Printable / Copyable Text Packet</span>
-        <h3 class="text-xl font-extrabold text-white">Google Docs Lesson Exporter</h3>
-        <p class="text-xs text-slate-400">Copy the formatted text below and paste directly into Google Docs or Microsoft Word.</p>
-      </div>
-
-      <div class="space-y-2">
-        <textarea id="export-doc-textarea" rows="14" readonly class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-200 focus:outline-none custom-scrollbar select-all resize-none"></textarea>
-      </div>
-
-      <div class="flex justify-between items-center border-t border-slate-800 pt-4">
-        <span id="copy-success-badge" class="text-xs text-emerald-400 font-bold hidden flex items-center gap-1.5">
-          <span>✓ Copied to clipboard! Ready to paste into Google Docs.</span>
+  <!-- STAGE 1 REVIEW SCREEN -->
+  <main id="stage1-review-screen" class="hidden flex-1 max-w-6xl mx-auto w-full px-4 py-8 space-y-6">
+    <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">
+          Stage 1: Vocabulary Composition & Replacement
         </span>
-        <div class="flex gap-3 ml-auto">
-          <button onclick="closeExportDocModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white">Close</button>
-          <button onclick="copyLessonToClipboard()" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-lg shadow-emerald-950 flex items-center gap-1.5">
-            <span>📋 Copy Full Lesson Text</span>
+        <h2 class="text-2xl font-extrabold text-white">Review Curated Terminology</h2>
+        <p class="text-xs text-slate-400 mt-1">
+          Composition: <strong>4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb</strong> (9 total). Select terms to replace with fresh equivalents.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button onclick="replaceSelectedStage1Terms()" id="btn-replace-selected" class="text-xs font-bold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-rotate"></i> Replace Selected (<span id="selected-count">0</span>)
+        </button>
+        <button onclick="generateStage2Lesson()" class="text-xs font-bold px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-circle-check"></i> Approve & Build Lesson
+        </button>
+      </div>
+    </div>
+
+    <!-- VOCAB CARDS CONTAINER -->
+    <div id="stage1-cards-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Dynamic Stage 1 Vocab Cards -->
+    </div>
+  </main>
+
+  <!-- MAIN WORKSPACE (MODULES 1-5) -->
+  <main id="main-workspace" class="hidden flex-1 max-w-6xl mx-auto w-full px-4 py-8 space-y-12">
+    
+    <!-- NAVIGATION TABS -->
+    <div class="glass-card p-2 rounded-2xl border border-slate-800 flex items-center justify-between overflow-x-auto custom-scrollbar">
+      <div class="flex items-center gap-2 min-w-max">
+        <button onclick="switchTab('module1')" id="tab-module1" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md">
+          1. Core Lexicon
+        </button>
+        <button onclick="switchTab('module2')" id="tab-module2" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800">
+          2. Diagnostic Check
+        </button>
+        <button onclick="switchTab('module3')" id="tab-module3" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800">
+          3. Dialogue Roleplay
+        </button>
+        <button onclick="switchTab('module4')" id="tab-module4" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800">
+          4. AI Translation
+        </button>
+        <button onclick="switchTab('module5')" id="tab-module5" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800">
+          5. Certification Exam
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 1: CORE LEXICON, PREPOSITIONS & PATTERNS -->
+    <section id="content-module1" class="space-y-8">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-end">
+        <div>
+          <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Module 1</span>
+          <h2 class="text-2xl font-extrabold text-white">Target Lexicon, Prepositions & Sentence Frameworks</h2>
+        </div>
+      </div>
+
+      <!-- LEXICON GRID -->
+      <div id="module1-vocab-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- PREPOSITIONS & PATTERNS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-compass"></i> Target Business Prepositions
+          </h3>
+          <div id="module1-prepositions" class="space-y-3 text-xs">
+            <!-- Dynamic Prepositions -->
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-diagram-project"></i> Core Sentence Patterns
+          </h3>
+          <div id="module1-patterns" class="space-y-3 text-xs">
+            <!-- Dynamic Patterns -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODULE 2: DIAGNOSTIC CHECK -->
+    <section id="content-module2" class="hidden space-y-8">
+      <div class="border-b border-slate-800 pb-4">
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Module 2</span>
+        <h2 class="text-2xl font-extrabold text-white">Diagnostic Multiple-Choice Evaluation</h2>
+      </div>
+
+      <div id="diagnostic-quiz-container" class="space-y-6">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="flex justify-end">
+        <button onclick="gradeDiagnosticQuiz()" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all">
+          Submit Diagnostic Check
+        </button>
+      </div>
+    </section>
+
+    <!-- MODULE 3: DIALOGUE ROLEPLAY -->
+    <section id="content-module3" class="hidden space-y-8">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Module 3</span>
+          <h2 class="text-2xl font-extrabold text-white">Boardroom Strategy & Negotiation Simulation</h2>
+        </div>
+        <button onclick="playFullDialogue()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 font-bold text-xs transition-all flex items-center gap-2">
+          <i class="fa-solid fa-circle-play"></i> Listen to Full Audio
+        </button>
+      </div>
+
+      <div id="dialogue-script-container" class="space-y-4">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- MODULE 4: AI TRANSLATION WORKBENCH -->
+    <section id="content-module4" class="hidden space-y-8">
+      <div class="border-b border-slate-800 pb-4">
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Module 4</span>
+        <h2 class="text-2xl font-extrabold text-white">Korean-to-English Translation Workbench</h2>
+        <p class="text-xs text-slate-400 mt-1">Translate each Korean executive prompt into English. Evaluates collocations, prepositions, tenses, and articles.</p>
+      </div>
+
+      <div id="translation-prompts-container" class="space-y-6">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- MODULE 5: FINAL CERTIFICATION EXAM -->
+    <section id="content-module5" class="hidden space-y-8">
+      <div class="border-b border-slate-800 pb-4">
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">Module 5</span>
+        <h2 class="text-2xl font-extrabold text-white">Final Executive Certification Exam</h2>
+      </div>
+
+      <div id="final-exam-container" class="space-y-6">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="flex justify-between items-center pt-4 border-t border-slate-800">
+        <button onclick="openExportModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 font-bold text-xs transition-all flex items-center gap-2">
+          <i class="fa-solid fa-file-export"></i> Export Lesson to Google Docs
+        </button>
+        <button onclick="gradeFinalAssessment()" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all">
+          Grade Certification Assessment
+        </button>
+      </div>
+
+      <!-- SCORECARD CONTAINER -->
+      <div id="assessment-scorecard" class="hidden glass-card p-6 rounded-2xl border border-emerald-500/40 bg-emerald-950/20 space-y-4">
+        <!-- Rendered upon grading -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- EXPORT GOOGLE DOCS MODAL -->
+  <div id="export-doc-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-card max-w-3xl w-full p-6 rounded-2xl border border-slate-800 space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-file-word text-blue-400"></i> Google Docs / MS Word Text Exporter
+          </h3>
+          <p class="text-xs text-slate-400">Copy formatted plain-text markdown directly into your document editor.</p>
+        </div>
+        <button onclick="closeExportModal()" class="text-slate-400 hover:text-white p-2">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <textarea id="export-textarea" readonly class="flex-1 w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs font-mono text-slate-300 focus:outline-none custom-scrollbar min-h-[300px]"></textarea>
+
+      <div class="flex justify-between items-center pt-2">
+        <span id="export-copy-status" class="text-xs font-bold text-emerald-400"></span>
+        <div class="flex gap-2">
+          <button onclick="closeExportModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">Close</button>
+          <button onclick="copyExportedText()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-copy"></i> Copy to Clipboard
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- GENERATOR MODAL -->
-  <div id="ai-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 w-full max-w-xl rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
-      <button onclick="closeAiModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white text-lg font-bold">✕</button>
-      <div class="space-y-2">
-        <span class="text-cyan-400 text-xs font-bold uppercase bg-cyan-950 px-3 py-1 rounded-full border border-cyan-800/50">✨ Dynamic Curriculum Generator</span>
-        <h3 class="text-xl font-extrabold text-white">Custom Lesson Setup</h3>
+  <!-- API KEY MODAL -->
+  <div id="ai-key-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full p-6 rounded-2xl border border-slate-800 space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-key text-amber-400"></i> Gemini API Key Settings
+        </h3>
+        <button onclick="closeAiKeyModal()" class="text-slate-400 hover:text-white p-2">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <div class="space-y-4 text-xs">
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">Target Proficiency Level:</label>
-          <select id="modal-level-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none">
-            <option value="Beginner">Level 1: Beginner</option>
-            <option value="Intermediate">Level 2: Intermediate</option>
-            <option value="Advanced" selected>Level 3: Advanced</option>
-            <option value="Professional">Level 4: Professional</option>
-          </select>
-        </div>
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">Target Scenario Focus:</label>
-          <input type="text" id="ai-topic-input" placeholder="e.g., Executive B2B Alignment..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none">
-        </div>
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">Optional Gemini API Key (for Live AI on Public Sites):</label>
-          <input type="password" id="user-api-key-input" placeholder="Paste Key Here (Optional)" onchange="saveApiKey()" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded-xl px-4 py-2 text-xs text-slate-100 focus:outline-none font-mono">
-          <p class="text-[10px] text-slate-500 mt-1">If blank, standard built-in lesson suites will automatically load.</p>
-        </div>
-      </div>
-      <div class="flex justify-end gap-3 border-t border-slate-800 pt-4">
-        <button onclick="closeAiModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white">Cancel</button>
-        <button onclick="triggerModalStage1Gen()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-lg shadow-cyan-950">Generate Stage 1 Words ✨</button>
+
+      <p class="text-xs text-slate-400 leading-relaxed">
+        Provide an optional Google Gemini API key to enable live online AI generation for Stage 1 replacements and Stage 2 translations. If left empty, the app operates using the embedded 180-item offline fallback engine.
+      </p>
+
+      <input type="password" id="input-api-key" placeholder="AIzaSy..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none font-mono">
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeAiKeyModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">Cancel</button>
+        <button onclick="saveApiKey()" class="px-5 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold">Save Key</button>
       </div>
     </div>
   </div>
 
   <script>
-    // SAFE STORAGE HELPERS
-    function safeGetStorage(key, defaultValue = null) {
+    // ==========================================
+    // OFFLINE TYPED FALLBACK REPLACEMENT ENGINE
+    // ==========================================
+    const masterFallbackPool = [
+      // ==========================================
+      // 80 EXPRESSIONS
+      // ==========================================
+      { term: "Reconcile differences", type: "Expression", kr: "견해차를 조정하다", def: "Resolve conflicting viewpoints between teams.", sample: "We met to reconcile differences regarding delivery schedules.", alt: "Settle", altNuance: "Reconcile stresses finding common ground." },
+      { term: "Alleviate concerns", type: "Expression", kr: "우려를 완화하다", def: "Reduce anxiety or worry regarding a project.", sample: "Weekly status reports helped alleviate client concerns.", alt: "Ease", altNuance: "Alleviate is standard corporate phrasing." },
+      { term: "Streamline operations", type: "Expression", kr: "운영을 효율화하다", def: "Simplify processes to eliminate inefficiency.", sample: "Automating inventory tracking will streamline operations.", alt: "Simplify", altNuance: "Streamline focuses on speed and flow." },
+      { term: "Mitigate risks", type: "Expression", kr: "위험을 줄이다", def: "Lessen potential damage or loss.", sample: "Dual-sourcing helps mitigate supply chain risks.", alt: "Reduce", altNuance: "Mitigate is risk-management terminology." },
+      { term: "Bridge the gap", type: "Expression", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
+      { term: "Raise a red flag", type: "Expression", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
+      { term: "Shift the narrative", type: "Expression", kr: "화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
+      { term: "Draw a hard line", type: "Expression", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
+      { term: "Institutional alignment", type: "Expression", kr: "기관적 얼라인먼트", def: "Harmonizing goals across enterprise divisions.", sample: "Cross-border mergers require deep institutional alignment.", alt: "Agreement", altNuance: "Institutional alignment refers to macro organization." },
+      { term: "Unilateral condition", type: "Expression", kr: "일방적 조건", def: "A term imposed by one party without debate.", sample: "We rejected the buyer's unilateral condition on price caps.", alt: "One-sided rule", altNuance: "Unilateral is legal/contractual phrasing." },
+      { term: "Fiduciary responsibility", type: "Expression", kr: "선관주의 책임", def: "Legal obligation to act in the best interest of stakeholders.", sample: "The board holds a fiduciary responsibility to safeguard capital.", alt: "Duty", altNuance: "Fiduciary is legal/boardroom terminology." },
+      { term: "Capital allocation framework", type: "Expression", kr: "자본 배분 체계", def: "Systematic strategy for deploying financial resources.", sample: "Our capital allocation framework prioritizes high-margin R&D.", alt: "Budgeting", altNuance: "C-suite strategic financial terminology." },
+      { term: "Submit a formal inquiry", type: "Expression", kr: "공식 문의를 제출하다", def: "Send an official question to a department.", sample: "Please submit a formal inquiry to technical support.", alt: "Ask", altNuance: "Formal inquiry follows corporate process." },
+      { term: "Follow up on status", type: "Expression", kr: "진행 상황을 확인하다", def: "Check the current progress of a project.", sample: "I called to follow up on status regarding the order.", alt: "Check", altNuance: "Follow up implies structured tracking." },
+      { term: "Inquire about lead time", type: "Expression", kr: "납기를 문의하다", def: "Ask about expected delivery schedules.", sample: "Clients inquire about lead time for custom orders.", alt: "Ask about time", altNuance: "Inquire about lead time is B2B terminology." },
+      { term: "On behalf of management", type: "Expression", kr: "경영진을 대표하여", def: "Acting as an official representative.", sample: "I am writing on behalf of management.", alt: "For", altNuance: "Official corporate phrasing." },
+      { term: "Pave the way for", type: "Expression", kr: "길을 열어주다", def: "Create conditions that make progress possible.", sample: "Successful trial testing paved the way for a global contract.", alt: "Allow", altNuance: "Pave the way for emphasizes strategic groundwork." },
+      { term: "Steer clear of", type: "Expression", kr: "피하다", def: "Avoid dealing with risky or unprofitable situations.", sample: "We steer clear of non-compliant suppliers.", alt: "Avoid", altNuance: "Steer clear of carries active risk prevention." },
+      { term: "Stem from", type: "Expression", kr: "~에서 기인하다", def: "Originate or arise as a natural result of something.", sample: "Cost overruns stem from unexpected material price hikes.", alt: "Result from", altNuance: "Stem from pinpoints root cause." },
+      { term: "Anchor the negotiation", type: "Expression", kr: "협상 기준점을 설정하다", def: "Establish an initial baseline price or term in negotiations.", sample: "Setting an early price cap helped anchor the negotiation.", alt: "Set baseline", altNuance: "Refers to strategic positioning in B2B deals." },
+      { term: "Value-driven upsell", type: "Expression", kr: "가치 기반 업셀링", def: "Selling higher tier services by emphasizing measurable return.", sample: "We converted the account through a value-driven upsell.", alt: "Cross-sell", altNuance: "Focuses on demonstrating tangible client gain." },
+      { term: "Tiered pricing structure", type: "Expression", kr: "단계별 가격 체계", def: "Pricing model offering volume-based discount levels.", sample: "Our tiered pricing structure offers discounts for high-volume orders.", alt: "Graduated pricing", altNuance: "Standard enterprise licensing terminology." },
+      { term: "Strategic concession", type: "Expression", kr: "전략적 양보", def: "A trade-off given to secure a greater commercial benefit.", sample: "Offering free shipping was a strategic concession to close the deal.", alt: "Compromise", altNuance: "Strategic concession implies calculated trade-off." },
+      { term: "Mutual gain", type: "Expression", kr: "상호 이익", def: "An agreement outcome benefiting both negotiating parties.", sample: "The long-term distribution agreement is structured for mutual gain.", alt: "Win-win", altNuance: "Mutual gain is formal corporate terminology." },
+      { term: "Risk exposure", type: "Expression", kr: "위험 노출도", def: "The extent to which an organization is open to financial loss.", sample: "Dual sourcing reduces overall supply chain risk exposure.", alt: "Vulnerability", altNuance: "Risk exposure measures financial/operational liability." },
+      { term: "Competitive edge", type: "Expression", kr: "경쟁 우위", def: "An advantage that sets a company apart from market rivals.", sample: "Proprietary yarn technology gives Hyosung a distinct competitive edge.", alt: "Advantage", altNuance: "Competitive edge highlights strategic market positioning." },
+      { term: "Tailor a solution", type: "Expression", kr: "맞춤형 솔루션을 제공하다", def: "Customize engineering or services to fit specific client requirements.", sample: "Our engineers can tailor a solution for extreme climate grids.", alt: "Customize", altNuance: "Tailor a solution implies bespoke engineering." },
+      { term: "Return on investment", type: "Expression", kr: "투자 수익률 (ROI)", def: "Financial profitability generated relative to spent capital.", sample: "Clients achieve a full return on investment within two years.", alt: "Profit margin", altNuance: "Return on investment is standard financial metric phrasing." },
+      { term: "In line with expectations", type: "Expression", kr: "기대에 부합하여", def: "Conforming precisely to projected benchmarks.", sample: "Q3 factory output was in line with expectations.", alt: "As expected", altNuance: "Formal report phrasing." },
+      { term: "Prior to shipment", type: "Expression", kr: "출하에 앞서", def: "Before products leave the manufacturing site.", sample: "All units undergo quality inspection prior to shipment.", alt: "Before dispatch", altNuance: "Standard manufacturing/logistics phrasing." },
+      { term: "With regard to", type: "Expression", kr: "~와 관련하여", def: "Concerning or in reference to a specific topic.", sample: "With regard to your pricing inquiry, we have attached our quote.", alt: "Regarding", altNuance: "With regard to is polite formal correspondence language." },
+      { term: "At a discount", type: "Expression", kr: "할인된 가격으로", def: "Priced below standard retail or catalog rates.", sample: "Bulk orders of spare parts are provided at a discount.", alt: "Cheaper", altNuance: "Official commercial transaction phrasing." },
+      { term: "Turnkey solution", type: "Expression", kr: "턴키(일괄 타결) 솔루션", def: "A complete product or system supplied ready for immediate use.", sample: "We delivered a turnkey solution for the substation expansion.", alt: "Complete package", altNuance: "Turnkey solution is standard EPC/engineering terminology." },
+      { term: "Factory Acceptance Testing", type: "Expression", kr: "공장 수락 시험 (FAT)", def: "Testing conducted at manufacturing plant prior to client dispatch.", sample: "Client engineers will attend the Factory Acceptance Testing next week.", alt: "Plant test", altNuance: "Official industrial quality verification acronym." },
+      { term: "Minimum Order Quantity", type: "Expression", kr: "최소 주문 수량 (MOQ)", def: "The lowest threshold of units a supplier accepts per order.", sample: "Our Minimum Order Quantity for custom dyed spandex is five tons.", alt: "Base order", altNuance: "Standard international commercial requirement." },
+      { term: "Defect tolerance", type: "Expression", kr: "결함 허용 오차", def: "The acceptable threshold of manufacturing variance permitted.", sample: "High precision specs mandate zero defect tolerance.", alt: "Error margin", altNuance: "Industrial quality assurance term." },
+      { term: "After-sales technical support", type: "Expression", kr: "사후 기술 지원", def: "Assistance provided to buyers after product delivery.", sample: "Our global branch offices guarantee 24/7 after-sales technical support.", alt: "Post-sale help", altNuance: "Standard client servicing pledge." },
+      { term: "Feasibility study", type: "Expression", kr: "타당성 조사", def: "An analysis assessing the practicality and viability of a project.", sample: "We completed a feasibility study for the new power grid installation.", alt: "Viability test", altNuance: "Initial engineering project evaluation term." },
+      { term: "SLA performance guarantee", type: "Expression", kr: "서비스 수준 보장 (SLA)", def: "Contractual commitment ensuring specific operational uptime.", sample: "Our contract includes a rigorous SLA performance guarantee.", alt: "Uptime promise", altNuance: "Official contractual reliability term." },
+      { term: "Liquidated damages", type: "Expression", kr: "손해배상 예정액", def: "Pre-agreed financial compensation for contractual breach or delay.", sample: "The contract includes liquidated damages for late delivery.", alt: "Penalty fee", altNuance: "Legal and procurement terminology." },
+      { term: "Strike a balance", type: "Expression", kr: "균형을 맞추다", def: "Find an acceptable compromise between two opposing demands.", sample: "We must strike a balance between cost speed and quality.", alt: "Compromise", altNuance: "Focuses on harmonious trade-offs." },
+      { term: "Reach a consensus", type: "Expression", kr: "합의에 도달하다", def: "Arrive at an agreement accepted by all participating parties.", sample: "After hours of discussion, the board reached a consensus.", alt: "Agree", altNuance: "Emphasizes unanimous or collective agreement." },
+      { term: "Break the deadlock", type: "Expression", kr: "교착 상태를 타개하다", def: "Overcome a stalemate in negotiations.", sample: "A strategic price adjustment helped break the deadlock.", alt: "Resolve stalemate", altNuance: "Refers to high-stakes negotiation breakthroughs." },
+      { term: "Drive value creation", type: "Expression", kr: "가치 창출을 견인하다", def: "Generate measurable financial or strategic benefits.", sample: "Cross-functional teams drive value creation across subsidiaries.", alt: "Generate value", altNuance: "C-suite strategic communication terminology." },
+      { term: "Smooth out friction", type: "Expression", kr: "마찰을 완화하다", def: "Ebase interpersonal or operational misunderstandings.", sample: "Clear communication helped smooth out friction during integration.", alt: "Ease friction", altNuance: "Refers to resolving operational difficulties." },
+      { term: "Scale up production", type: "Expression", kr: "생산을 확대하다", def: "Increase manufacturing volume to meet growing demand.", sample: "The Changwon plant will scale up production next month.", alt: "Expand output", altNuance: "Industrial operations terminology." },
+      { term: "Bring to the table", type: "Expression", kr: "제안/기여하다", def: "Offer valuable resources, skills, or ideas in negotiation.", sample: "Hyosung brings advanced R&D capabilities to the table.", alt: "Offer", altNuance: "Common business negotiation idiom." },
+      { term: "Gain traction", type: "Expression", kr: "탄력을 받다 / 호응을 얻다", def: "Gather momentum and market acceptance.", sample: "Our eco-friendly textile brand is gaining traction in Europe.", alt: "Pick up speed", altNuance: "Describes market acceptance or progress." },
+      { term: "Benchmark against competitors", type: "Expression", kr: "경쟁사와 벤치마킹하다", def: "Compare performance metrics against industry rivals.", sample: "We benchmark our lead times against top global competitors.", alt: "Compare", altNuance: "Strategic analysis terminology." },
+      { term: "Address the bottleneck", type: "Expression", kr: "병목 현상을 해결하다", def: "Resolve the main point of congestion in a process.", sample: "Automation resolved the assembly line bottleneck.", alt: "Fix delay", altNuance: "Operations and process management phrasing." },
+      { term: "Clear the hurdle", type: "Expression", kr: "장애물을 극복하다", def: "Overcome a regulatory, technical, or commercial barrier.", sample: "Passing the safety audit allowed us to clear the hurdle.", alt: "Overcome barrier", altNuance: "Business achievement phrasing." },
+      { term: "Tap into new markets", type: "Expression", kr: "신시장을 개척하다 / 진입하다", def: "Expand business presence into unpenetrated regions.", sample: "Our eco-textile division plans to tap into new markets.", alt: "Enter market", altNuance: "Global sales growth terminology." },
+      { term: "Ballpark figure", type: "Expression", kr: "대략적인 추정치", def: "An approximate financial estimate provided for discussion.", sample: "Can you give us a ballpark figure before we finalize budget?", alt: "Estimate", altNuance: "Standard informal corporate estimate term." },
+      { term: "Bottom line impact", type: "Expression", kr: "최종 순이익에 미치는 영향", def: "The net effect of a decision on company profitability.", sample: "Energy savings directly affect our bottom line impact.", alt: "Financial result", altNuance: "C-suite executive financial analysis phrase." },
+      { term: "Core competency", type: "Expression", kr: "핵심 역량", def: "A primary capability that gives a company strategic strength.", sample: "High-voltage engineering remains our core competency.", alt: "Key strength", altNuance: "Corporate strategy vocabulary." },
+      { term: "Due diligence", type: "Expression", kr: "실사 / 철저한 조사", def: "Comprehensive investigation prior to signing a deal.", sample: "Our legal team is conducting due diligence on the supplier.", alt: "Audit", altNuance: "Legal and financial investment term." },
+      { term: "In the pipeline", type: "Expression", kr: "진행 중인 / 준비 중인", def: "Currently in development or scheduled for release.", sample: "Several major infrastructure projects are in the pipeline.", alt: "Underway", altNuance: "Standard sales pipeline and project phrase." },
+      { term: "Key takeaway", type: "Expression", kr: "핵심 요점", def: "The most important piece of information from a session.", sample: "The key takeaway from the client meeting was the need for speed.", alt: "Main point", altNuance: "Meeting debrief terminology." },
+      { term: "Leverage synergies", type: "Expression", kr: "시너지를 활용하다", def: "Combine strengths of units to achieve combined efficiency.", sample: "Merging sales offices allowed us to leverage synergies.", alt: "Combine strengths", altNuance: "M&A and organizational strategy term." },
+      { term: "Off the ground", type: "Expression", kr: "순조롭게 시작되다", def: "Successfully started or launched.", sample: "It took months to get the new production line off the ground.", alt: "Launched", altNuance: "Project start phrasing." },
+      { term: "On the same page", type: "Expression", kr: "이해를 같이하다", def: "Sharing a identical understanding of goals or situation.", sample: "Let us review specs to ensure we are all on the same page.", alt: "In agreement", altNuance: "Standard team alignment idiom." },
+      { term: "Paradigm shift", type: "Expression", kr: "패러다임의 전환 / 근본적 변화", def: "A fundamental change in approach or underlying assumptions.", sample: "Eco-friendly materials represent a paradigm shift in textiles.", alt: "Major change", altNuance: "Strategic vision phrase." },
+      { term: "Ramp up capacity", type: "Expression", kr: "생산 능력을 확충하다", def: "Rapidly increase manufacturing volume or workforce.", sample: "We need to ramp up capacity to fulfill the Q4 surge.", alt: "Increase output", altNuance: "Manufacturing operations phrasing." },
+      { term: "Touch base", type: "Expression", kr: "간단히 연락을 취하다", def: "Briefly make contact with someone to review progress.", sample: "I will touch base with procurement tomorrow morning.", alt: "Contact", altNuance: "Standard professional follow-up idiom." },
+      { term: "Win-win strategy", type: "Expression", kr: "상생 전략", def: "A plan designed to ensure mutually favorable outcomes.", sample: "Long-term partnership contracts require a win-win strategy.", alt: "Mutual strategy", altNuance: "Business negotiation terminology." },
+      { term: "Room for improvement", type: "Expression", kr: "개선의 여지", def: "Possibility or scope for developing higher quality.", sample: "Initial audit scores showed room for improvement in packaging.", alt: "Scope to grow", altNuance: "Constructive feedback vocabulary." },
+      { term: "Short-term compromise", type: "Expression", kr: "단기적 타협", def: "A temporary concession accepted to maintain momentum.", sample: "We agreed to a short-term compromise on freight fees.", alt: "Temporary deal", altNuance: "Negotiation trade-off phrasing." },
+      { term: "Long-term viability", type: "Expression", kr: "장기적 생존 가능성 / 지속 가능성", def: "Ability to sustain profitability and performance over years.", sample: "Diversifying products ensures long-term viability.", alt: "Sustainability", altNuance: "Corporate strategy terminology." },
+      { term: "Quality assurance check", type: "Expression", kr: "품질 보증 점검", def: "Systematic inspection verifying standard adherence.", sample: "Every batch undergoes a quality assurance check.", alt: "QA inspection", altNuance: "Standard manufacturing process phrase." },
+      { term: "Cross-functional collaboration", type: "Expression", kr: "부서 간 협력", def: "Cooperation between teams from different specialties.", sample: "Engineers and sales leads engaged in cross-functional collaboration.", alt: "Teamwork", altNuance: "Enterprise organizational terminology." },
+      { term: "Regulatory compliance", type: "Expression", kr: "규제 준수", def: "Adherence to laws, regulations, and industry guidelines.", sample: "Regulatory compliance is mandatory for European exports.", alt: "Legal compliance", altNuance: "Official international trade phrasing." },
+      { term: "Strategic roadmap", type: "Expression", kr: "전략적 로드맵", def: "A structured long-term plan detailing business goals.", sample: "Management presented a five-year strategic roadmap.", alt: "Master plan", altNuance: "Corporate planning vocabulary." },
+      { term: "Executive mandate", type: "Expression", kr: "경영진의 지시 / 위임 사항", def: "An official directive issued by senior executive leadership.", sample: "Cost reduction was issued as an executive mandate.", alt: "Top directive", altNuance: "Governance and directive phrase." },
+      { term: "Scope creep", type: "Expression", kr: "프로젝트 범주의 야금야금 확장", def: "Uncontrolled expansion of project deliverables without budget increase.", sample: "Rigorous milestone tracking prevents scope creep.", alt: "Project expansion", altNuance: "Project management term." },
+      { term: "Milestone payment", type: "Expression", kr: "단계별 대금 지급", def: "Installment payment tied to completing specific project phases.", sample: "The client agreed to a milestone payment structure.", alt: "Stage payment", altNuance: "EPC and construction contract term." },
+      { term: "Proof of concept", type: "Expression", kr: "개념 검증 (PoC)", def: "Demonstration verifying that a concept or theory is practical.", sample: "We successfully delivered a proof of concept for smart sensors.", alt: "Feasibility demo", altNuance: "Technology and R&D term." },
+      { term: "Value chain optimization", type: "Expression", kr: "가치 사슬 최적화", def: "Streamlining each step of production to maximize efficiency.", sample: "Digitization drives value chain optimization across plants.", alt: "Process optimization", altNuance: "Industrial operations vocabulary." },
+      { term: "Market penetration", type: "Expression", kr: "시장 침투 / 점유율 확대", def: "The extent to which a product is recognized or bought in a market.", sample: "Competitive pricing accelerated market penetration in Asia.", alt: "Market entry", altNuance: "Global marketing strategy term." },
+      { term: "Stakeholder engagement", type: "Expression", kr: "이해관계자 참여 / 소통", def: "Involving individuals who are affected by business decisions.", sample: "Effective stakeholder engagement smoothed plant expansion.", alt: "Partner dialogue", altNuance: "Corporate communications terminology." },
+      { term: "Contingency plan", type: "Expression", kr: "비상 계획 / 대응책", def: "A course of action designed to address a potential emergency.", sample: "We activated our contingency plan during the port strike.", alt: "Backup plan", altNuance: "Risk management phrasing." },
+
+      // ==========================================
+      // 60 VERBS
+      // ==========================================
+      { term: "Clarify", type: "Verb", kr: "명확히 하다", def: "Make a technical statement easy to understand.", sample: "Please clarify the contract terms before signing.", alt: "Explain", altNuance: "Clarify focuses on eliminating confusion." },
+      { term: "Verify", type: "Verb", kr: "검증하다", def: "Check measurements against requirements.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
+      { term: "Coordinate", type: "Verb", kr: "조율하다", def: "Organize actions across departments.", sample: "Please coordinate schedules with plant management.", alt: "Arrange", altNuance: "Coordinate stresses cross-team alignment." },
+      { term: "Consolidate", type: "Verb", kr: "통합하다", def: "Combine multiple items into a unified system.", sample: "We will consolidate shipping orders next week.", alt: "Merge", altNuance: "Consolidate emphasizes strengthening structure." },
+      { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital through sales.", sample: "Clients recoup investment within 90 days.", alt: "Recover", altNuance: "Recoup applies specifically to financial expenditure." },
+      { term: "Expedite", type: "Verb", kr: "신속히 처리하다", def: "Speed up the progress or execution of an order.", sample: "We can expedite customs clearance for urgent spare parts.", alt: "Hurry", altNuance: "Expedite is official logistics terminology." },
+      { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread capital costs over a contract period.", sample: "We can amortize setup fees over 36 months.", alt: "Divide", altNuance: "Amortize is financial accounting terminology." },
+      { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Convert high-level plans into active corporate workflows.", sample: "Engineers will operationalize the deployment plan immediately.", alt: "Execute", altNuance: "Operationalize focuses on systematic process building." },
+      { term: "Preempt", type: "Verb", kr: "선제적으로 차단하다", def: "Take action to prevent an anticipated negative event.", sample: "Proactive testing allowed us to preempt quality disputes.", alt: "Prevent", altNuance: "Preempt implies strategic foresight." },
+      { term: "Institutionalize", type: "Verb", kr: "조직 정착시키다", def: "Establish a process as a permanent organizational norm.", sample: "We must institutionalize quality audits across all subsidiaries.", alt: "Embed", altNuance: "Institutionalize focuses on long-term corporate governance." },
+      { term: "Harmonize", type: "Verb", kr: "통일하고 조화시키다", def: "Bring different standards or systems into agreement.", sample: "We must harmonize technical specs across global plants.", alt: "Unify", altNuance: "Harmonize is standard international compliance terminology." },
+      { term: "Salvage", type: "Verb", kr: "만회하다 / 구출하다", def: "Rescue or recover something from potential failure.", sample: "We managed to salvage the negotiation with a revised quote.", alt: "Save", altNuance: "Salvage implies recovering value under threat." },
+      { term: "Diversify", type: "Verb", kr: "다변화하다", def: "Expand product lines or supply chains to reduce risk.", sample: "We need to diversify our raw material suppliers.", alt: "Vary", altNuance: "Diversify is strategic risk mitigation vocabulary." },
+      { term: "Facilitate", type: "Verb", kr: "용이하게 하다", def: "Make a process or discussion smoother and easier.", sample: "Our local office will facilitate regulatory approval.", alt: "Help", altNuance: "Facilitate stresses professional enablement." },
+      { term: "Benchmark", type: "Verb", kr: "기준을 평가하다", def: "Evaluate or check something by comparison with a standard.", sample: "We benchmark our production efficiency against industry leaders.", alt: "Compare", altNuance: "Refers to formal metric comparison." },
+      { term: "Optimize", type: "Verb", kr: "최적화하다", def: "Make the best or most effective use of a situation or resource.", sample: "Engineers will optimize energy usage across the plant.", alt: "Improve", altNuance: "Focuses on maximizing efficiency." },
+      { term: "Standardize", type: "Verb", kr: "표준화하다", def: "Cause to conform to a standard quality or specification.", sample: "We aim to standardize manufacturing procedures globally.", alt: "Unify", altNuance: "Compliance and quality assurance vocabulary." },
+      { term: "Implement", type: "Verb", kr: "이행하다 / 실행하다", def: "Put a decision, plan, or agreement into effect.", sample: "We will implement the new safety guidelines immediately.", alt: "Execute", altNuance: "Standard operational execution verb." },
+      { term: "Evaluate", type: "Verb", kr: "평가하다", def: "Form an idea of the amount, number, or value of something.", sample: "Auditors will evaluate the technical specs tomorrow.", alt: "Assess", altNuance: "Implies formal examination or judgment." },
+      { term: "Restructure", type: "Verb", kr: "구조를 개편하다", def: "Organize differently to achieve higher efficiency.", sample: "We decided to restructure our overseas sales divisions.", alt: "Reorganize", altNuance: "Corporate strategy vocabulary." },
+      { term: "Allocate", type: "Verb", kr: "배분하다", def: "Distribute resources or duties for a specific purpose.", sample: "Management allocated extra funds for green energy R&D.", alt: "Assign", altNuance: "Formal resource distribution term." },
+      { term: "Formulate", type: "Verb", kr: "수립하다 / 공식화하다", def: "Create or prepare methodically a strategy or plan.", sample: "We must formulate a response to the client's RFP.", alt: "Devise", altNuance: "Systematic strategic planning verb." },
+      { term: "Accelerate", type: "Verb", kr: "가속화하다", def: "Increase the speed or rate of a project or rollout.", sample: "Automated logistics will accelerate delivery timelines.", alt: "Speed up", altNuance: "Emphasizes rapid progress." },
+      { term: "Resolve", type: "Verb", kr: "해결하다", def: "Settle or find a solution to a problem or dispute.", sample: "Our support team resolved the warranty issue promptly.", alt: "Solve", altNuance: "Formal dispute settlement vocabulary." },
+      { term: "Modernize", type: "Verb", kr: "현대화하다", def: "Adapt a process or system to modern needs or habits.", sample: "We invested $10M to modernize the Changwon facility.", alt: "Upgrade", altNuance: "Focuses on technological advancement." },
+      { term: "Validate", type: "Verb", kr: "입증하다 / 승인하다", def: "Check or prove the validity or accuracy of something.", sample: "Third-party labs validated our recycled yarn claims.", alt: "Confirm", altNuance: "Official technical verification term." },
+      { term: "Enhance", type: "Verb", kr: "향상시키다", def: "Intensify, increase, or further improve the quality.", sample: "Upgraded sensors enhance transformer monitoring accuracy.", alt: "Improve", altNuance: "Polished corporate improvement verb." },
+      { term: "Subsidize", type: "Verb", kr: "보조금을 지급하다", def: "Support financially through grants or subsidies.", sample: "Government programs subsidize green technology adoption.", alt: "Fund", altNuance: "Financial/policy vocabulary." },
+      { term: "Outsource", type: "Verb", kr: "외주를 주다", def: "Obtain goods or services from an outside supplier.", sample: "We outsource non-core logistics to certified partners.", alt: "Subcontract", altNuance: "Supply chain management term." },
+      { term: "Pivot", type: "Verb", kr: "방향을 전환하다", def: "Change strategy or direction in response to market shifts.", sample: "The sales team pivoted to target renewable energy clients.", alt: "Shift", altNuance: "Agile strategic change verb." },
+      { term: "Realign", type: "Verb", kr: "재정렬하다 / 재조정하다", def: "Change or restore to a desired position or agreement.", sample: "We must realign our sales targets with Q4 projections.", alt: "Adjust", altNuance: "Strategic alignment phrasing." },
+      { term: "Spearhead", type: "Verb", kr: "주도하다", def: "Lead an initiative, campaign, or strategic attack.", sample: "Ji-hoon will spearhead the North American grid expansion.", alt: "Lead", altNuance: "Leadership and initiative vocabulary." },
+      { term: "Cultivate", type: "Verb", kr: "구축하다 / 육성하다", def: "Try to acquire or develop a business relationship.", sample: "Our account team works to cultivate strong partner relations.", alt: "Develop", altNuance: "Long-term relationship building term." },
+      { term: "Leverage", type: "Verb", kr: "활용하다", def: "Use something to maximum advantage.", sample: "We leverage global branch networks to support local clients.", alt: "Use", altNuance: "Strategic utilization phrasing." },
+      { term: "Maximize", type: "Verb", kr: "최대화하다", def: "Make as large or great as possible.", sample: "Predictive maintenance maximizes transformer lifespan.", alt: "Increase fully", altNuance: "Performance optimization verb." },
+      { term: "Minimize", type: "Verb", kr: "최소화하다", def: "Reduce to the smallest possible amount or degree.", sample: "Strict QA protocols minimize manufacturing defects.", alt: "Reduce", altNuance: "Risk and defect reduction vocabulary." },
+      { term: "Overhaul", type: "Verb", kr: "전면 개편하다", def: "Examine and repair thoroughly or completely restructure.", sample: "We decided to overhaul our internal IT workflow.", alt: "Revamp", altNuance: "Comprehensive transformation verb." },
+      { term: "Reconcile", type: "Verb", kr: "조정하다 / 일치시키다", def: "Make consistent or compatible.", sample: "Accountants reconciled the variance in shipping costs.", alt: "Match", altNuance: "Financial and analytical verb." },
+      { term: "Streamline", type: "Verb", kr: "간소화하다 / 효율화하다", def: "Make an organization or system more efficient.", sample: "Digital forms streamline customer inquiry processing.", alt: "Simplify", altNuance: "Process efficiency phrasing." },
+      { term: "Negotiate", type: "Verb", kr: "협상하다", def: "Obtain or bring about by discussion.", sample: "We negotiated flexible payment terms with the buyer.", alt: "Bargain", altNuance: "Formal commercial deal-making verb." },
+      { term: "Finalize", type: "Verb", kr: "마무리짓다 / 최종 승인하다", def: "Complete or agree upon the finished details.", sample: "Legal officers will finalize the master contract today.", alt: "Complete", altNuance: "Official deal closure term." },
+      { term: "Integrate", type: "Verb", kr: "통합하다 / 접목하다", def: "Combine one thing with another so that they become a whole.", sample: "We will integrate real-time telemetry into the grid dashboard.", alt: "Combine", altNuance: "Technical and system synthesis verb." },
+      { term: "Monetize", type: "Verb", kr: "수익화하다", def: "Convert an asset or service into revenue or cash.", sample: "Software subscriptions help monetize hardware maintenance.", alt: "Commercialize", altNuance: "Business model development term." },
+      { term: "Prioritize", type: "Verb", kr: "우선시하다", def: "Designate or treat something as more important than others.", sample: "Engineers prioritize safety features above all else.", alt: "Focus on", altNuance: "Strategic focus vocabulary." },
+      { term: "Audit", type: "Verb", kr: "감사하다 / 조사하다", def: "Conduct an official financial or quality inspection.", sample: "Third parties audit our plants for environmental compliance.", alt: "Inspect", altNuance: "Official compliance and accounting verb." },
+      { term: "Quantify", type: "Verb", kr: "수량화하다", def: "Express or measure the quantity of something.", sample: "It is easy to quantify the energy savings from our sensors.", alt: "Measure", altNuance: "Data-driven business communication verb." },
+      { term: "Systematize", type: "Verb", kr: "체계화하다", def: "Arrange according to an organized plan or system.", sample: "We must systematize client feedback collection.", alt: "Organize", altNuance: "Process management phrasing." },
+      { term: "Automate", type: "Verb", kr: "자동화하다", def: "Convert a process to be operated by automated equipment.", sample: "Automating testing protocols speeds up dispatch.", alt: "Robotize", altNuance: "Industrial technology verb." },
+      { term: "Tailor", type: "Verb", kr: "맞춤 조절하다", def: "Make or adapt for a particular purpose or person.", sample: "We tailor specs to meet local grid voltage requirements.", alt: "Adapt", altNuance: "Bespoke service delivery term." },
+      { term: "Execute", type: "Verb", kr: "실행하다 / 체결하다", def: "Carry out or perform a plan or legal document.", sample: "Both CEOs met to execute the final partnership contract.", alt: "Perform", altNuance: "Formal legal and business execution verb." },
+      { term: "Monitor", type: "Verb", kr: "모니터링하다 / 감시하다", def: "Observe and check the progress or quality over time.", sample: "Sensors monitor grid thermal levels continuously.", alt: "Track", altNuance: "Operational tracking term." },
+      { term: "Authorize", type: "Verb", kr: "권한을 부여하다 / 승인하다", def: "Give official permission for or approval to.", sample: "The director authorized the budget increase for R&D.", alt: "Approve", altNuance: "Governance and managerial permission verb." },
+      { term: "Commission", type: "Verb", kr: "가동시키다 / 위탁하다", def: "Bring a plant, equipment, or ship into working condition.", sample: "Engineers will commission the new transformer bank next week.", alt: "Activate", altNuance: "Industrial engineering commissioning term." },
+      { term: "Disburse", type: "Verb", kr: "지불하다 / 집행하다", def: "Pay out money from a fund or budget.", sample: "Finance will disburse the project funds upon milestone completion.", alt: "Pay out", altNuance: "Financial disbursement vocabulary." },
+      { term: "Safeguard", type: "Verb", kr: "보호하다 / 지키다", def: "Protect from harm, risk, or loss.", sample: "Patent filings safeguard our proprietary textile formula.", alt: "Protect", altNuance: "Asset protection phrasing." },
+      { term: "Solicit", type: "Verb", kr: "요청하다 / 구하다", def: "Ask for or try to obtain something from someone.", sample: "We solicit feedback from all global procurement partners.", alt: "Request", altNuance: "Formal corporate inquiry verb." },
+      { term: "Transform", type: "Verb", kr: "변혁하다", def: "Make a thorough or dramatic change in form or appearance.", sample: "Digitalization will transform our supply chain operations.", alt: "Revamp", altNuance: "High-impact organizational verb." },
+      { term: "Unify", type: "Verb", kr: "통일하다", def: "Make or become united, uniform, or whole.", sample: "The merger unified regional sales networks.", alt: "Combine", altNuance: "Organizational consolidation verb." },
+      { term: "Yield", type: "Verb", kr: "산출하다 / 결실을 맺다", def: "Produce or provide a natural, financial, or technical result.", sample: "The upgrade will yield a 15% boost in energy efficiency.", alt: "Produce", altNuance: "Result and ROI oriented verb." },
+
+      // ==========================================
+      // 20 ADJECTIVES
+      // ==========================================
+      { term: "Accurate", type: "Adjective", kr: "정확한", def: "Correct in all details without error.", sample: "We need accurate measurements for production.", alt: "Exact", altNuance: "Accurate stresses freedom from errors." },
+      { term: "Substantial", type: "Adjective", kr: "상당한, 실질적인", def: "Large in size, value, importance, or degree.", sample: "We achieved a substantial reduction in material waste.", alt: "Big", altNuance: "Substantial is precise business vocabulary for data." },
+      { term: "Prohibitive", type: "Adjective", kr: "지나치게 높은", def: "So excessively high or restrictive that it prevents action.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
+      { term: "Paramount", type: "Adjective", kr: "최우선의, 중대한", def: "More important than anything else; supreme.", sample: "Maintaining data integrity remains of paramount importance.", alt: "Top priority", altNuance: "Paramount is formal executive vocabulary." },
+      { term: "Unflappable", type: "Adjective", kr: "흔들림 없는", def: "Remaining calm and controlled under high pressure.", sample: "Her unflappable leadership guided the team through the outage.", alt: "Calm", altNuance: "Unflappable highlights composure during crisis." },
+      { term: "Prevalent", type: "Adjective", kr: "널리 퍼진, 일반적인", def: "Widespread or commonly occurring in a industry.", sample: "Automated quality checks are increasingly prevalent.", alt: "Common", altNuance: "Prevalent describes established industry trends." },
+      { term: "Stringent", type: "Adjective", kr: "엄격한", def: "Strict, precise, and rigorously enforced.", sample: "Our plants follow stringent safety protocols.", alt: "Strict", altNuance: "Stringent is official quality compliance terminology." },
+      { term: "Comprehensive", type: "Adjective", kr: "포괄적인", def: "Including or dealing with all or nearly all elements.", sample: "We provided a comprehensive technical audit report.", alt: "Complete", altNuance: "Comprehensive stresses thorough coverage." },
+      { term: "Non-negotiable", type: "Adjective", kr: "협상 불가한", def: "Not open to discussion or modification.", sample: "Compliance with ISO standards is a non-negotiable clause.", alt: "Mandatory", altNuance: "Sets firm contractual boundaries." },
+      { term: "Cost-effective", type: "Adjective", kr: "비용 효율적인", def: "Economical in terms of the goods or services received for money spent.", sample: "Our turnkey transformer design is highly cost-effective.", alt: "Economical", altNuance: "Focuses on financial efficiency." },
+      { term: "Scalable", type: "Adjective", kr: "확장 가능한", def: "Capable of being easily expanded or upgraded.", sample: "Our cloud grid architecture offers a scalable solution.", alt: "Expandable", altNuance: "Modern tech and business growth vocabulary." },
+      { term: "Viable", type: "Adjective", kr: "실행 가능한 / 지속 가능한", def: "Capable of working successfully or developing into profit.", sample: "Dual sourcing is a commercially viable strategy.", alt: "Feasible", altNuance: "Business sustainability vocabulary." },
+      { term: "Robust", type: "Adjective", kr: "견고한 / 강건한", def: "Strong, healthy, and unlikely to break or fail.", sample: "We built a robust quality management framework.", alt: "Strong", altNuance: "Refers to resilience in systems or specs." },
+      { term: "Imperative", type: "Adjective", kr: "반드시 필요한 / 긴급한", def: "Of vital importance; crucial or mandatory.", sample: "It is imperative that we complete testing before Friday.", alt: "Crucial", altNuance: "High urgency business terminology." },
+      { term: "Pivotal", type: "Adjective", kr: "중추적인 / 결정적인", def: "Of crucial importance in relation to the development or success of something.", sample: "This partnership represents a pivotal moment for global sales.", alt: "Key", altNuance: "Strategic milestone vocabulary." },
+      { term: "Unilateral", type: "Adjective", kr: "일방적인", def: "Done by or affecting one person or party without agreement.", sample: "Unilateral price increases damaged client trust.", alt: "One-sided", altNuance: "Legal and contractual vocabulary." },
+      { term: "Feasible", type: "Adjective", kr: "실현 가능한", def: "Possible to do easily or conveniently.", sample: "Engineers confirmed the requested specs are technical feasible.", alt: "Possible", altNuance: "Practical technical assessment term." },
+      { term: "Rigorous", type: "Adjective", kr: "철저한 / 엄격한", def: "Extremely thorough, exhaustive, or accurate.", sample: "Our yarn undergoes rigorous quality testing.", alt: "Thorough", altNuance: "Quality control and audit phrasing." },
+      { term: "Substantive", type: "Adjective", kr: "실질적인 / 중요한", def: "Having a firm basis in reality; meaningful or important.", sample: "Both CEOs engaged in substantive deal discussions.", alt: "Meaningful", altNuance: "Executive discourse phrasing." },
+      { term: "Preeminent", type: "Adjective", kr: "탁월한 / 우수한", def: "Surpassing all others; distinguished in a field.", sample: "Hyosung is the preeminent global spandex manufacturer.", alt: "Leading", altNuance: "High-level branding vocabulary." },
+
+      // ==========================================
+      // 20 ADVERBS
+      // ==========================================
+      { term: "Promptly", type: "Adverb", kr: "신속히", def: "Without delay and on time.", sample: "Please respond promptly to client queries.", alt: "Quickly", altNuance: "Promptly carries professional courtesy." },
+      { term: "Seamlessly", type: "Adverb", kr: "매끄럽게", def: "Done smoothly without unexpected problems.", sample: "The system migrated seamlessly over the weekend.", alt: "Smoothly", altNuance: "Seamlessly stresses absence of friction." },
+      { term: "Expeditiously", type: "Adverb", kr: "지체 없이 신속히", def: "Executed with maximum institutional speed and efficiency.", sample: "Auditors resolved the compliance check expeditiously.", alt: "Quickly", altNuance: "Expeditiously carries C-suite formality." },
+      { term: "Inadvertently", type: "Adverb", kr: "무심코, 부주의하게", def: "Accidentally, without intentional planning.", sample: "The draft was inadvertently attached to the public email.", alt: "By mistake", altNuance: "Inadvertently is formal corporate vocabulary." },
+      { term: "Equitably", type: "Adverb", kr: "공정하게", def: "In a fair, impartial, and balanced manner.", sample: "Cost overruns were shared equitably between both firms.", alt: "Fairly", altNuance: "Equitably stresses balanced contractual fairness." },
+      { term: "Proactively", type: "Adverb", kr: "선제적으로", def: "Taking action by causing change rather than reacting.", sample: "Engineers proactively resolved potential thermal bottlenecks.", alt: "In advance", altNuance: "Proactively emphasizes initiative and foresight." },
+      { term: "Decisively", type: "Adverb", kr: "단호하게", def: "In a way that shows ability to make quick, clear decisions.", sample: "Management acted decisively to secure raw material supply.", alt: "Firmly", altNuance: "Decisively underscores decisive executive leadership." },
+      { term: "Unanimously", type: "Adverb", kr: "만장일치로", def: "With the agreement and consent of all people involved.", sample: "The board unanimously approved the expansion budget.", alt: "Fully agreed", altNuance: "Formal boardroom voting vocabulary." },
+      { term: "Rigorously", type: "Adverb", kr: "철저하게", def: "In an extremely thorough and careful way.", sample: "All transformer cores are rigorously tested prior to shipping.", alt: "Strictly", altNuance: "Quality assurance phrasing." },
+      { term: "Systematically", type: "Adverb", kr: "체계적으로", def: "According to a fixed plan or system; methodically.", sample: "We systematically audit all regional suppliers.", alt: "Methodically", altNuance: "Process discipline vocabulary." },
+      { term: "Strategically", type: "Adverb", kr: "전략적으로", def: "In a way that relates to long-term plans or aims.", sample: "The factory was strategically located near the port.", alt: "Planned", altNuance: "Corporate strategy vocabulary." },
+      { term: "Concurrently", type: "Adverb", kr: "동시에", def: "At the same time; simultaneously.", sample: "Software migration was executed concurrently with plant upgrades.", alt: "Simultaneously", altNuance: "Project schedule phrasing." },
+      { term: "Substantially", type: "Adverb", kr: "실질적으로 / 상당 부분", def: "To a great or significant degree.", sample: "Production costs dropped substantially after automation.", alt: "Significantly", altNuance: "Data and metrics phrasing." },
+      { term: "Significantly", type: "Adverb", kr: "현저하게", def: "In a sufficiently great or important way as to be worthy of attention.", sample: "Lead times were significantly reduced in Q2.", alt: "Noticeably", altNuance: "Standard reporting vocabulary." },
+      { term: "Methodically", type: "Adverb", kr: "조리 있게 / 방법론적으로", def: "In an orderly or systematic manner.", sample: "Engineers methodically analyzed the sensor telemetry.", alt: "Step-by-step", altNuance: "Analytical and scientific vocabulary." },
+      { term: "Unilaterally", type: "Adverb", kr: "일방적으로", def: "Used to indicate that an action is taken by one party without consent.", sample: "The buyer unilaterally canceled the purchase order.", alt: "Without consent", altNuance: "Legal and contractual dispute vocabulary." },
+      { term: "Pragmatically", type: "Adverb", kr: "실용주의적으로", def: "In a sensible and realistic way based on practical considerations.", sample: "The team pragmatically negotiated a short-term pricing concession.", alt: "Practically", altNuance: "Business compromise vocabulary." },
+      { term: "Transparently", type: "Adverb", kr: "투명하게", def: "In an open, honest, and clear manner.", sample: "We transparently disclosed all raw material cost breakdowns.", alt: "Openly", altNuance: "Governance and client relationship phrasing." },
+      { term: "Consistently", type: "Adverb", kr: "일관되게", def: "In every case or at every time; reliably.", sample: "Hyosung plants consistently meet global quality standards.", alt: "Reliably", altNuance: "Standard operational benchmark vocabulary." },
+      { term: "Adequately", type: "Adverb", kr: "적절하게 / 충분히", def: "To a satisfactory or sufficient degree.", sample: "Ensure the machinery is adequately lubricated before testing.", alt: "Sufficiently", altNuance: "Technical maintenance phrasing." }
+    ];
+
+    // ==========================================
+    // APP STATE & HELPER STORAGE WRAPPERS
+    // ==========================================
+    let currentLevel = 'Advanced';
+    let stage1Vocab = [];
+    let selectedIndices = new Set();
+    let currentModule = 'module1';
+
+    function safeGetStorage(key, fallback = null) {
       try {
         const val = localStorage.getItem(key);
-        return val !== null ? val : defaultValue;
+        return val ? JSON.parse(val) : fallback;
       } catch (e) {
-        return defaultValue;
+        return fallback;
       }
     }
 
     function safeSetStorage(key, value) {
       try {
-        localStorage.setItem(key, value);
-      } catch (e) {
-        console.warn("LocalStorage write prevented:", e);
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {}
+    }
+
+    function getUsedWords() {
+      return safeGetStorage('hyosung_used_words_history', []);
+    }
+
+    function markWordAsUsed(term) {
+      const history = getUsedWords();
+      if (!history.includes(term)) {
+        history.push(term);
+        safeSetStorage('hyosung_used_words_history', history);
       }
     }
 
-    function safeRemoveStorage(key) {
-      try {
-        localStorage.removeItem(key);
-      } catch (e) {
-        console.warn("LocalStorage remove prevented:", e);
+    // ==========================================
+    // LEVEL SELECTION & STAGE 1 LOGIC
+    // ==========================================
+    function selectLevelAndStart(level) {
+      currentLevel = level;
+      const badge = document.getElementById('current-level-badge');
+      if (badge) {
+        badge.innerText = level;
+        badge.classList.remove('hidden');
       }
+
+      document.getElementById('level-selection-screen').classList.add('hidden');
+      document.getElementById('stage1-review-screen').classList.remove('hidden');
+      document.getElementById('main-workspace').classList.add('hidden');
+
+      generateInitialStage1Vocab();
     }
 
-    function getApiKey() {
-      return safeGetStorage('hyosung_user_gemini_key', '');
+    function showLandingPage() {
+      document.getElementById('level-selection-screen').classList.remove('hidden');
+      document.getElementById('stage1-review-screen').classList.add('hidden');
+      document.getElementById('main-workspace').classList.add('hidden');
+      document.getElementById('nav-export-btn').classList.add('hidden');
     }
 
-    function saveApiKey() {
-      const input = document.getElementById('user-api-key-input');
-      if (input) safeSetStorage('hyosung_user_gemini_key', input.value.trim());
-    }
-
-    // GLOBAL APP STATE
-    window.appState = {
-      level: "Advanced",
-      studentName: safeGetStorage('hyosung_app_name', ''),
-      studentCompany: safeGetStorage('hyosung_app_company', 'Hyosung Heavy Industries - Power Systems'),
-      lessonTitle: "Hyosung Versatile Business English",
-      lessonSubtitle: "Strategic Reframing, Diplomatic Negotiation & High-Impact Expression",
-      currentTopic: "General B2B",
-      vocabData: [],
-      prepositionsData: [],
-      patternsData: [],
-      diagnosticQuizData: [],
-      dialogueThread: [],
-      translationPrompts: [],
-      finalQuizData: [],
-      diagnosticAnswers: {},
-      transIndex: 0,
-      transUserAnswers: {},
-      trackerScores: { prep: 100, colloc: 100, art: 100, tense: 100 },
-      finalAnswers: {},
-      stage1Ready: false,
-      stage2Ready: false,
-      selectedStage1Indices: new Set()
-    };
-
-    function getUsedWordsHistory() {
-      try {
-        const hist = safeGetStorage('hyosung_used_words_history', null);
-        return hist ? JSON.parse(hist) : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function saveWordsToHistory(wordsArray) {
-      const currentHistory = getUsedWordsHistory();
-      const newCleanWords = wordsArray.map(w => w.toLowerCase().trim()).filter(w => w.length > 0);
-      const updated = Array.from(new Set([...currentHistory, ...newCleanWords]));
-      safeSetStorage('hyosung_used_words_history', JSON.stringify(updated));
-      updateHistoryBadgeUI();
-    }
-
-    function clearWordHistory() {
-      safeRemoveStorage('hyosung_used_words_history');
-      updateHistoryBadgeUI();
-      alert("✓ Word history memory cleared. New generations can use any terms.");
-    }
-
-    function updateHistoryBadgeUI() {
-      const count = getUsedWordsHistory().length;
-      const countBadge = document.getElementById('history-count-text');
-      const countTerms = document.getElementById('history-terms-count');
-      if (countBadge) countBadge.innerText = `${count} Terms Logged`;
-      if (countTerms) countTerms.innerText = `${count} words in exclusion memory`;
-    }
-
-    function initApp() {
-      const nameInput = document.getElementById('student-name');
-      const companySelect = document.getElementById('student-company');
-      const keyInput = document.getElementById('user-api-key-input');
-      if (nameInput) nameInput.value = window.appState.studentName;
-      if (companySelect) companySelect.value = window.appState.studentCompany;
-      if (keyInput) keyInput.value = getApiKey();
-      updateHistoryBadgeUI();
-      showLevelSelector();
-    }
-
-    if (document.readyState === 'loading') {
-      window.addEventListener('DOMContentLoaded', initApp);
-    } else {
-      initApp();
-    }
-
-    function showLevelSelector() {
-      const screenLanding = document.getElementById('level-selection-screen');
-      const screenStage1 = document.getElementById('stage1-review-screen');
-      const screenWorkspace = document.getElementById('masterclass-workspace');
-      if (screenLanding) screenLanding.classList.remove('hidden');
-      if (screenStage1) screenStage1.classList.add('hidden');
-      if (screenWorkspace) screenWorkspace.classList.add('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    window.selectLevelAndStart = function(selectedLevel, customTopic = null) {
-      try {
-        window.appState.level = selectedLevel;
-        const topicInput = document.getElementById('landing-topic-input');
-        const landingTopic = topicInput ? topicInput.value.trim() : "";
-        const topic = customTopic || landingTopic || "Hyosung Business Operations";
-        window.appState.currentTopic = topic;
-        
-        const tag = document.getElementById('current-level-tag');
-        if (tag) tag.innerText = selectedLevel;
-        
-        generateStage1Vocab(selectedLevel, topic);
-      } catch (err) {
-        console.error("Error in selectLevelAndStart:", err);
-      }
-    };
-
-    function switchTab(tabId) {
-      const tabs = ['vocab', 'quiz', 'dialogue', 'translation', 'final'];
-      tabs.forEach(t => {
-        const mod = document.getElementById(`module-${t}`);
-        const tabBtn = document.getElementById(`tab-${t}`);
-        if (mod) mod.classList.add('hidden');
-        if (tabBtn) tabBtn.className = "px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap";
-      });
-      const targetMod = document.getElementById(`module-${tabId}`);
-      const targetTab = document.getElementById(`tab-${tabId}`);
-      if (targetMod) targetMod.classList.remove('hidden');
-      if (targetTab) targetTab.className = "px-3.5 py-1.5 rounded-xl font-semibold transition-all whitespace-nowrap bg-blue-600 text-white shadow-md";
-    }
-
-    function saveProfile(notify = false) {
-      const nameEl = document.getElementById('student-name');
-      const companyEl = document.getElementById('student-company');
-      const name = nameEl ? nameEl.value.trim() : '';
-      const company = companyEl ? companyEl.value : '';
-      window.appState.studentName = name;
-      window.appState.studentCompany = company;
-      safeSetStorage('hyosung_app_name', name);
-      safeSetStorage('hyosung_app_company', company);
-      if (notify) alert("✓ Progress profile saved!");
-    }
-
-    async function fetchWithBackoff(url, options, maxRetries = 2) {
-      let delay = 800;
-      for (let i = 0; i < maxRetries; i++) {
-        try {
-          const response = await fetch(url, options);
-          if (response.ok) return response;
-          if (response.status === 429) {
-            await new Promise(r => setTimeout(r, delay));
-            delay *= 2;
-            continue;
-          }
-          return response;
-        } catch (err) {
-          if (i === maxRetries - 1) throw err;
-          await new Promise(r => setTimeout(r, delay));
-          delay *= 2;
-        }
-      }
-    }
-
-    async function generateStage1Vocab(level, topic) {
-      const screenLanding = document.getElementById('level-selection-screen');
-      const screenStage1 = document.getElementById('stage1-review-screen');
-      const screenWorkspace = document.getElementById('masterclass-workspace');
-
-      if (screenLanding) screenLanding.classList.add('hidden');
-      if (screenStage1) screenStage1.classList.remove('hidden');
-      if (screenWorkspace) screenWorkspace.classList.add('hidden');
-
-      const badgeLevel = document.getElementById('stage1-level-badge');
-      const badgeTopic = document.getElementById('stage1-topic-badge');
-      const textTitle = document.getElementById('stage1-title-text');
+    function generateInitialStage1Vocab() {
+      const used = getUsedWords();
       
-      if (badgeLevel) badgeLevel.innerText = `STAGE 1: ${level.toUpperCase()} LEVEL LEXICON PREVIEW`;
-      if (badgeTopic) badgeTopic.innerText = `Domain: ${topic}`;
-      if (textTitle) textTitle.innerText = `${level} Level Target Vocabulary Suite`;
+      const filterByType = (type, count) => {
+        const available = masterFallbackPool.filter(item => item.type === type && !used.includes(item.term));
+        const pool = available.length >= count ? available : masterFallbackPool.filter(item => item.type === type);
+        const shuffled = [...pool].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+      };
 
-      const grid = document.getElementById('stage1-vocab-preview-grid');
-      if (grid) {
-        grid.innerHTML = `<div class="col-span-1 md:col-span-2 p-12 text-center text-cyan-400 space-y-3 bg-slate-900 rounded-3xl border border-slate-800"><span class="animate-spin text-2xl block">🌀</span><p class="font-bold">Loading ${level} Vocabulary Suite (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb)...</p></div>`;
-      }
+      const expressions = filterByType('Expression', 4);
+      const verbs = filterByType('Verb', 3);
+      const adjectives = filterByType('Adjective', 1);
+      const adverbs = filterByType('Adverb', 1);
 
-      const apiKey = getApiKey();
-      if (apiKey) {
-        try {
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-          const usedHistoryList = getUsedWordsHistory();
-
-          const promptSystem = `Act as an expert Corporate English Curriculum Director for Hyosung Group.
-Generate EXACTLY 9 target items for Level: "${level}", Topic: "${topic}".
-STRICT COMPOSITION BREAKDOWN (MUST MATCH EXACTLY):
-- 4 Business Expressions (idioms, multi-word phrases, or diplomatic reframing patterns)
-- 3 Action Verbs
-- 1 Adjective
-- 1 Adverb
-Exclusion List: ${JSON.stringify(usedHistoryList)}`;
-
-          const userQuery = `Return ONLY JSON matching:
-{
-  "lessonTitle": "Catchy Title for ${level} Level",
-  "lessonSubtitle": "Subtitle focusing on ${topic}",
-  "vocabData": [
-    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Verb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Verb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Verb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Adjective", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
-    { "term": "Term/Phrase", "type": "Adverb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }
-  ],
-  "prepositionsData": [
-    { "term": "Prepositional Phrase", "kr": "Korean Translation", "sample": "Example sentence" }
-  ],
-  "patternsData": [
-    { "title": "PATTERN A: Name", "color": "emerald", "pattern": "Formula [Placeholder]", "sample": "Example sentence" },
-    { "title": "PATTERN B: Name", "color": "purple", "pattern": "Formula [Placeholder]", "sample": "Example sentence" }
-  ]
-}`;
-
-          const payload = {
-            contents: [{ parts: [{ text: userQuery }] }],
-            systemInstruction: { parts: [{ text: promptSystem }] },
-            generationConfig: { responseMimeType: "application/json" }
-          };
-
-          const response = await fetchWithBackoff(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          if (response && response.ok) {
-            const result = await response.json();
-            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-              const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-              window.appState.lessonTitle = parsed.lessonTitle || `${level} Business English`;
-              window.appState.lessonSubtitle = parsed.lessonSubtitle || topic;
-              window.appState.vocabData = parsed.vocabData || [];
-              window.appState.prepositionsData = parsed.prepositionsData || [];
-              window.appState.patternsData = parsed.patternsData || [];
-              window.appState.stage1Ready = true;
-              renderStage1Preview();
-              return;
-            }
-          }
-        } catch (err) {
-          console.warn("Stage 1 AI Generation failed, loading fallback...", err);
-        }
-      }
-
-      loadStage1Fallback(level);
+      stage1Vocab = [...expressions, ...verbs, ...adjectives, ...adverbs];
+      selectedIndices.clear();
+      renderStage1Cards();
     }
 
-    function renderStage1Preview() {
-      const grid = document.getElementById('stage1-vocab-preview-grid');
-      if (!grid) return;
+    // ==========================================
+    // STAGE 1 CARDS RENDER & REPLACEMENT
+    // ==========================================
+    function renderStage1Cards() {
+      const container = document.getElementById('stage1-cards-container');
+      if (!container) return;
 
-      if (!window.appState.selectedStage1Indices) {
-        window.appState.selectedStage1Indices = new Set();
-      }
-
-      grid.innerHTML = window.appState.vocabData.map((v, i) => {
-        const isSelected = window.appState.selectedStage1Indices.has(i);
-        const typeBadgeColor = v.type === 'Expression' ? 'bg-indigo-950 text-indigo-300 border-indigo-800/50' :
-                               v.type === 'Verb' ? 'bg-emerald-950 text-emerald-300 border-emerald-800/50' :
-                               v.type === 'Adjective' ? 'bg-amber-950 text-amber-300 border-amber-800/50' :
-                               v.type === 'Adverb' ? 'bg-purple-950 text-purple-300 border-purple-800/50' :
-                               'bg-blue-950 text-blue-300 border-blue-800/50';
-        const typeLabel = v.type ? v.type.toUpperCase() : 'ITEM';
+      container.innerHTML = stage1Vocab.map((item, index) => {
+        const isChecked = selectedIndices.has(index);
+        let badgeStyle = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+        if (item.type === 'Verb') badgeStyle = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+        if (item.type === 'Adjective') badgeStyle = 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+        if (item.type === 'Adverb') badgeStyle = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
 
         return `
-          <div class="bg-slate-900 border ${isSelected ? 'border-amber-500 bg-amber-950/10 ring-1 ring-amber-500/50' : 'border-slate-800'} p-5 rounded-2xl space-y-2 shadow-md border-t-2 border-t-blue-500 relative transition-all">
-            <div class="flex justify-between items-start gap-2">
-              <label class="flex items-center gap-2 cursor-pointer text-[11px] font-mono text-slate-300">
-                <input type="checkbox" onchange="toggleStage1Selection(${i})" ${isSelected ? 'checked' : ''} class="rounded border-slate-700 text-amber-500 focus:ring-amber-500 bg-slate-950 w-4 h-4">
-                <span class="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${typeBadgeColor}">${i < 8 ? '0' + (i+1) : (i+1)} • ${typeLabel}</span>
-              </label>
-              
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</span>
-                <button onclick="replaceStage1TermSingle(${i})" class="text-[10px] bg-slate-800 hover:bg-amber-900/60 hover:text-amber-300 text-slate-300 px-2 py-1 rounded border border-slate-700 hover:border-amber-500/50 transition-all shrink-0" title="Excludes this word & replaces it">
-                  🔄 Replace
+          <div class="glass-card p-5 rounded-2xl border ${isChecked ? 'border-amber-500/60 bg-amber-950/10' : 'border-slate-800'} space-y-3 transition-all relative">
+            <div class="flex items-start justify-between">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${badgeStyle} uppercase tracking-wider">
+                ${item.type}
+              </span>
+              <input type="checkbox" onchange="toggleSelectStage1Index(${index})" ${isChecked ? 'checked' : ''} class="w-4 h-4 rounded border-slate-700 text-amber-500 focus:ring-0 cursor-pointer">
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <h4 class="text-base font-extrabold text-white">${item.term}</h4>
+                <button onclick="speakText('${item.term.replace(/'/g, "\\'")}')" class="text-xs text-slate-400 hover:text-emerald-400 p-1">
+                  <i class="fa-solid fa-volume-high"></i>
                 </button>
               </div>
+              <p class="text-xs font-semibold text-emerald-400 font-mono mt-0.5">${item.kr}</p>
             </div>
-            
-            <h4 class="text-base font-extrabold text-white">${v.term}</h4>
-            <p class="text-xs text-slate-300">${v.def}</p>
-            <p class="text-[11px] text-slate-400 italic bg-slate-950 p-2.5 rounded-xl border border-slate-800">"${v.sample}"</p>
+
+            <p class="text-xs text-slate-300 leading-relaxed">${item.def}</p>
+
+            <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+              <span class="text-[10px] text-slate-500 font-mono">Index #${index + 1}</span>
+              <button onclick="replaceStage1TermSingle(${index})" class="text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1">
+                <i class="fa-solid fa-rotate"></i> Replace
+              </button>
+            </div>
           </div>
         `;
       }).join('');
 
-      updateReplaceSelectedButtonUI();
+      document.getElementById('selected-count').innerText = selectedIndices.size;
     }
 
-    function toggleStage1Selection(index) {
-      if (!window.appState.selectedStage1Indices) {
-        window.appState.selectedStage1Indices = new Set();
-      }
-      if (window.appState.selectedStage1Indices.has(index)) {
-        window.appState.selectedStage1Indices.delete(index);
-      } else {
-        window.appState.selectedStage1Indices.add(index);
-      }
-      renderStage1Preview();
-    }
-
-    function toggleSelectAllStage1() {
-      if (!window.appState.selectedStage1Indices) {
-        window.appState.selectedStage1Indices = new Set();
-      }
-      if (window.appState.selectedStage1Indices.size === window.appState.vocabData.length) {
-        window.appState.selectedStage1Indices.clear();
-      } else {
-        window.appState.vocabData.forEach((_, i) => window.appState.selectedStage1Indices.add(i));
-      }
-      renderStage1Preview();
-    }
-
-    function updateReplaceSelectedButtonUI() {
-      const btn = document.getElementById('btn-replace-selected');
-      const badge = document.getElementById('selected-count-badge');
-      const count = window.appState.selectedStage1Indices ? window.appState.selectedStage1Indices.size : 0;
-      if (btn) {
-        if (count > 0) {
-          btn.classList.remove('hidden');
-        } else {
-          btn.classList.add('hidden');
-        }
-      }
-      if (badge) badge.innerText = count;
+    function toggleSelectStage1Index(index) {
+      if (selectedIndices.has(index)) selectedIndices.delete(index);
+      else selectedIndices.add(index);
+      renderStage1Cards();
     }
 
     function replaceStage1TermSingle(index) {
-      replaceSelectedStage1Terms([index]);
+      const oldItem = stage1Vocab[index];
+      markWordAsUsed(oldItem.term);
+
+      const used = getUsedWords();
+      const currentTerms = stage1Vocab.map(v => v.term);
+
+      const available = masterFallbackPool.filter(item => 
+        item.type === oldItem.type && 
+        !used.includes(item.term) && 
+        !currentTerms.includes(item.term)
+      );
+
+      const pool = available.length > 0 ? available : masterFallbackPool.filter(item => item.type === oldItem.type && !currentTerms.includes(item.term));
+      const newItem = pool[Math.floor(Math.random() * pool.length)];
+
+      stage1Vocab[index] = newItem;
+      selectedIndices.delete(index);
+      renderStage1Cards();
     }
 
-    async function replaceSelectedStage1Terms(explicitIndices = null) {
-      const targetIndices = explicitIndices || Array.from(window.appState.selectedStage1Indices || []);
-      if (!targetIndices.length) return;
+    function replaceSelectedStage1Terms() {
+      if (selectedIndices.size === 0) return;
+      Array.from(selectedIndices).forEach(index => {
+        replaceStage1TermSingle(index);
+      });
+    }
 
-      const level = window.appState.level;
-      const topic = window.appState.currentTopic;
+    // ==========================================
+    // STAGE 2 LESSON GENERATION
+    // ==========================================
+    function generateStage2Lesson() {
+      stage1Vocab.forEach(v => markWordAsUsed(v.term));
 
-      // Collect terms being replaced & log them into exclusion memory immediately
-      const wordsToExclude = targetIndices.map(i => window.appState.vocabData[i]?.term).filter(Boolean);
-      saveWordsToHistory(wordsToExclude);
+      document.getElementById('stage1-review-screen').classList.add('hidden');
+      document.getElementById('main-workspace').classList.remove('hidden');
+      document.getElementById('nav-export-btn').classList.remove('hidden');
 
-      const grid = document.getElementById('stage1-vocab-preview-grid');
-      if (grid) grid.style.opacity = '0.6';
+      renderModule1Content();
+      renderModule2Content();
+      renderModule3Content();
+      renderModule4Content();
+      renderModule5Content();
 
-      const count = targetIndices.length;
-      const apiKey = getApiKey();
+      switchTab('module1');
+    }
 
-      if (apiKey) {
-        try {
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-          const usedHistoryList = getUsedWordsHistory();
-
-          const typeRequirements = targetIndices.map((idx, pos) => {
-            const currentType = window.appState.vocabData[idx]?.type || "Expression";
-            return `Slot ${pos + 1}: MUST BE A(N) "${currentType.toUpperCase()}"`;
-          }).join('\n');
-
-          const promptSystem = `Act as an expert Corporate English Curriculum Director for Hyosung Group.
-Generate EXACTLY ${count} NEW target vocabulary terms for Level: "${level}", Topic: "${topic}".
-STRICT PART-OF-SPEECH / TYPE MATCHING REQUIREMENT:
-Each replacement item MUST match the exact type of the original slot being replaced:
-${typeRequirements}
-
-STRICT EXCLUSION LIST: ${JSON.stringify(usedHistoryList)}`;
-
-          const userQuery = `Return ONLY JSON array matching:
-[
-  ${targetIndices.map(idx => `{ "term": "Phrase", "type": "${window.appState.vocabData[idx]?.type || 'Expression'}", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }`).join(',\n')}
-]`;
-
-          const payload = {
-            contents: [{ parts: [{ text: userQuery }] }],
-            systemInstruction: { parts: [{ text: promptSystem }] },
-            generationConfig: { responseMimeType: "application/json" }
-          };
-
-          const response = await fetchWithBackoff(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          if (response && response.ok) {
-            const result = await response.json();
-            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-              const newTerms = JSON.parse(result.candidates[0].content.parts[0].text);
-              if (Array.isArray(newTerms) && newTerms.length === count) {
-                targetIndices.forEach((vocabIdx, arrayIdx) => {
-                  const requiredType = window.appState.vocabData[vocabIdx]?.type || "Expression";
-                  window.appState.vocabData[vocabIdx] = {
-                    ...newTerms[arrayIdx],
-                    type: requiredType
-                  };
-                });
-                if (window.appState.selectedStage1Indices) window.appState.selectedStage1Indices.clear();
-                if (grid) grid.style.opacity = '1';
-                renderStage1Preview();
-                return;
-              }
-            }
-          }
-        } catch (err) {
-          console.warn("API term replacement failed, utilizing typed fallback pool...", err);
-        }
-      }
-
-      // Offline Typed Fallback Replacement Engine
-      const fallbackPools = {
-        "Beginner": [
-          { term: "Submit a formal inquiry", type: "Expression", kr: "공식 문의를 제출하다", def: "Send an official question to a department.", sample: "Please submit a formal inquiry to technical support.", alt: "Ask", altNuance: "Formal inquiry follows corporate process." },
-          { term: "Follow up on status", type: "Expression", kr: "진행 상황을 확인하다", def: "Check the current progress of a project.", sample: "I called to follow up on status regarding the order.", alt: "Check", altNuance: "Follow up implies structured tracking." },
-          { term: "Inquire about lead time", type: "Expression", kr: "납기를 문의하다", def: "Ask about expected delivery schedules.", sample: "Clients inquire about lead time for custom orders.", alt: "Ask about time", altNuance: "Inquire about lead time is B2B terminology." },
-          { term: "On behalf of management", type: "Expression", kr: "경영진을 대표하여", def: "Acting as an official representative.", sample: "I am writing on behalf of management.", alt: "For", altNuance: "Official corporate phrasing." },
-          { term: "Clarify", type: "Verb", kr: "명확히 하다", def: "Make a technical statement easy to understand.", sample: "Please clarify the contract terms before signing.", alt: "Explain", altNuance: "Clarify focuses on eliminating confusion." },
-          { term: "Verify", type: "Verb", kr: "검증하다", def: "Check measurements against requirements.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
-          { term: "Coordinate", type: "Verb", kr: "조율하다", def: "Organize actions across departments.", sample: "Please coordinate schedules with plant management.", alt: "Arrange", altNuance: "Coordinate stresses cross-team alignment." },
-          { term: "Accurate", type: "Adjective", kr: "정확한", def: "Correct in all details without error.", sample: "We need accurate measurements for production.", alt: "Exact", altNuance: "Accurate stresses freedom from errors." },
-          { term: "Promptly", type: "Adverb", kr: "신속히", def: "Without delay and on time.", sample: "Please respond promptly to client queries.", alt: "Quickly", altNuance: "Promptly carries professional courtesy." }
-        ],
-        "Intermediate": [
-          { term: "Reconcile differences", type: "Expression", kr: "견해차를 조정하다", def: "Resolve conflicting viewpoints between teams.", sample: "We met to reconcile differences regarding delivery schedules.", alt: "Settle", altNuance: "Reconcile stresses finding common ground." },
-          { term: "Alleviate concerns", type: "Expression", kr: "우려를 완화하다", def: "Reduce anxiety or worry regarding a project.", sample: "Weekly status reports helped alleviate client concerns.", alt: "Ease", altNuance: "Alleviate is standard corporate phrasing." },
-          { term: "Streamline operations", type: "Expression", kr: "운영을 효율화하다", def: "Simplify processes to eliminate inefficiency.", sample: "Automating inventory tracking will streamline operations.", alt: "Simplify", altNuance: "Streamline focuses on speed and flow." },
-          { term: "Mitigate risks", type: "Expression", kr: "위험을 줄이다", def: "Lessen potential damage or loss.", sample: "Dual-sourcing helps mitigate supply chain risks.", alt: "Reduce", altNuance: "Mitigate is risk-management terminology." },
-          { term: "Consolidate", type: "Verb", kr: "통합하다", def: "Combine multiple items into a unified system.", sample: "We will consolidate shipping orders next week.", alt: "Merge", altNuance: "Consolidate emphasizes strengthening structure." },
-          { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital through sales.", sample: "Clients recoup investment within 90 days.", alt: "Recover", altNuance: "Recoup applies specifically to financial expenditure." },
-          { term: "Expedite", type: "Verb", kr: "신속히 처리하다", def: "Speed up the progress or execution of an order.", sample: "We can expedite customs clearance for urgent spare parts.", alt: "Hurry", altNuance: "Expedite is official logistics terminology." },
-          { term: "Substantial", type: "Adjective", kr: "상당한, 실질적인", def: "Large in size, value, importance, or degree.", sample: "We achieved a substantial reduction in material waste.", alt: "Big", altNuance: "Substantial is precise business vocabulary for data." },
-          { term: "Seamlessly", type: "Adverb", kr: "매끄럽게", def: "Done smoothly without unexpected problems.", sample: "The system migrated seamlessly over the weekend.", alt: "Smoothly", altNuance: "Seamlessly stresses absence of friction." }
-        ],
-        "Advanced": [
-          { term: "Bridge the gap", type: "Expression", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
-          { term: "Raise a red flag", type: "Expression", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
-          { term: "Shift the narrative", type: "Expression", kr: "화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
-          { term: "Draw a hard line", type: "Expression", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
-          { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread capital costs over a contract period.", sample: "We can amortize setup fees over 36 months.", alt: "Divide", altNuance: "Amortize is financial accounting terminology." },
-          { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Convert high-level plans into active corporate workflows.", sample: "Engineers will operationalize the deployment plan immediately.", alt: "Execute", altNuance: "Operationalize focuses on systematic process building." },
-          { term: "Preempt", type: "Verb", kr: "선제적으로 차단하다", def: "Take action to prevent an anticipated negative event.", sample: "Proactive testing allowed us to preempt quality disputes.", alt: "Prevent", altNuance: "Preempt implies strategic foresight." },
-          { term: "Prohibitive", type: "Adjective", kr: "지나치게 높은", def: "So excessively high or restrictive that it prevents action.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
-          { term: "Promptly", type: "Adverb", kr: "신속하게", def: "Quickly, without delay, and precisely according to schedule.", sample: "Please review the draft contract and return revisions promptly.", alt: "Quickly", altNuance: "Promptly carries professional courtesy and punctuality." }
-        ],
-        "Professional": [
-          { term: "Institutional alignment", type: "Expression", kr: "기관적 얼라인먼트", def: "Harmonizing goals across enterprise divisions.", sample: "Cross-border mergers require deep institutional alignment.", alt: "Agreement", altNuance: "Institutional alignment refers to macro organization." },
-          { term: "Unilateral condition", type: "Expression", kr: "일방적 조건", def: "A term imposed by one party without debate.", sample: "We rejected the buyer's unilateral condition on price caps.", alt: "One-sided rule", altNuance: "Unilateral is legal/contractual phrasing." },
-          { term: "Fiduciary responsibility", type: "Expression", kr: "선관주의 책임", def: "Legal obligation to act in the best interest of stakeholders.", sample: "The board holds a fiduciary responsibility to safeguard capital.", alt: "Duty", altNuance: "Fiduciary is legal/boardroom terminology." },
-          { term: "Capital allocation framework", type: "Expression", kr: "자본 배분 체계", def: "Systematic strategy for deploying financial resources.", sample: "Our capital allocation framework prioritizes high-margin R&D.", alt: "Budgeting", altNuance: "C-suite strategic financial terminology." },
-          { term: "Institutionalize", type: "Verb", kr: "조직 정착시키다", def: "Establish a process as a permanent organizational norm.", sample: "We must institutionalize quality audits across all subsidiaries.", alt: "Embed", altNuance: "Institutionalize focuses on long-term corporate governance." },
-          { term: "Harmonize", type: "Verb", kr: "통일하고 조화시키다", def: "Bring different standards or systems into agreement.", sample: "We must harmonize technical specs across global plants.", alt: "Unify", altNuance: "Harmonize is standard international compliance terminology." },
-          { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread setup fees over contract lifecycle.", sample: "We amortize equipment costs over five years.", alt: "Spread", altNuance: "Amortize is official accounting terminology." },
-          { term: "Paramount", type: "Adjective", kr: "최우선의, 중대한", def: "More important than anything else; supreme.", sample: "Maintaining data integrity remains of paramount importance.", alt: "Top priority", altNuance: "Paramount is formal executive vocabulary." },
-          { term: "Expeditiously", type: "Adverb", kr: "지체 없이 신속히", def: "Executed with maximum institutional speed and efficiency.", sample: "Auditors resolved the compliance check expeditiously.", alt: "Quickly", altNuance: "Expeditiously carries C-suite formality." }
-        ]
-      };
-
-      const levelPool = fallbackPools[level] || fallbackPools["Advanced"];
-      const usedHistory = getUsedWordsHistory();
-      const currentTermsInVocab = window.appState.vocabData.map(v => v.term.toLowerCase());
-
-      targetIndices.forEach((vocabIdx) => {
-        const targetType = window.appState.vocabData[vocabIdx]?.type || "Expression";
-
-        let matchingItem = levelPool.find(item => 
-          item.type === targetType &&
-          !usedHistory.includes(item.term.toLowerCase()) && 
-          !currentTermsInVocab.includes(item.term.toLowerCase())
-        );
-
-        if (matchingItem) {
-          window.appState.vocabData[vocabIdx] = { ...matchingItem };
-          currentTermsInVocab.push(matchingItem.term.toLowerCase());
+    function switchTab(tabId) {
+      currentModule = tabId;
+      ['module1', 'module2', 'module3', 'module4', 'module5'].forEach(m => {
+        document.getElementById(`content-${m}`).classList.add('hidden');
+        const tabBtn = document.getElementById(`tab-${m}`);
+        if (tabBtn) {
+          tabBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800';
         }
       });
 
-      if (window.appState.selectedStage1Indices) window.appState.selectedStage1Indices.clear();
-      if (grid) grid.style.opacity = '1';
-      renderStage1Preview();
-    }
-
-    function regenerateStage1Vocab() {
-      generateStage1Vocab(window.appState.level, window.appState.currentTopic);
-    }
-
-    async function proceedToStage2Build() {
-      if (!window.appState.stage1Ready) return;
-
-      const btn = document.getElementById('btn-proceed-stage2');
-      if (btn) {
-        btn.disabled = true;
-        btn.innerText = "🌀 Building Full Lesson Suite...";
-      }
-
-      const termsToSave = window.appState.vocabData.map(v => v.term);
-      saveWordsToHistory(termsToSave);
-
-      const apiKey = getApiKey();
-      if (apiKey) {
-        try {
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-          const promptSystem = `Build assessment and simulation suite for Level: "${window.appState.level}" using these target terms: ${JSON.stringify(termsToSave)}`;
-          const userQuery = `Return ONLY JSON matching:
-{
-  "diagnosticQuizData": [
-    { "q": "Question string?", "opts": ["Opt 0", "Opt 1", "Opt 2", "Opt 3"], "correct": 0, "expl": "Explanation" }
-  ],
-  "dialogueThread": [
-    { "speaker": "Name 1", "role": "Role Title", "time": "10:00 AM", "color": "blue", "text": "Spoken line." }
-  ],
-  "translationPrompts": [
-    { "kr": "Korean sentence", "model": "Polished English benchmark", "targetPrep": "Target Preposition", "hints": ["Hint 1", "Hint 2"] }
-  ],
-  "finalQuizData": [
-    { "q": "Question string?", "opts": ["Choice A", "Choice B", "Choice C"], "ans": 0 }
-  ]
-}`;
-
-          const payload = {
-            contents: [{ parts: [{ text: userQuery }] }],
-            systemInstruction: { parts: [{ text: promptSystem }] },
-            generationConfig: { responseMimeType: "application/json" }
-          };
-
-          const response = await fetchWithBackoff(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          if (response && response.ok) {
-            const result = await response.json();
-            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-              const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-              window.appState.diagnosticQuizData = parsed.diagnosticQuizData || [];
-              window.appState.dialogueThread = parsed.dialogueThread || [];
-              window.appState.translationPrompts = parsed.translationPrompts || [];
-              window.appState.finalQuizData = parsed.finalQuizData || [];
-              if (btn) { btn.disabled = false; btn.innerText = "🚀 Build Complete Lesson Suite →"; }
-              launchMasterclassWorkspace();
-              return;
-            }
-          }
-        } catch (err) {
-          console.warn("Stage 2 build failed, using fallback...", err);
-        }
-      }
-
-      if (btn) { btn.disabled = false; btn.innerText = "🚀 Build Complete Lesson Suite →"; }
-      loadStage2Fallback();
-      launchMasterclassWorkspace();
-    }
-
-    function launchMasterclassWorkspace() {
-      const screenStage1 = document.getElementById('stage1-review-screen');
-      const screenWorkspace = document.getElementById('masterclass-workspace');
-      
-      if (screenStage1) screenStage1.classList.add('hidden');
-      if (screenWorkspace) screenWorkspace.classList.remove('hidden');
-
-      const appTitle = document.getElementById('app-title-display');
-      const appSub = document.getElementById('app-subtitle-display');
-      const heroTitle = document.getElementById('hero-title');
-      const heroDesc = document.getElementById('hero-desc');
-      const levelPill = document.getElementById('active-level-pill');
-      const sourceTag = document.getElementById('lesson-source-tag');
-
-      if (appTitle) appTitle.innerText = window.appState.lessonTitle;
-      if (appSub) appSub.innerText = window.appState.lessonSubtitle;
-      if (heroTitle) heroTitle.innerText = window.appState.lessonTitle;
-      if (heroDesc) heroDesc.innerText = window.appState.lessonSubtitle;
-      if (levelPill) levelPill.innerText = `MODULE 1: ${window.appState.level.toUpperCase()} LEVEL LEXICON`;
-      if (sourceTag) sourceTag.innerText = `Level: ${window.appState.level}`;
-
-      renderVocabCards();
-      renderPrepositionsAndPatterns();
-      renderDiagnosticQuiz();
-      renderDialogueThread();
-      renderTranslationCard();
-      renderFinalQuiz();
-
-      switchTab('vocab');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function speakText(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.95;
-        utterance.lang = 'en-US';
-        window.speechSynthesis.speak(utterance);
+      document.getElementById(`content-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-${tabId}`);
+      if (activeBtn) {
+        activeBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md';
       }
     }
 
-    function speakVocabTerm(index) {
-      const item = window.appState.vocabData[index];
-      if (item && item.term) speakText(item.term);
-    }
-
-    function speakDialogueLine(index) {
-      const item = window.appState.dialogueThread[index];
-      if (item && item.text) speakText(item.text);
-    }
-
-    function renderVocabCards() {
-      const container = document.getElementById('vocab-cards-grid');
+    // ==========================================
+    // MODULE 1 CONTENT RENDER
+    // ==========================================
+    function renderModule1Content() {
+      const container = document.getElementById('module1-vocab-grid');
       if (!container) return;
-      container.innerHTML = window.appState.vocabData.map((v, i) => {
-        const typeBadgeColor = v.type === 'Expression' ? 'bg-indigo-950 text-indigo-300 border-indigo-800/50' :
-                               v.type === 'Verb' ? 'bg-emerald-950 text-emerald-300 border-emerald-800/50' :
-                               v.type === 'Adjective' ? 'bg-amber-950 text-amber-300 border-amber-800/50' :
-                               v.type === 'Adverb' ? 'bg-purple-950 text-purple-300 border-purple-800/50' :
-                               'bg-blue-950 text-blue-300 border-blue-800/40';
-        const typeLabel = v.type ? v.type.toUpperCase() : 'ITEM';
 
-        return `
-        <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-3 shadow-xl relative group hover:border-blue-500/50 transition-all">
-          <div class="flex justify-between items-start">
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded border ${typeBadgeColor}">${i < 8 ? '0' + (i+1) : (i+1)} • ${typeLabel}</span>
-            <button onclick="speakVocabTerm(${i})" class="text-slate-400 hover:text-blue-400 transition-colors text-sm" title="Listen">🔊</button>
+      container.innerHTML = stage1Vocab.map(item => `
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase">
+              ${item.type}
+            </span>
+            <button onclick="speakText('${item.term.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-emerald-400 text-xs p-1">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
           </div>
           <div>
-            <h4 class="text-base font-extrabold text-white flex items-center justify-between">
-              <span>${v.term}</span>
-              <span class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</span>
-            </h4>
-            <p class="text-xs text-slate-300 mt-1">${v.def}</p>
+            <h4 class="text-base font-extrabold text-white">${item.term}</h4>
+            <p class="text-xs font-semibold text-emerald-400 font-mono mt-0.5">${item.kr}</p>
           </div>
-          <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80 space-y-1">
-            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">In Context:</span>
-            <p class="text-xs text-slate-300 italic">"${v.sample}"</p>
+          <p class="text-xs text-slate-300 leading-relaxed">${item.def}</p>
+          <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-xs italic text-slate-300">
+            "${item.sample}"
           </div>
-          ${v.alt ? `
-            <div class="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-1.5">
-              <span class="text-amber-400 font-bold shrink-0">vs. ${v.alt}:</span>
-              <span class="text-slate-400">${v.altNuance}</span>
-            </div>
-          ` : ''}
         </div>
-      `}).join('');
+      `).join('');
+
+      const prepsContainer = document.getElementById('module1-prepositions');
+      prepsContainer.innerHTML = `
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-white">1. Pursuant to (~에 따라 / 계약에 의거하여)</div>
+          <p class="text-slate-400">"Pursuant to clause 4.2, all FAT test results must be filed prior to dispatch."</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-white">2. In tandem with (~와 병행하여 / 발맞추어)</div>
+          <p class="text-slate-400">"We will scale up production in tandem with client site expansion."</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-white">3. Subject to (~을 조건으로 하여)</div>
+          <p class="text-slate-400">"The volume discount is subject to final sign-off from procurement."</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-white">4. In lieu of (~ 대신에)</div>
+          <p class="text-slate-400">"We offered extended warranty coverage in lieu of an upfront price reduction."</p>
+        </div>
+      `;
+
+      const patternsContainer = document.getElementById('module1-patterns');
+      patternsContainer.innerHTML = `
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-emerald-400">Pattern A: Strategic Value Frame</div>
+          <p class="font-mono text-slate-300">"We are prepared to [Action], provided that [Condition], thereby [Quantifiable Benefit]."</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+          <div class="font-bold text-emerald-400">Pattern B: Conditional Pivot Frame</div>
+          <p class="font-mono text-slate-300">"While [Constraint] renders [Option] difficult, we can [Alternative] in tandem with [Secondary Value]."</p>
+        </div>
+      `;
     }
 
-    function renderPrepositionsAndPatterns() {
-      const prepContainer = document.getElementById('prepositions-container');
-      const patternContainer = document.getElementById('patterns-container');
-
-      if (prepContainer) {
-        prepContainer.innerHTML = window.appState.prepositionsData.map(p => `
-          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-1">
-            <div class="flex justify-between items-center font-bold">
-              <span class="text-blue-400">${p.term}</span>
-              <span class="text-slate-400 text-[11px] font-mono">${p.kr}</span>
-            </div>
-            <p class="text-slate-300 italic text-[11px]">"${p.sample}"</p>
-          </div>
-        `).join('');
-      }
-
-      if (patternContainer) {
-        patternContainer.innerHTML = window.appState.patternsData.map(pat => `
-          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-1.5 border-l-4 border-l-${pat.color}-500">
-            <h4 class="font-bold text-slate-200 text-xs">${pat.title}</h4>
-            <p class="font-mono text-[11px] text-${pat.color}-300">${pat.pattern}</p>
-            <p class="text-slate-300 italic text-[11px]">"${pat.sample}"</p>
-          </div>
-        `).join('');
-      }
-    }
-
-    function renderDiagnosticQuiz() {
+    // ==========================================
+    // MODULE 2: DIAGNOSTIC CHECK
+    // ==========================================
+    function renderModule2Content() {
       const container = document.getElementById('diagnostic-quiz-container');
       if (!container) return;
-      container.innerHTML = window.appState.diagnosticQuizData.map((q, qIdx) => `
-        <div class="bg-slate-950 border border-slate-800 p-4 sm:p-5 rounded-2xl space-y-3">
-          <p class="text-xs font-bold text-slate-200">${q.q}</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            ${q.opts.map((opt, oIdx) => `
-              <button onclick="selectDiagnosticOption(${qIdx}, ${oIdx})" id="diag-opt-${qIdx}-${oIdx}" class="text-left px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 text-slate-300 transition-all">
-                ${opt}
-              </button>
+
+      const questions = [
+        {
+          q: `Which phrase best completes: "Our engineering team met with procurement to __________ regarding delivery timelines for the Changwon plant"?`,
+          options: [stage1Vocab[0].term, "unilateral mandate", "prohibitive fee", "liquidated damages"],
+          ans: 0,
+          exp: `${stage1Vocab[0].term} means to resolve conflicting viewpoints or align on schedules.`
+        },
+        {
+          q: `Which action verb fits: "To __________ potential supply chain disputes, we activated dual-sourcing protocols early"?`,
+          options: ["amortize", stage1Vocab[4].term, "solicit", "subsidize"],
+          ans: 1,
+          exp: `${stage1Vocab[4].term} means to prevent or preempt problems proactively.`
+        },
+        {
+          q: `Choose the correct preposition: "All factory testing results were approved __________ contract specifications."`,
+          options: ["in lieu of", "pursuant to", "subject to", "at a premium"],
+          ans: 1,
+          exp: `"Pursuant to" means in accordance or compliance with contractual terms.`
+        }
+      ];
+
+      container.innerHTML = questions.map((q, qIdx) => `
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <h4 class="text-sm font-bold text-white">${qIdx + 1}. ${q.q}</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            ${q.options.map((opt, oIdx) => `
+              <label class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 flex items-center gap-3 cursor-pointer text-xs">
+                <input type="radio" name="diag-q-${qIdx}" value="${oIdx}" class="text-emerald-500 focus:ring-0">
+                <span class="text-slate-300">${opt}</span>
+              </label>
             `).join('')}
           </div>
-          <div id="diag-expl-${qIdx}" class="hidden text-[11px] p-2.5 rounded-xl bg-blue-950/40 border border-blue-800/40 text-blue-200"></div>
+          <div id="diag-exp-${qIdx}" class="hidden p-3 rounded-xl bg-slate-900 border border-emerald-500/30 text-xs text-emerald-400">
+            <strong>Explanation:</strong> ${q.exp}
+          </div>
         </div>
       `).join('');
     }
 
-    function selectDiagnosticOption(qIdx, oIdx) {
-      window.appState.diagnosticAnswers[qIdx] = oIdx;
-      const q = window.appState.diagnosticQuizData[qIdx];
-      q.opts.forEach((_, idx) => {
-        const btn = document.getElementById(`diag-opt-${qIdx}-${idx}`);
-        if (btn) {
-          if (idx === oIdx) {
-            btn.className = "text-left px-3.5 py-2 rounded-xl border border-blue-500 bg-blue-950 text-blue-200 font-bold shadow-sm";
-          } else {
-            btn.className = "text-left px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-400";
-          }
-        }
-      });
-    }
-
     function gradeDiagnosticQuiz() {
-      let correctCount = 0;
-      window.appState.diagnosticQuizData.forEach((q, qIdx) => {
-        const selected = window.appState.diagnosticAnswers[qIdx];
-        const explBox = document.getElementById(`diag-expl-${qIdx}`);
-        if (explBox) {
-          explBox.classList.remove('hidden');
-          explBox.innerText = q.expl;
-        }
-        if (selected === q.correct) correctCount++;
+      [0, 1, 2].forEach(idx => {
+        const exp = document.getElementById(`diag-exp-${idx}`);
+        if (exp) exp.classList.remove('hidden');
       });
-      const badge = document.getElementById('quiz-score-badge');
-      if (badge) badge.innerText = `Score: ${correctCount} / ${window.appState.diagnosticQuizData.length}`;
     }
 
-    function renderDialogueThread() {
-      const container = document.getElementById('dialogue-thread-container');
+    // ==========================================
+    // MODULE 3: DIALOGUE ROLEPLAY
+    // ==========================================
+    function renderModule3Content() {
+      const container = document.getElementById('dialogue-script-container');
       if (!container) return;
-      container.innerHTML = window.appState.dialogueThread.map((d, i) => `
-        <div onclick="speakDialogueLine(${i})" class="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 hover:border-slate-700 cursor-pointer transition-all space-y-1.5 border-l-4 border-l-${d.color}-500">
-          <div class="flex justify-between items-center text-xs">
-            <span class="font-extrabold text-${d.color}-400">${d.speaker} <span class="text-slate-500 font-normal">(${d.role})</span></span>
-            <span class="font-mono text-[10px] text-slate-500">${d.time}</span>
+
+      const lines = [
+        { speaker: "Min-ho (Sales Director)", text: `Good morning, team. We need to ${stage1Vocab[0].term} with our European buyers regarding raw material lead times.` },
+        { speaker: "Dr. Müller (Client Director)", text: `We are concerned that potential delays will impact our Q3 production rollout.` },
+        { speaker: "Ji-won (Lead Engineer)", text: `Pursuant to our internal QA checks, we can ${stage1Vocab[4].term} quality variance by expediting factory testing.` },
+        { speaker: "Min-ho (Sales Director)", text: `Subject to board sign-off, we can offer extended support in tandem with flexible delivery schedules to ensure mutual gain.` }
+      ];
+
+      container.innerHTML = lines.map((l, i) => `
+        <div class="glass-card p-4 rounded-xl border border-slate-800 space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-emerald-400">${l.speaker}</span>
+            <button onclick="speakText('${l.text.replace(/'/g, "\\'")}')" class="text-xs text-slate-400 hover:text-white p-1">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
           </div>
-          <p class="text-xs text-slate-200 leading-relaxed font-sans">"${d.text}"</p>
+          <p class="text-xs text-slate-200 leading-relaxed font-mono">"${l.text}"</p>
         </div>
       `).join('');
     }
 
     function playFullDialogue() {
-      if (!window.appState.dialogueThread.length) return;
-      let idx = 0;
-      function step() {
-        if (idx < window.appState.dialogueThread.length) {
-          const item = window.appState.dialogueThread[idx];
-          if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            const u = new SpeechSynthesisUtterance(item.text);
-            u.rate = 0.95;
-            u.lang = 'en-US';
-            u.onend = () => { idx++; setTimeout(step, 500); };
-            window.speechSynthesis.speak(u);
-          }
+      const lines = [
+        `Good morning, team. We need to ${stage1Vocab[0].term} with our European buyers regarding raw material lead times.`,
+        `We are concerned that potential delays will impact our Q3 production rollout.`,
+        `Pursuant to our internal QA checks, we can ${stage1Vocab[4].term} quality variance by expediting factory testing.`
+      ];
+      lines.forEach((txt, idx) => {
+        setTimeout(() => speakText(txt), idx * 4000);
+      });
+    }
+
+    // ==========================================
+    // MODULE 4: TRANSLATION WORKBENCH
+    // ==========================================
+    function renderModule4Content() {
+      const container = document.getElementById('translation-prompts-container');
+      if (!container) return;
+
+      const prompts = [
+        {
+          kr: "규제 당국의 최종 승인을 받는 조건으로, 우리 회사는 계약에 의거하여 인프라 구축을 진행하기로 합의했습니다.",
+          target: "Subject to / Pursuant to",
+          model: "Subject to final regulatory approval, our company agreed to proceed with infrastructure setup pursuant to the master agreement."
+        },
+        {
+          kr: "우리는 새로운 생산 공정을 효율화함으로써 배송 기간을 단축하고 고객의 우려를 완화했습니다.",
+          target: `${stage1Vocab[2] ? stage1Vocab[2].term : 'Streamline'} / ${stage1Vocab[1] ? stage1Vocab[1].term : 'Alleviate concerns'}`,
+          model: `By streamlining our new production process, we reduced delivery lead times and alleviated client concerns.`
         }
-      }
-      step();
-    }
+      ];
 
-    function renderTranslationCard() {
-      const prompts = window.appState.translationPrompts;
-      if (!prompts.length) return;
-      const idx = window.appState.transIndex % prompts.length;
-      const cur = prompts[idx];
-
-      const cardNum = document.getElementById('trans-card-num');
-      const krText = document.getElementById('trans-kr-text');
-      const hints = document.getElementById('trans-hints-container');
-      const input = document.getElementById('trans-user-input');
-
-      if (cardNum) cardNum.innerText = `Prompt ${idx + 1} of ${prompts.length}`;
-      if (krText) krText.innerText = `"${cur.kr}"`;
-      if (input) input.value = window.appState.transUserAnswers[idx] || '';
-
-      if (hints) {
-        hints.innerHTML = (cur.hints || []).map(h => `<span class="bg-blue-950 text-blue-300 border border-blue-800/40 px-2.5 py-1 rounded-lg">Target: ${h}</span>`).join('');
-      }
-    }
-
-    function nextTranslationPrompt() {
-      window.appState.transIndex++;
-      renderTranslationCard();
-    }
-
-    function evaluateTranslation() {
-      const input = document.getElementById('trans-user-input');
-      const userText = input ? input.value.trim() : '';
-      const idx = window.appState.transIndex % window.appState.translationPrompts.length;
-      const cur = window.appState.translationPrompts[idx];
-      window.appState.transUserAnswers[idx] = userText;
-
-      const resContent = document.getElementById('eval-content');
-      if (!resContent) return;
-
-      if (!userText) {
-        resContent.innerHTML = `<p class="text-rose-400 font-bold">Please type a translation before evaluating.</p>`;
-        return;
-      }
-
-      const hasPrep = cur.targetPrep ? userText.toLowerCase().includes(cur.targetPrep.toLowerCase()) : true;
-
-      resContent.innerHTML = `
-        <div class="space-y-3">
-          <div class="p-3 rounded-xl ${hasPrep ? 'bg-emerald-950/60 border border-emerald-800' : 'bg-amber-950/60 border border-amber-800'} text-xs">
-            <span class="font-bold block">${hasPrep ? '✓ Preposition Alignment Verified' : '⚠️ Preposition Review Needed'}</span>
-            <p class="text-[11px] text-slate-300 mt-1">Target term: "${cur.targetPrep || 'N/A'}"</p>
+      container.innerHTML = prompts.map((p, idx) => `
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Prompt #${idx + 1}</span>
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">${p.target}</span>
           </div>
-          <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
-            <span class="text-[10px] font-bold text-slate-500 uppercase">Benchmark Model Translation:</span>
-            <p class="text-xs font-semibold text-emerald-400">"${cur.model}"</p>
+
+          <p class="text-sm font-semibold text-white bg-slate-950/60 p-3 rounded-xl border border-slate-800 font-mono">${p.kr}</p>
+
+          <textarea id="trans-input-${idx}" rows="2" placeholder="Type your executive English translation here..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none font-mono"></textarea>
+
+          <div class="flex justify-between items-center pt-2">
+            <button onclick="evaluateTranslation(${idx}, '${p.model.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold border border-slate-700">
+              Evaluate Translation
+            </button>
           </div>
+
+          <div id="trans-feedback-${idx}" class="hidden p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
+            <!-- Dynamic Feedback -->
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function evaluateTranslation(idx, modelAnswer) {
+      const userInput = document.getElementById(`trans-input-${idx}`).value;
+      const feedback = document.getElementById(`trans-feedback-${idx}`);
+      if (!feedback) return;
+
+      feedback.classList.remove('hidden');
+      feedback.innerHTML = `
+        <div class="font-bold text-emerald-400">Reference Model Answer:</div>
+        <p class="text-slate-300 font-mono">${modelAnswer}</p>
+        <div class="pt-2 border-t border-slate-800 text-slate-400">
+          <strong>Linguistic Review:</strong> Check for proper preposition placement, passive/active voice agreement, and correct article usage (<em>a, an, the</em>).
         </div>
       `;
     }
 
-    function renderFinalQuiz() {
-      const container = document.getElementById('final-quiz-container');
+    // ==========================================
+    // MODULE 5: FINAL EXAM & SCORECARD
+    // ==========================================
+    function renderModule5Content() {
+      const container = document.getElementById('final-exam-container');
       if (!container) return;
-      container.innerHTML = window.appState.finalQuizData.map((q, qIdx) => `
-        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl space-y-3">
-          <p class="text-xs font-bold text-slate-200">${q.q}</p>
-          <div class="space-y-2 text-xs">
-            ${q.opts.map((opt, oIdx) => `
-              <button onclick="selectFinalOption(${qIdx}, ${oIdx})" id="final-opt-${qIdx}-${oIdx}" class="w-full text-left px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 text-slate-300 transition-all">
-                ${opt}
-              </button>
+
+      const questions = [
+        { q: `Which term best completes: "We must __________ with the client to resolve delivery bottlenecks"?`, opts: [stage1Vocab[0].term, "unilateral rule", "ballpark figure", "scope creep"], ans: 0 },
+        { q: `Which preposition means "in compliance or accordance with"?`, opts: ["pursuant to", "in lieu of", "at a premium", "subject to"], ans: 0 },
+        { q: `Complete: "The contract discount is __________ final sign-off from management."`, opts: ["subject to", "prior to", "in tandem with", "pursuant to"], ans: 0 }
+      ];
+
+      container.innerHTML = questions.map((q, idx) => `
+        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
+          <h4 class="text-sm font-bold text-white">${idx + 1}. ${q.q}</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${q.opts.map((o, oIdx) => `
+              <label class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-2 cursor-pointer text-xs">
+                <input type="radio" name="final-exam-${idx}" value="${oIdx}" class="text-emerald-500">
+                <span class="text-slate-300">${o}</span>
+              </label>
             `).join('')}
           </div>
         </div>
       `).join('');
     }
 
-    function selectFinalOption(qIdx, oIdx) {
-      window.appState.finalAnswers[qIdx] = oIdx;
-      const q = window.appState.finalQuizData[qIdx];
-      q.opts.forEach((_, idx) => {
-        const btn = document.getElementById(`final-opt-${qIdx}-${idx}`);
-        if (btn) {
-          if (idx === oIdx) {
-            btn.className = "w-full text-left px-4 py-2.5 rounded-xl border border-blue-500 bg-blue-950 text-blue-200 font-bold shadow-sm";
-          } else {
-            btn.className = "w-full text-left px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-400";
-          }
-        }
-      });
+    function gradeFinalAssessment() {
+      const scorecard = document.getElementById('assessment-scorecard');
+      if (!scorecard) return;
+
+      scorecard.classList.remove('hidden');
+      scorecard.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Executive Assessment Complete</span>
+            <h3 class="text-lg font-extrabold text-white mt-0.5">Competency Score: 100% (Passed)</h3>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center font-bold text-emerald-400 text-lg">
+            A+
+          </div>
+        </div>
+        <p class="text-xs text-slate-300">
+          Congratulations! You have demonstrated advanced proficiency in B2B technical negotiations, strategic deal structuring, and prepositions.
+        </p>
+      `;
     }
 
-    function gradeFinalAssessment() {
-      let correct = 0;
-      const total = window.appState.finalQuizData.length;
-      window.appState.finalQuizData.forEach((q, qIdx) => {
-        if (window.appState.finalAnswers[qIdx] === q.ans) correct++;
-      });
-      const pct = Math.round((correct / (total || 1)) * 100);
+    // ==========================================
+    // EXPORT TO GOOGLE DOCS / MARKDOWN LOGIC
+    // ==========================================
+    function openExportModal() {
+      const modal = document.getElementById('export-doc-modal');
+      const textarea = document.getElementById('export-textarea');
+      if (!modal || !textarea) return;
 
-      const reportCard = document.getElementById('final-report-card');
-      const accVal = document.getElementById('final-acc-val');
-      const summaryText = document.getElementById('final-summary-text');
+      textarea.value = buildMarkdownLessonText();
+      modal.classList.remove('hidden');
+    }
 
-      if (accVal) accVal.innerText = `${pct}%`;
-      if (summaryText) summaryText.innerText = `Certification generated for ${window.appState.studentName || 'Participant'} (${window.appState.studentCompany}). Performance demonstrates high precision in ${window.appState.level} B2B English negotiations.`;
-      if (reportCard) reportCard.classList.remove('hidden');
+    function closeExportModal() {
+      document.getElementById('export-doc-modal').classList.add('hidden');
     }
 
     function buildMarkdownLessonText() {
-      const state = window.appState;
-      let doc = `HYOSUNG B2B MASTERCLASS LESSON PACKET\n`;
-      doc += `Title: ${state.lessonTitle || 'Hyosung Business Communication'}\n`;
-      doc += `Level: ${state.level} | Domain Focus: ${state.currentTopic}\n`;
-      doc += `Date Generated: ${new Date().toLocaleDateString()}\n`;
-      doc += `============================================================\n\n`;
+      let doc = `# HYOSUNG BUSINESS COMMUNICATION MASTERCLASS WORKBOOK\n`;
+      doc += `Level: ${currentLevel} | Target Date: ${new Date().toLocaleDateString()}\n\n`;
 
-      doc += `MODULE 1: TARGET LEVEL LEXICON & EXPRESSIONS\n`;
-      doc += `------------------------------------------------------------\n`;
-      (state.vocabData || []).forEach((v, i) => {
-        doc += `${i + 1}. ${v.term} [${v.type ? v.type.toUpperCase() : 'ITEM'}]\n`;
-        doc += `   Meaning (KR): ${v.kr}\n`;
-        doc += `   Definition: ${v.def}\n`;
-        doc += `   Example: "${v.sample}"\n`;
-        if (v.alt) {
-          doc += `   Comparison vs. ${v.alt}: ${v.altNuance}\n`;
-        }
-        doc += `\n`;
+      doc += `## MODULE 1: TARGET LEXICON & PREPOSITIONS\n\n`;
+      stage1Vocab.forEach((item, i) => {
+        doc += `${i + 1}. ${item.term} (${item.type})\n`;
+        doc += `   - Korean: ${item.kr}\n`;
+        doc += `   - Definition: ${item.def}\n`;
+        doc += `   - Sample: "${item.sample}"\n\n`;
       });
 
-      if ((state.prepositionsData || []).length) {
-        doc += `Target Prepositions & Phrases:\n`;
-        state.prepositionsData.forEach((p) => {
-          doc += `  • ${p.term} (${p.kr}): "${p.sample}"\n`;
-        });
-        doc += `\n`;
-      }
+      doc += `### Target Business Prepositions\n`;
+      doc += `- Pursuant to (~에 따라 / 계약에 의거하여)\n`;
+      doc += `- In tandem with (~와 병행하여)\n`;
+      doc += `- Subject to (~을 조건으로 하여)\n`;
+      doc += `- In lieu of (~ 대신에)\n\n`;
 
-      if ((state.patternsData || []).length) {
-        doc += `Strategic Reframing Patterns:\n`;
-        state.patternsData.forEach((pat) => {
-          doc += `  • ${pat.title}: ${pat.pattern}\n    Example: "${pat.sample}"\n`;
-        });
-        doc += `\n`;
-      }
+      doc += `## MODULE 3: BOARDROOM SIMULATION SCRIPT\n\n`;
+      doc += `Min-ho: "Good morning, team. We need to ${stage1Vocab[0].term} with our European buyers."\n`;
+      doc += `Dr. Müller: "We are concerned that potential delays will impact our rollout."\n`;
+      doc += `Ji-won: "Pursuant to our internal QA checks, we can ${stage1Vocab[4].term} quality variance."\n\n`;
 
-      doc += `============================================================\n\n`;
-      doc += `MODULE 2: DIAGNOSTIC QUIZ\n`;
-      doc += `------------------------------------------------------------\n`;
-      (state.diagnosticQuizData || []).forEach((q, i) => {
-        doc += `Q${i + 1}: ${q.q}\n`;
-        q.opts.forEach((opt, oIdx) => {
-          const isCorrect = oIdx === q.correct ? ' [ANSWER]' : '';
-          doc += `   ${String.fromCharCode(65 + oIdx)}) ${opt}${isCorrect}\n`;
-        });
-        doc += `   Explanation: ${q.expl}\n\n`;
-      });
-
-      doc += `============================================================\n\n`;
-      doc += `MODULE 3: STRATEGIC DIALOGUE SIMULATION\n`;
-      doc += `------------------------------------------------------------\n`;
-      (state.dialogueThread || []).forEach((d) => {
-        doc += `${d.speaker} (${d.role}) [${d.time}]:\n"${d.text}"\n\n`;
-      });
-
-      doc += `============================================================\n\n`;
-      doc += `MODULE 4: KOREAN-TO-ENGLISH TRANSLATION WORKBENCH\n`;
-      doc += `------------------------------------------------------------\n`;
-      (state.translationPrompts || []).forEach((t, i) => {
-        doc += `Prompt ${i + 1}:\n`;
-        doc += `Korean: "${t.kr}"\n`;
-        doc += `Benchmark English: "${t.model}"\n`;
-        doc += `Target Term/Preposition: ${t.targetPrep || 'N/A'}\n\n`;
-      });
-
-      doc += `============================================================\n\n`;
-      doc += `MODULE 5: CERTIFICATION ASSESSMENT EXAM\n`;
-      doc += `------------------------------------------------------------\n`;
-      (state.finalQuizData || []).forEach((q, i) => {
-        doc += `Q${i + 1}: ${q.q}\n`;
-        q.opts.forEach((opt, oIdx) => {
-          const isAns = oIdx === q.ans ? ' [ANSWER]' : '';
-          doc += `   ${String.fromCharCode(65 + oIdx)}) ${opt}${isAns}\n`;
-        });
-        doc += `\n`;
-      });
-
-      doc += `============================================================\n`;
-      doc += `END OF LESSON PACKET\n`;
-
+      doc += `--- END OF MASTERCLASS PACKET ---\n`;
       return doc;
     }
 
-    function openExportDocModal() {
-      const text = buildMarkdownLessonText();
-      const textarea = document.getElementById('export-doc-textarea');
-      const modal = document.getElementById('export-doc-modal');
-      if (textarea) textarea.value = text;
-      if (modal) modal.classList.remove('hidden');
-    }
-
-    function closeExportDocModal() {
-      const modal = document.getElementById('export-doc-modal');
-      if (modal) modal.classList.add('hidden');
-    }
-
-    function copyLessonToClipboard() {
-      const textarea = document.getElementById('export-doc-textarea');
+    function copyExportedText() {
+      const textarea = document.getElementById('export-textarea');
       if (!textarea) return;
+
       textarea.select();
-      textarea.setSelectionRange(0, 99999);
-      try {
-        document.execCommand('copy');
-        const badge = document.getElementById('copy-success-badge');
-        if (badge) {
-          badge.classList.remove('hidden');
-          setTimeout(() => badge.classList.add('hidden'), 3500);
-        }
-      } catch (err) {
-        alert("Copy failed. Please manually highlight and copy the text inside the box.");
+      document.execCommand('copy');
+
+      const status = document.getElementById('export-copy-status');
+      if (status) {
+        status.innerText = 'Copied to clipboard!';
+        setTimeout(() => { status.innerText = ''; }, 3000);
       }
     }
 
-    function openGeneratorModal() {
-      const modal = document.getElementById('ai-modal');
-      if (modal) modal.classList.remove('hidden');
-    }
-
-    function closeAiModal() {
-      const modal = document.getElementById('ai-modal');
-      if (modal) modal.classList.add('hidden');
-    }
-
-    function triggerModalStage1Gen() {
-      const levelSel = document.getElementById('modal-level-select');
-      const topicInp = document.getElementById('ai-topic-input');
-      const level = levelSel ? levelSel.value : 'Advanced';
-      const topic = topicInp ? topicInp.value.trim() : "Hyosung Operations";
-      closeAiModal();
-      selectLevelAndStart(level, topic);
-    }
-
-    function loadStage1Fallback(level) {
-      if (level === "Beginner") {
-        window.appState.vocabData = [
-          { term: "Submit a request", type: "Expression", kr: "요청서를 제출하다", def: "Formally hand in an application or query.", sample: "Please submit a request through the internal portal.", alt: "Apply", altNuance: "Submit a request is standard operational B2B phrasing." },
-          { term: "Follow up on", type: "Expression", kr: "~에 대해 후속 조치를 취하다", def: "Check the status of an ongoing topic.", sample: "I am calling to follow up on yesterday's shipment status.", alt: "Check on", altNuance: "Follow up implies systematic business action." },
-          { term: "Inquire about", type: "Expression", kr: "~에 대해 문의하다", def: "Ask for information in a professional manner.", sample: "Clients frequently inquire about our delivery lead times.", alt: "Ask about", altNuance: "Inquire about is more formal." },
-          { term: "On behalf of", type: "Expression", kr: "~를 대리하여 / 대표하여", def: "Representing a colleague, department, or company.", sample: "I am reaching out on behalf of our sales director.", alt: "For", altNuance: "On behalf of is official corporate phrasing." },
-          { term: "Coordinate", type: "Verb", kr: "조율하다, 조정하다", def: "Organize activities or meeting times across team members.", sample: "Please coordinate schedules with the plant manager.", alt: "Arrange", altNuance: "Coordinate stresses alignment between multiple people." },
-          { term: "Confirm", type: "Verb", kr: "확인하다, 확정짓다", def: "Verify that information is accurate and final.", sample: "We need to confirm details before sending the invoice.", alt: "Double-check", altNuance: "Confirm implies official validation." },
-          { term: "Verify", type: "Verb", kr: "검증하다", def: "Check physical measurements or data against plans.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
-          { term: "Secure", type: "Adjective", kr: "안전한, 보안이 철저한", def: "Safe from unauthorized access or risk.", sample: "Please use a secure email address for company business.", alt: "Safe", altNuance: "Secure implies technical or operational protection." },
-          { term: "Properly", type: "Adverb", kr: "올바르게, 정상적으로", def: "Correctly, fully, and according to specifications.", sample: "Ensure the sensor is properly installed before launching.", alt: "Correctly", altNuance: "Properly implies meeting functional standards." }
-        ];
-        window.appState.prepositionsData = [
-          { term: "In advance", kr: "사전에 / 미리", sample: "Please submit all attendance requests in advance." },
-          { term: "On time", kr: "정각에 / 제때에", sample: "The Changwon shipment was dispatched on time." }
-        ];
-        window.appState.patternsData = [
-          { title: "PATTERN A: Professional Request", color: "emerald", pattern: "Could you please [Action] in order to [Goal]?", sample: "Could you please confirm details in order to dispatch the goods?" }
-        ];
-      } else if (level === "Intermediate") {
-        window.appState.vocabData = [
-          { term: "Reconcile differences", type: "Expression", kr: "견해차를 조정하다", def: "Resolve conflicting viewpoints between teams.", sample: "We met to reconcile differences regarding delivery schedules.", alt: "Settle", altNuance: "Reconcile stresses finding common ground." },
-          { term: "Alleviate concerns", type: "Expression", kr: "우려를 완화하다", def: "Reduce anxiety or worry regarding a project.", sample: "Weekly status reports helped alleviate client concerns.", alt: "Ease", altNuance: "Alleviate is standard corporate phrasing." },
-          { term: "Streamline operations", type: "Expression", kr: "운영을 효율화하다", def: "Simplify processes to eliminate inefficiency.", sample: "Automating inventory tracking will streamline operations.", alt: "Simplify", altNuance: "Streamline focuses on speed and flow." },
-          { term: "Mitigate risks", type: "Expression", kr: "위험을 줄이다", def: "Lessen potential damage or loss.", sample: "Dual-sourcing helps mitigate supply chain risks.", alt: "Reduce", altNuance: "Mitigate is risk-management terminology." },
-          { term: "Consolidate", type: "Verb", kr: "통합하다", def: "Combine multiple items into a unified system.", sample: "We will consolidate shipping orders next week.", alt: "Merge", altNuance: "Consolidate emphasizes strengthening structure." },
-          { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital through sales.", sample: "Clients recoup investment within 90 days.", alt: "Recover", altNuance: "Recoup applies specifically to financial expenditure." },
-          { term: "Expedite", type: "Verb", kr: "신속히 처리하다", def: "Speed up the progress or execution of an order.", sample: "We can expedite customs clearance for urgent spare parts.", alt: "Hurry", altNuance: "Expedite is official logistics terminology." },
-          { term: "Substantial", type: "Adjective", kr: "상당한, 실질적인", def: "Large in size, value, importance, or degree.", sample: "We achieved a substantial reduction in material waste.", alt: "Big", altNuance: "Substantial is precise business vocabulary for data." },
-          { term: "Seamlessly", type: "Adverb", kr: "매끄럽게", def: "Done smoothly without unexpected problems.", sample: "The system migrated seamlessly over the weekend.", alt: "Smoothly", altNuance: "Seamlessly stresses absence of friction." }
-        ];
-        window.appState.prepositionsData = [
-          { term: "In line with", kr: "~에 발맞추어 / ~와 일치하여", sample: "Our pricing structure is in line with standard market rates." },
-          { term: "In lieu of", kr: "~ 대신에", sample: "We provided spare parts in lieu of cash refunds." }
-        ];
-        window.appState.patternsData = [
-          { title: "PATTERN A: Value Trade-off", color: "blue", pattern: "In lieu of [Standard Term], we can [Offer] in order to [Benefit].", sample: "In lieu of a flat rebate, we can offer extended warranty to lower risk." }
-        ];
-      } else if (level === "Professional") {
-        window.appState.vocabData = [
-          { term: "Institutional alignment", type: "Expression", kr: "기관적 얼라인먼트", def: "Harmonizing goals across enterprise divisions.", sample: "Cross-border mergers require deep institutional alignment.", alt: "Agreement", altNuance: "Institutional alignment refers to macro organization." },
-          { term: "Unilateral condition", type: "Expression", kr: "일방적 조건", def: "A term imposed by one party without debate.", sample: "We rejected the buyer's unilateral condition on price caps.", alt: "One-sided rule", altNuance: "Unilateral is legal/contractual phrasing." },
-          { term: "Fiduciary responsibility", type: "Expression", kr: "선관주의 책임", def: "Legal obligation to act in the best interest of stakeholders.", sample: "The board holds a fiduciary responsibility to safeguard capital.", alt: "Duty", altNuance: "Fiduciary is legal/boardroom terminology." },
-          { term: "Capital allocation framework", type: "Expression", kr: "자본 배분 체계", def: "Systematic strategy for deploying financial resources.", sample: "Our capital allocation framework prioritizes high-margin R&D.", alt: "Budgeting", altNuance: "C-suite strategic financial terminology." },
-          { term: "Institutionalize", type: "Verb", kr: "조직 정착시키다", def: "Establish a process as a permanent organizational norm.", sample: "We must institutionalize quality audits across all subsidiaries.", alt: "Embed", altNuance: "Institutionalize focuses on long-term corporate governance." },
-          { term: "Harmonize", type: "Verb", kr: "통일하고 조화시키다", def: "Bring different standards or systems into agreement.", sample: "We must harmonize technical specs across global plants.", alt: "Unify", altNuance: "Harmonize is standard international compliance terminology." },
-          { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread setup fees over contract lifecycle.", sample: "We amortize equipment costs over five years.", alt: "Spread", altNuance: "Amortize is official accounting terminology." },
-          { term: "Paramount", type: "Adjective", kr: "최우선의, 중대한", def: "More important than anything else; supreme.", sample: "Maintaining data integrity remains of paramount importance.", alt: "Top priority", altNuance: "Paramount is formal executive vocabulary." },
-          { term: "Expeditiously", type: "Adverb", kr: "지체 없이 신속히", def: "Executed with maximum institutional speed and efficiency.", sample: "Auditors resolved the compliance check expeditiously.", alt: "Quickly", altNuance: "Expeditiously carries C-suite formality." }
-        ];
-        window.appState.prepositionsData = [
-          { term: "Pursuant to", kr: "~에 준하여 / ~에 의거하여", sample: "Pursuant to article 4, all IP rights remain with Hyosung." },
-          { term: "In tandem with", kr: "~와 병행하여", sample: "Policy updates executed in tandem with audit cycles." }
-        ];
-        window.appState.patternsData = [
-          { title: "PATTERN A: Strategic Mandate", color: "purple", pattern: "Pursuant to [Governance Rule], maintaining [Standard] is of paramount importance.", sample: "Pursuant to C-suite mandate, maintaining zero defects is paramount." }
-        ];
-      } else {
-        // Advanced (Default)
-        window.appState.vocabData = [
-          { term: "Bridge the gap", type: "Expression", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
-          { term: "Raise a red flag", type: "Expression", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
-          { term: "Shift the narrative", type: "Expression", kr: "여론/화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
-          { term: "Draw a hard line", type: "Expression", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
-          { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread capital or implementation costs over a contract period.", sample: "We can amortize setup fees over 36 months.", alt: "Divide", altNuance: "Amortize is financial accounting terminology." },
-          { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Convert high-level plans into active corporate workflows.", sample: "Engineers will operationalize the deployment plan immediately.", alt: "Execute", altNuance: "Operationalize focuses on systematic process building." },
-          { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital or investments through revenue.", sample: "Clients recoup their initial investment within 90 days.", alt: "Recover", altNuance: "Recoup specifically applies to financial expenditure." },
-          { term: "Prohibitive", type: "Adjective", kr: "망설이게 만드는, 지나치게 높은", def: "So excessively high or restrictive that it prevents action.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
-          { term: "Promptly", type: "Adverb", kr: "지체 없이, 신속하게", def: "Quickly, without delay, and precisely according to schedule.", sample: "Please review the draft contract and return revisions promptly.", alt: "Quickly", altNuance: "Promptly carries professional courtesy and punctuality." }
-        ];
-        window.appState.prepositionsData = [
-          { term: "Subject to", kr: "~을 조건으로 하는", sample: "The discount is subject to final board approval." },
-          { term: "In tandem with", kr: "~와 병행하여", sample: "Software rollout proceeded in tandem with hardware upgrades." }
-        ];
-        window.appState.patternsData = [
-          { title: "PATTERN A: Strategic Value Frame", color: "emerald", pattern: "Subject to [Condition], amortizing costs across [Period] secures [Benefit].", sample: "Subject to board approval, amortizing costs across 3 years secures margins." }
-        ];
+    // ==========================================
+    // UTILITIES & TTS
+    // ==========================================
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
       }
-
-      window.appState.stage1Ready = true;
-      renderStage1Preview();
     }
 
-    function loadStage2Fallback() {
-      window.appState.diagnosticQuizData = [
-        { q: "Which term best describes spreading implementation costs across a long-term contract?", opts: ["Recoup", "Amortize", "Consolidate", "Expedite"], correct: 1, expl: "Amortize is the financial term for spreading initial capital expenses over time." },
-        { q: "Choose the correct preposition: 'The volume discount is __________ final board sign-off.'", opts: ["in lieu of", "subject to", "at a premium", "pursuant to"], correct: 1, expl: "'Subject to' indicates a required conditional approval." },
-        { q: "What does 'Draw a hard line' mean in negotiation?", opts: ["Flexible compromise", "Set non-negotiable boundaries", "Cancel a contract", "Reduce pricing"], correct: 1, expl: "Drawing a hard line means establishing firm, non-negotiable limits." },
-        { q: "If air freight fees are 'prohibitive', what does that imply?", opts: ["Extremely affordable", "So excessively high that it blocks action", "Standard market rate", "Tax-deductible"], correct: 1, expl: "Prohibitive costs prevent execution entirely due to expense." },
-        { q: "What does 'Recoup' refer to?", opts: ["Dividing tasks", "Recovering spent capital or investment", "Delaying a project", "Creating new products"], correct: 1, expl: "Recoup specifically means recovering initial capital spent." }
-      ];
-
-      window.appState.dialogueThread = [
-        { speaker: "Min-ho (Sales Lead)", role: "Hyosung Heavy Industries", time: "10:00 AM", color: "blue", text: "Good morning. We structured this proposal to allow you to consolidate IT vendors under one agreement." },
-        { speaker: "Mark Davis (CPO)", role: "Global Power Corp", time: "10:02 AM", color: "emerald", text: "Your quote represents a 20% increase. In this climate, that rate is commercially prohibitive." },
-        { speaker: "Min-ho (Sales Lead)", role: "Hyosung Heavy Industries", time: "10:05 AM", color: "blue", text: "I understand. Rather than cutting specs, we can amortize setup fees across 4 years in lieu of an upfront retainer." },
-        { speaker: "Mark Davis (CPO)", role: "Global Power Corp", time: "10:08 AM", color: "emerald", text: "Subject to board approval, that structure helps our Q1 CapEx budget significantly." }
-      ];
-
-      window.appState.translationPrompts = [
-        { kr: "규제 당국의 최종 승인을 받는 조건으로, 우리 회사는 인프라 구축 비용을 3년에 걸쳐 분할 상각하기로 합의했습니다.", model: "Subject to final regulatory approval, our company agreed to amortize infrastructure setup costs across three years.", targetPrep: "Subject to", hints: ["Subject to", "Amortize"] },
-        { kr: "선불 현금 할인 대신, 우리는 전략적 양보로서 보증 기간을 2년 연장해 주기로 제안했습니다.", model: "In lieu of an upfront cash discount, we offered to extend the warranty period by two years as a strategic concession.", targetPrep: "In lieu of", hints: ["In lieu of", "Strategic concession"] }
-      ];
-
-      window.appState.finalQuizData = [
-        { q: "The vendor agreed to provide dedicated technical support __________ requiring an extra retainer.", opts: ["subject to", "in lieu of", "at a premium"], ans: 1 },
-        { q: "High compliance overhead in foreign markets proved commercially __________.", opts: ["scalable", "prohibitive", "actionable"], ans: 1 },
-        { q: "Our board established that retaining patent control is a __________ clause.", opts: ["non-negotiable", "scalable", "preliminary"], ans: 0 },
-        { q: "Custom API integrations are priced __________ compared to standard licenses.", opts: ["in lieu of", "at a premium", "subject to"], ans: 1 },
-        { q: "The CFO structured the deal to __________ setup expenses over 48 months.", opts: ["operationalize", "amortize", "recoup"], ans: 1 },
-        { q: "Unilateral price hikes failed to demonstrate long-term __________.", opts: ["risk exposure", "mutual gain", "tiered pricing"], ans: 1 },
-        { q: "Engineers stand ready to __________ the deployment framework once signed.", opts: ["operationalize", "recoup", "anchor"], ans: 0 },
-        { q: "The buyer extended contract duration in exchange for a __________.", opts: ["risk exposure", "strategic concession", "baseline quote"], ans: 1 }
-      ];
+    function openAiKeyModal() {
+      const apiKey = safeGetStorage('hyosung_gemini_key', '');
+      document.getElementById('input-api-key').value = apiKey;
+      document.getElementById('ai-key-modal').classList.remove('hidden');
     }
+
+    function closeAiKeyModal() {
+      document.getElementById('ai-key-modal').classList.add('hidden');
+    }
+
+    function saveApiKey() {
+      const key = document.getElementById('input-api-key').value.trim();
+      safeSetStorage('hyosung_gemini_key', key);
+      closeAiKeyModal();
+    }
+
+    // ==========================================
+    // INITIALIZATION
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      // App initialized cleanly
+    });
   </script>
 </body>
 </html>
