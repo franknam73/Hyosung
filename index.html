@@ -363,522 +363,59 @@
 
   <script>
     // ==========================================
-    // OFFLINE TYPED FALLBACK REPLACEMENT ENGINE
+    // MODULE 2: DIAGNOSTIC CHECK (DYNAMICALLY BOUND)
     // ==========================================
-    const masterFallbackPool = [
-      // ==========================================
-      // 80 EXPRESSIONS
-      // ==========================================
-      { term: "Reconcile differences", type: "Expression", kr: "견해차를 조정하다", def: "Resolve conflicting viewpoints between teams.", sample: "We met to reconcile differences regarding delivery schedules.", alt: "Settle", altNuance: "Reconcile stresses finding common ground." },
-      { term: "Alleviate concerns", type: "Expression", kr: "우려를 완화하다", def: "Reduce anxiety or worry regarding a project.", sample: "Weekly status reports helped alleviate client concerns.", alt: "Ease", altNuance: "Alleviate is standard corporate phrasing." },
-      { term: "Streamline operations", type: "Expression", kr: "운영을 효율화하다", def: "Simplify processes to eliminate inefficiency.", sample: "Automating inventory tracking will streamline operations.", alt: "Simplify", altNuance: "Streamline focuses on speed and flow." },
-      { term: "Mitigate risks", type: "Expression", kr: "위험을 줄이다", def: "Lessen potential damage or loss.", sample: "Dual-sourcing helps mitigate supply chain risks.", alt: "Reduce", altNuance: "Mitigate is risk-management terminology." },
-      { term: "Bridge the gap", type: "Expression", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
-      { term: "Raise a red flag", type: "Expression", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
-      { term: "Shift the narrative", type: "Expression", kr: "화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
-      { term: "Draw a hard line", type: "Expression", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
-      { term: "Institutional alignment", type: "Expression", kr: "기관적 얼라인먼트", def: "Harmonizing goals across enterprise divisions.", sample: "Cross-border mergers require deep institutional alignment.", alt: "Agreement", altNuance: "Institutional alignment refers to macro organization." },
-      { term: "Unilateral condition", type: "Expression", kr: "일방적 조건", def: "A term imposed by one party without debate.", sample: "We rejected the buyer's unilateral condition on price caps.", alt: "One-sided rule", altNuance: "Unilateral is legal/contractual phrasing." },
-      { term: "Fiduciary responsibility", type: "Expression", kr: "선관주의 책임", def: "Legal obligation to act in the best interest of stakeholders.", sample: "The board holds a fiduciary responsibility to safeguard capital.", alt: "Duty", altNuance: "Fiduciary is legal/boardroom terminology." },
-      { term: "Capital allocation framework", type: "Expression", kr: "자본 배분 체계", def: "Systematic strategy for deploying financial resources.", sample: "Our capital allocation framework prioritizes high-margin R&D.", alt: "Budgeting", altNuance: "C-suite strategic financial terminology." },
-      { term: "Submit a formal inquiry", type: "Expression", kr: "공식 문의를 제출하다", def: "Send an official question to a department.", sample: "Please submit a formal inquiry to technical support.", alt: "Ask", altNuance: "Formal inquiry follows corporate process." },
-      { term: "Follow up on status", type: "Expression", kr: "진행 상황을 확인하다", def: "Check the current progress of a project.", sample: "I called to follow up on status regarding the order.", alt: "Check", altNuance: "Follow up implies structured tracking." },
-      { term: "Inquire about lead time", type: "Expression", kr: "납기를 문의하다", def: "Ask about expected delivery schedules.", sample: "Clients inquire about lead time for custom orders.", alt: "Ask about time", altNuance: "Inquire about lead time is B2B terminology." },
-      { term: "On behalf of management", type: "Expression", kr: "경영진을 대표하여", def: "Acting as an official representative.", sample: "I am writing on behalf of management.", alt: "For", altNuance: "Official corporate phrasing." },
-      { term: "Pave the way for", type: "Expression", kr: "길을 열어주다", def: "Create conditions that make progress possible.", sample: "Successful trial testing paved the way for a global contract.", alt: "Allow", altNuance: "Pave the way for emphasizes strategic groundwork." },
-      { term: "Steer clear of", type: "Expression", kr: "피하다", def: "Avoid dealing with risky or unprofitable situations.", sample: "We steer clear of non-compliant suppliers.", alt: "Avoid", altNuance: "Steer clear of carries active risk prevention." },
-      { term: "Stem from", type: "Expression", kr: "~에서 기인하다", def: "Originate or arise as a natural result of something.", sample: "Cost overruns stem from unexpected material price hikes.", alt: "Result from", altNuance: "Stem from pinpoints root cause." },
-      { term: "Anchor the negotiation", type: "Expression", kr: "협상 기준점을 설정하다", def: "Establish an initial baseline price or term in negotiations.", sample: "Setting an early price cap helped anchor the negotiation.", alt: "Set baseline", altNuance: "Refers to strategic positioning in B2B deals." },
-      { term: "Value-driven upsell", type: "Expression", kr: "가치 기반 업셀링", def: "Selling higher tier services by emphasizing measurable return.", sample: "We converted the account through a value-driven upsell.", alt: "Cross-sell", altNuance: "Focuses on demonstrating tangible client gain." },
-      { term: "Tiered pricing structure", type: "Expression", kr: "단계별 가격 체계", def: "Pricing model offering volume-based discount levels.", sample: "Our tiered pricing structure offers discounts for high-volume orders.", alt: "Graduated pricing", altNuance: "Standard enterprise licensing terminology." },
-      { term: "Strategic concession", type: "Expression", kr: "전략적 양보", def: "A trade-off given to secure a greater commercial benefit.", sample: "Offering free shipping was a strategic concession to close the deal.", alt: "Compromise", altNuance: "Strategic concession implies calculated trade-off." },
-      { term: "Mutual gain", type: "Expression", kr: "상호 이익", def: "An agreement outcome benefiting both negotiating parties.", sample: "The long-term distribution agreement is structured for mutual gain.", alt: "Win-win", altNuance: "Mutual gain is formal corporate terminology." },
-      { term: "Risk exposure", type: "Expression", kr: "위험 노출도", def: "The extent to which an organization is open to financial loss.", sample: "Dual sourcing reduces overall supply chain risk exposure.", alt: "Vulnerability", altNuance: "Risk exposure measures financial/operational liability." },
-      { term: "Competitive edge", type: "Expression", kr: "경쟁 우위", def: "An advantage that sets a company apart from market rivals.", sample: "Proprietary yarn technology gives Hyosung a distinct competitive edge.", alt: "Advantage", altNuance: "Competitive edge highlights strategic market positioning." },
-      { term: "Tailor a solution", type: "Expression", kr: "맞춤형 솔루션을 제공하다", def: "Customize engineering or services to fit specific client requirements.", sample: "Our engineers can tailor a solution for extreme climate grids.", alt: "Customize", altNuance: "Tailor a solution implies bespoke engineering." },
-      { term: "Return on investment", type: "Expression", kr: "투자 수익률 (ROI)", def: "Financial profitability generated relative to spent capital.", sample: "Clients achieve a full return on investment within two years.", alt: "Profit margin", altNuance: "Return on investment is standard financial metric phrasing." },
-      { term: "In line with expectations", type: "Expression", kr: "기대에 부합하여", def: "Conforming precisely to projected benchmarks.", sample: "Q3 factory output was in line with expectations.", alt: "As expected", altNuance: "Formal report phrasing." },
-      { term: "Prior to shipment", type: "Expression", kr: "출하에 앞서", def: "Before products leave the manufacturing site.", sample: "All units undergo quality inspection prior to shipment.", alt: "Before dispatch", altNuance: "Standard manufacturing/logistics phrasing." },
-      { term: "With regard to", type: "Expression", kr: "~와 관련하여", def: "Concerning or in reference to a specific topic.", sample: "With regard to your pricing inquiry, we have attached our quote.", alt: "Regarding", altNuance: "With regard to is polite formal correspondence language." },
-      { term: "At a discount", type: "Expression", kr: "할인된 가격으로", def: "Priced below standard retail or catalog rates.", sample: "Bulk orders of spare parts are provided at a discount.", alt: "Cheaper", altNuance: "Official commercial transaction phrasing." },
-      { term: "Turnkey solution", type: "Expression", kr: "턴키(일괄 타결) 솔루션", def: "A complete product or system supplied ready for immediate use.", sample: "We delivered a turnkey solution for the substation expansion.", alt: "Complete package", altNuance: "Turnkey solution is standard EPC/engineering terminology." },
-      { term: "Factory Acceptance Testing", type: "Expression", kr: "공장 수락 시험 (FAT)", def: "Testing conducted at manufacturing plant prior to client dispatch.", sample: "Client engineers will attend the Factory Acceptance Testing next week.", alt: "Plant test", altNuance: "Official industrial quality verification acronym." },
-      { term: "Minimum Order Quantity", type: "Expression", kr: "최소 주문 수량 (MOQ)", def: "The lowest threshold of units a supplier accepts per order.", sample: "Our Minimum Order Quantity for custom dyed spandex is five tons.", alt: "Base order", altNuance: "Standard international commercial requirement." },
-      { term: "Defect tolerance", type: "Expression", kr: "결함 허용 오차", def: "The acceptable threshold of manufacturing variance permitted.", sample: "High precision specs mandate zero defect tolerance.", alt: "Error margin", altNuance: "Industrial quality assurance term." },
-      { term: "After-sales technical support", type: "Expression", kr: "사후 기술 지원", def: "Assistance provided to buyers after product delivery.", sample: "Our global branch offices guarantee 24/7 after-sales technical support.", alt: "Post-sale help", altNuance: "Standard client servicing pledge." },
-      { term: "Feasibility study", type: "Expression", kr: "타당성 조사", def: "An analysis assessing the practicality and viability of a project.", sample: "We completed a feasibility study for the new power grid installation.", alt: "Viability test", altNuance: "Initial engineering project evaluation term." },
-      { term: "SLA performance guarantee", type: "Expression", kr: "서비스 수준 보장 (SLA)", def: "Contractual commitment ensuring specific operational uptime.", sample: "Our contract includes a rigorous SLA performance guarantee.", alt: "Uptime promise", altNuance: "Official contractual reliability term." },
-      { term: "Liquidated damages", type: "Expression", kr: "손해배상 예정액", def: "Pre-agreed financial compensation for contractual breach or delay.", sample: "The contract includes liquidated damages for late delivery.", alt: "Penalty fee", altNuance: "Legal and procurement terminology." },
-      { term: "Strike a balance", type: "Expression", kr: "균형을 맞추다", def: "Find an acceptable compromise between two opposing demands.", sample: "We must strike a balance between cost speed and quality.", alt: "Compromise", altNuance: "Focuses on harmonious trade-offs." },
-      { term: "Reach a consensus", type: "Expression", kr: "합의에 도달하다", def: "Arrive at an agreement accepted by all participating parties.", sample: "After hours of discussion, the board reached a consensus.", alt: "Agree", altNuance: "Emphasizes unanimous or collective agreement." },
-      { term: "Break the deadlock", type: "Expression", kr: "교착 상태를 타개하다", def: "Overcome a stalemate in negotiations.", sample: "A strategic price adjustment helped break the deadlock.", alt: "Resolve stalemate", altNuance: "Refers to high-stakes negotiation breakthroughs." },
-      { term: "Drive value creation", type: "Expression", kr: "가치 창출을 견인하다", def: "Generate measurable financial or strategic benefits.", sample: "Cross-functional teams drive value creation across subsidiaries.", alt: "Generate value", altNuance: "C-suite strategic communication terminology." },
-      { term: "Smooth out friction", type: "Expression", kr: "마찰을 완화하다", def: "Ebase interpersonal or operational misunderstandings.", sample: "Clear communication helped smooth out friction during integration.", alt: "Ease friction", altNuance: "Refers to resolving operational difficulties." },
-      { term: "Scale up production", type: "Expression", kr: "생산을 확대하다", def: "Increase manufacturing volume to meet growing demand.", sample: "The Changwon plant will scale up production next month.", alt: "Expand output", altNuance: "Industrial operations terminology." },
-      { term: "Bring to the table", type: "Expression", kr: "제안/기여하다", def: "Offer valuable resources, skills, or ideas in negotiation.", sample: "Hyosung brings advanced R&D capabilities to the table.", alt: "Offer", altNuance: "Common business negotiation idiom." },
-      { term: "Gain traction", type: "Expression", kr: "탄력을 받다 / 호응을 얻다", def: "Gather momentum and market acceptance.", sample: "Our eco-friendly textile brand is gaining traction in Europe.", alt: "Pick up speed", altNuance: "Describes market acceptance or progress." },
-      { term: "Benchmark against competitors", type: "Expression", kr: "경쟁사와 벤치마킹하다", def: "Compare performance metrics against industry rivals.", sample: "We benchmark our lead times against top global competitors.", alt: "Compare", altNuance: "Strategic analysis terminology." },
-      { term: "Address the bottleneck", type: "Expression", kr: "병목 현상을 해결하다", def: "Resolve the main point of congestion in a process.", sample: "Automation resolved the assembly line bottleneck.", alt: "Fix delay", altNuance: "Operations and process management phrasing." },
-      { term: "Clear the hurdle", type: "Expression", kr: "장애물을 극복하다", def: "Overcome a regulatory, technical, or commercial barrier.", sample: "Passing the safety audit allowed us to clear the hurdle.", alt: "Overcome barrier", altNuance: "Business achievement phrasing." },
-      { term: "Tap into new markets", type: "Expression", kr: "신시장을 개척하다 / 진입하다", def: "Expand business presence into unpenetrated regions.", sample: "Our eco-textile division plans to tap into new markets.", alt: "Enter market", altNuance: "Global sales growth terminology." },
-      { term: "Ballpark figure", type: "Expression", kr: "대략적인 추정치", def: "An approximate financial estimate provided for discussion.", sample: "Can you give us a ballpark figure before we finalize budget?", alt: "Estimate", altNuance: "Standard informal corporate estimate term." },
-      { term: "Bottom line impact", type: "Expression", kr: "최종 순이익에 미치는 영향", def: "The net effect of a decision on company profitability.", sample: "Energy savings directly affect our bottom line impact.", alt: "Financial result", altNuance: "C-suite executive financial analysis phrase." },
-      { term: "Core competency", type: "Expression", kr: "핵심 역량", def: "A primary capability that gives a company strategic strength.", sample: "High-voltage engineering remains our core competency.", alt: "Key strength", altNuance: "Corporate strategy vocabulary." },
-      { term: "Due diligence", type: "Expression", kr: "실사 / 철저한 조사", def: "Comprehensive investigation prior to signing a deal.", sample: "Our legal team is conducting due diligence on the supplier.", alt: "Audit", altNuance: "Legal and financial investment term." },
-      { term: "In the pipeline", type: "Expression", kr: "진행 중인 / 준비 중인", def: "Currently in development or scheduled for release.", sample: "Several major infrastructure projects are in the pipeline.", alt: "Underway", altNuance: "Standard sales pipeline and project phrase." },
-      { term: "Key takeaway", type: "Expression", kr: "핵심 요점", def: "The most important piece of information from a session.", sample: "The key takeaway from the client meeting was the need for speed.", alt: "Main point", altNuance: "Meeting debrief terminology." },
-      { term: "Leverage synergies", type: "Expression", kr: "시너지를 활용하다", def: "Combine strengths of units to achieve combined efficiency.", sample: "Merging sales offices allowed us to leverage synergies.", alt: "Combine strengths", altNuance: "M&A and organizational strategy term." },
-      { term: "Off the ground", type: "Expression", kr: "순조롭게 시작되다", def: "Successfully started or launched.", sample: "It took months to get the new production line off the ground.", alt: "Launched", altNuance: "Project start phrasing." },
-      { term: "On the same page", type: "Expression", kr: "이해를 같이하다", def: "Sharing a identical understanding of goals or situation.", sample: "Let us review specs to ensure we are all on the same page.", alt: "In agreement", altNuance: "Standard team alignment idiom." },
-      { term: "Paradigm shift", type: "Expression", kr: "패러다임의 전환 / 근본적 변화", def: "A fundamental change in approach or underlying assumptions.", sample: "Eco-friendly materials represent a paradigm shift in textiles.", alt: "Major change", altNuance: "Strategic vision phrase." },
-      { term: "Ramp up capacity", type: "Expression", kr: "생산 능력을 확충하다", def: "Rapidly increase manufacturing volume or workforce.", sample: "We need to ramp up capacity to fulfill the Q4 surge.", alt: "Increase output", altNuance: "Manufacturing operations phrasing." },
-      { term: "Touch base", type: "Expression", kr: "간단히 연락을 취하다", def: "Briefly make contact with someone to review progress.", sample: "I will touch base with procurement tomorrow morning.", alt: "Contact", altNuance: "Standard professional follow-up idiom." },
-      { term: "Win-win strategy", type: "Expression", kr: "상생 전략", def: "A plan designed to ensure mutually favorable outcomes.", sample: "Long-term partnership contracts require a win-win strategy.", alt: "Mutual strategy", altNuance: "Business negotiation terminology." },
-      { term: "Room for improvement", type: "Expression", kr: "개선의 여지", def: "Possibility or scope for developing higher quality.", sample: "Initial audit scores showed room for improvement in packaging.", alt: "Scope to grow", altNuance: "Constructive feedback vocabulary." },
-      { term: "Short-term compromise", type: "Expression", kr: "단기적 타협", def: "A temporary concession accepted to maintain momentum.", sample: "We agreed to a short-term compromise on freight fees.", alt: "Temporary deal", altNuance: "Negotiation trade-off phrasing." },
-      { term: "Long-term viability", type: "Expression", kr: "장기적 생존 가능성 / 지속 가능성", def: "Ability to sustain profitability and performance over years.", sample: "Diversifying products ensures long-term viability.", alt: "Sustainability", altNuance: "Corporate strategy terminology." },
-      { term: "Quality assurance check", type: "Expression", kr: "품질 보증 점검", def: "Systematic inspection verifying standard adherence.", sample: "Every batch undergoes a quality assurance check.", alt: "QA inspection", altNuance: "Standard manufacturing process phrase." },
-      { term: "Cross-functional collaboration", type: "Expression", kr: "부서 간 협력", def: "Cooperation between teams from different specialties.", sample: "Engineers and sales leads engaged in cross-functional collaboration.", alt: "Teamwork", altNuance: "Enterprise organizational terminology." },
-      { term: "Regulatory compliance", type: "Expression", kr: "규제 준수", def: "Adherence to laws, regulations, and industry guidelines.", sample: "Regulatory compliance is mandatory for European exports.", alt: "Legal compliance", altNuance: "Official international trade phrasing." },
-      { term: "Strategic roadmap", type: "Expression", kr: "전략적 로드맵", def: "A structured long-term plan detailing business goals.", sample: "Management presented a five-year strategic roadmap.", alt: "Master plan", altNuance: "Corporate planning vocabulary." },
-      { term: "Executive mandate", type: "Expression", kr: "경영진의 지시 / 위임 사항", def: "An official directive issued by senior executive leadership.", sample: "Cost reduction was issued as an executive mandate.", alt: "Top directive", altNuance: "Governance and directive phrase." },
-      { term: "Scope creep", type: "Expression", kr: "프로젝트 범주의 야금야금 확장", def: "Uncontrolled expansion of project deliverables without budget increase.", sample: "Rigorous milestone tracking prevents scope creep.", alt: "Project expansion", altNuance: "Project management term." },
-      { term: "Milestone payment", type: "Expression", kr: "단계별 대금 지급", def: "Installment payment tied to completing specific project phases.", sample: "The client agreed to a milestone payment structure.", alt: "Stage payment", altNuance: "EPC and construction contract term." },
-      { term: "Proof of concept", type: "Expression", kr: "개념 검증 (PoC)", def: "Demonstration verifying that a concept or theory is practical.", sample: "We successfully delivered a proof of concept for smart sensors.", alt: "Feasibility demo", altNuance: "Technology and R&D term." },
-      { term: "Value chain optimization", type: "Expression", kr: "가치 사슬 최적화", def: "Streamlining each step of production to maximize efficiency.", sample: "Digitization drives value chain optimization across plants.", alt: "Process optimization", altNuance: "Industrial operations vocabulary." },
-      { term: "Market penetration", type: "Expression", kr: "시장 침투 / 점유율 확대", def: "The extent to which a product is recognized or bought in a market.", sample: "Competitive pricing accelerated market penetration in Asia.", alt: "Market entry", altNuance: "Global marketing strategy term." },
-      { term: "Stakeholder engagement", type: "Expression", kr: "이해관계자 참여 / 소통", def: "Involving individuals who are affected by business decisions.", sample: "Effective stakeholder engagement smoothed plant expansion.", alt: "Partner dialogue", altNuance: "Corporate communications terminology." },
-      { term: "Contingency plan", type: "Expression", kr: "비상 계획 / 대응책", def: "A course of action designed to address a potential emergency.", sample: "We activated our contingency plan during the port strike.", alt: "Backup plan", altNuance: "Risk management phrasing." },
-
-      // ==========================================
-      // 60 VERBS
-      // ==========================================
-      { term: "Clarify", type: "Verb", kr: "명확히 하다", def: "Make a technical statement easy to understand.", sample: "Please clarify the contract terms before signing.", alt: "Explain", altNuance: "Clarify focuses on eliminating confusion." },
-      { term: "Verify", type: "Verb", kr: "검증하다", def: "Check measurements against requirements.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
-      { term: "Coordinate", type: "Verb", kr: "조율하다", def: "Organize actions across departments.", sample: "Please coordinate schedules with plant management.", alt: "Arrange", altNuance: "Coordinate stresses cross-team alignment." },
-      { term: "Consolidate", type: "Verb", kr: "통합하다", def: "Combine multiple items into a unified system.", sample: "We will consolidate shipping orders next week.", alt: "Merge", altNuance: "Consolidate emphasizes strengthening structure." },
-      { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital through sales.", sample: "Clients recoup investment within 90 days.", alt: "Recover", altNuance: "Recoup applies specifically to financial expenditure." },
-      { term: "Expedite", type: "Verb", kr: "신속히 처리하다", def: "Speed up the progress or execution of an order.", sample: "We can expedite customs clearance for urgent spare parts.", alt: "Hurry", altNuance: "Expedite is official logistics terminology." },
-      { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread capital costs over a contract period.", sample: "We can amortize setup fees over 36 months.", alt: "Divide", altNuance: "Amortize is financial accounting terminology." },
-      { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Convert high-level plans into active corporate workflows.", sample: "Engineers will operationalize the deployment plan immediately.", alt: "Execute", altNuance: "Operationalize focuses on systematic process building." },
-      { term: "Preempt", type: "Verb", kr: "선제적으로 차단하다", def: "Take action to prevent an anticipated negative event.", sample: "Proactive testing allowed us to preempt quality disputes.", alt: "Prevent", altNuance: "Preempt implies strategic foresight." },
-      { term: "Institutionalize", type: "Verb", kr: "조직 정착시키다", def: "Establish a process as a permanent organizational norm.", sample: "We must institutionalize quality audits across all subsidiaries.", alt: "Embed", altNuance: "Institutionalize focuses on long-term corporate governance." },
-      { term: "Harmonize", type: "Verb", kr: "통일하고 조화시키다", def: "Bring different standards or systems into agreement.", sample: "We must harmonize technical specs across global plants.", alt: "Unify", altNuance: "Harmonize is standard international compliance terminology." },
-      { term: "Salvage", type: "Verb", kr: "만회하다 / 구출하다", def: "Rescue or recover something from potential failure.", sample: "We managed to salvage the negotiation with a revised quote.", alt: "Save", altNuance: "Salvage implies recovering value under threat." },
-      { term: "Diversify", type: "Verb", kr: "다변화하다", def: "Expand product lines or supply chains to reduce risk.", sample: "We need to diversify our raw material suppliers.", alt: "Vary", altNuance: "Diversify is strategic risk mitigation vocabulary." },
-      { term: "Facilitate", type: "Verb", kr: "용이하게 하다", def: "Make a process or discussion smoother and easier.", sample: "Our local office will facilitate regulatory approval.", alt: "Help", altNuance: "Facilitate stresses professional enablement." },
-      { term: "Benchmark", type: "Verb", kr: "기준을 평가하다", def: "Evaluate or check something by comparison with a standard.", sample: "We benchmark our production efficiency against industry leaders.", alt: "Compare", altNuance: "Refers to formal metric comparison." },
-      { term: "Optimize", type: "Verb", kr: "최적화하다", def: "Make the best or most effective use of a situation or resource.", sample: "Engineers will optimize energy usage across the plant.", alt: "Improve", altNuance: "Focuses on maximizing efficiency." },
-      { term: "Standardize", type: "Verb", kr: "표준화하다", def: "Cause to conform to a standard quality or specification.", sample: "We aim to standardize manufacturing procedures globally.", alt: "Unify", altNuance: "Compliance and quality assurance vocabulary." },
-      { term: "Implement", type: "Verb", kr: "이행하다 / 실행하다", def: "Put a decision, plan, or agreement into effect.", sample: "We will implement the new safety guidelines immediately.", alt: "Execute", altNuance: "Standard operational execution verb." },
-      { term: "Evaluate", type: "Verb", kr: "평가하다", def: "Form an idea of the amount, number, or value of something.", sample: "Auditors will evaluate the technical specs tomorrow.", alt: "Assess", altNuance: "Implies formal examination or judgment." },
-      { term: "Restructure", type: "Verb", kr: "구조를 개편하다", def: "Organize differently to achieve higher efficiency.", sample: "We decided to restructure our overseas sales divisions.", alt: "Reorganize", altNuance: "Corporate strategy vocabulary." },
-      { term: "Allocate", type: "Verb", kr: "배분하다", def: "Distribute resources or duties for a specific purpose.", sample: "Management allocated extra funds for green energy R&D.", alt: "Assign", altNuance: "Formal resource distribution term." },
-      { term: "Formulate", type: "Verb", kr: "수립하다 / 공식화하다", def: "Create or prepare methodically a strategy or plan.", sample: "We must formulate a response to the client's RFP.", alt: "Devise", altNuance: "Systematic strategic planning verb." },
-      { term: "Accelerate", type: "Verb", kr: "가속화하다", def: "Increase the speed or rate of a project or rollout.", sample: "Automated logistics will accelerate delivery timelines.", alt: "Speed up", altNuance: "Emphasizes rapid progress." },
-      { term: "Resolve", type: "Verb", kr: "해결하다", def: "Settle or find a solution to a problem or dispute.", sample: "Our support team resolved the warranty issue promptly.", alt: "Solve", altNuance: "Formal dispute settlement vocabulary." },
-      { term: "Modernize", type: "Verb", kr: "현대화하다", def: "Adapt a process or system to modern needs or habits.", sample: "We invested $10M to modernize the Changwon facility.", alt: "Upgrade", altNuance: "Focuses on technological advancement." },
-      { term: "Validate", type: "Verb", kr: "입증하다 / 승인하다", def: "Check or prove the validity or accuracy of something.", sample: "Third-party labs validated our recycled yarn claims.", alt: "Confirm", altNuance: "Official technical verification term." },
-      { term: "Enhance", type: "Verb", kr: "향상시키다", def: "Intensify, increase, or further improve the quality.", sample: "Upgraded sensors enhance transformer monitoring accuracy.", alt: "Improve", altNuance: "Polished corporate improvement verb." },
-      { term: "Subsidize", type: "Verb", kr: "보조금을 지급하다", def: "Support financially through grants or subsidies.", sample: "Government programs subsidize green technology adoption.", alt: "Fund", altNuance: "Financial/policy vocabulary." },
-      { term: "Outsource", type: "Verb", kr: "외주를 주다", def: "Obtain goods or services from an outside supplier.", sample: "We outsource non-core logistics to certified partners.", alt: "Subcontract", altNuance: "Supply chain management term." },
-      { term: "Pivot", type: "Verb", kr: "방향을 전환하다", def: "Change strategy or direction in response to market shifts.", sample: "The sales team pivoted to target renewable energy clients.", alt: "Shift", altNuance: "Agile strategic change verb." },
-      { term: "Realign", type: "Verb", kr: "재정렬하다 / 재조정하다", def: "Change or restore to a desired position or agreement.", sample: "We must realign our sales targets with Q4 projections.", alt: "Adjust", altNuance: "Strategic alignment phrasing." },
-      { term: "Spearhead", type: "Verb", kr: "주도하다", def: "Lead an initiative, campaign, or strategic attack.", sample: "Ji-hoon will spearhead the North American grid expansion.", alt: "Lead", altNuance: "Leadership and initiative vocabulary." },
-      { term: "Cultivate", type: "Verb", kr: "구축하다 / 육성하다", def: "Try to acquire or develop a business relationship.", sample: "Our account team works to cultivate strong partner relations.", alt: "Develop", altNuance: "Long-term relationship building term." },
-      { term: "Leverage", type: "Verb", kr: "활용하다", def: "Use something to maximum advantage.", sample: "We leverage global branch networks to support local clients.", alt: "Use", altNuance: "Strategic utilization phrasing." },
-      { term: "Maximize", type: "Verb", kr: "최대화하다", def: "Make as large or great as possible.", sample: "Predictive maintenance maximizes transformer lifespan.", alt: "Increase fully", altNuance: "Performance optimization verb." },
-      { term: "Minimize", type: "Verb", kr: "최소화하다", def: "Reduce to the smallest possible amount or degree.", sample: "Strict QA protocols minimize manufacturing defects.", alt: "Reduce", altNuance: "Risk and defect reduction vocabulary." },
-      { term: "Overhaul", type: "Verb", kr: "전면 개편하다", def: "Examine and repair thoroughly or completely restructure.", sample: "We decided to overhaul our internal IT workflow.", alt: "Revamp", altNuance: "Comprehensive transformation verb." },
-      { term: "Reconcile", type: "Verb", kr: "조정하다 / 일치시키다", def: "Make consistent or compatible.", sample: "Accountants reconciled the variance in shipping costs.", alt: "Match", altNuance: "Financial and analytical verb." },
-      { term: "Streamline", type: "Verb", kr: "간소화하다 / 효율화하다", def: "Make an organization or system more efficient.", sample: "Digital forms streamline customer inquiry processing.", alt: "Simplify", altNuance: "Process efficiency phrasing." },
-      { term: "Negotiate", type: "Verb", kr: "협상하다", def: "Obtain or bring about by discussion.", sample: "We negotiated flexible payment terms with the buyer.", alt: "Bargain", altNuance: "Formal commercial deal-making verb." },
-      { term: "Finalize", type: "Verb", kr: "마무리짓다 / 최종 승인하다", def: "Complete or agree upon the finished details.", sample: "Legal officers will finalize the master contract today.", alt: "Complete", altNuance: "Official deal closure term." },
-      { term: "Integrate", type: "Verb", kr: "통합하다 / 접목하다", def: "Combine one thing with another so that they become a whole.", sample: "We will integrate real-time telemetry into the grid dashboard.", alt: "Combine", altNuance: "Technical and system synthesis verb." },
-      { term: "Monetize", type: "Verb", kr: "수익화하다", def: "Convert an asset or service into revenue or cash.", sample: "Software subscriptions help monetize hardware maintenance.", alt: "Commercialize", altNuance: "Business model development term." },
-      { term: "Prioritize", type: "Verb", kr: "우선시하다", def: "Designate or treat something as more important than others.", sample: "Engineers prioritize safety features above all else.", alt: "Focus on", altNuance: "Strategic focus vocabulary." },
-      { term: "Audit", type: "Verb", kr: "감사하다 / 조사하다", def: "Conduct an official financial or quality inspection.", sample: "Third parties audit our plants for environmental compliance.", alt: "Inspect", altNuance: "Official compliance and accounting verb." },
-      { term: "Quantify", type: "Verb", kr: "수량화하다", def: "Express or measure the quantity of something.", sample: "It is easy to quantify the energy savings from our sensors.", alt: "Measure", altNuance: "Data-driven business communication verb." },
-      { term: "Systematize", type: "Verb", kr: "체계화하다", def: "Arrange according to an organized plan or system.", sample: "We must systematize client feedback collection.", alt: "Organize", altNuance: "Process management phrasing." },
-      { term: "Automate", type: "Verb", kr: "자동화하다", def: "Convert a process to be operated by automated equipment.", sample: "Automating testing protocols speeds up dispatch.", alt: "Robotize", altNuance: "Industrial technology verb." },
-      { term: "Tailor", type: "Verb", kr: "맞춤 조절하다", def: "Make or adapt for a particular purpose or person.", sample: "We tailor specs to meet local grid voltage requirements.", alt: "Adapt", altNuance: "Bespoke service delivery term." },
-      { term: "Execute", type: "Verb", kr: "실행하다 / 체결하다", def: "Carry out or perform a plan or legal document.", sample: "Both CEOs met to execute the final partnership contract.", alt: "Perform", altNuance: "Formal legal and business execution verb." },
-      { term: "Monitor", type: "Verb", kr: "모니터링하다 / 감시하다", def: "Observe and check the progress or quality over time.", sample: "Sensors monitor grid thermal levels continuously.", alt: "Track", altNuance: "Operational tracking term." },
-      { term: "Authorize", type: "Verb", kr: "권한을 부여하다 / 승인하다", def: "Give official permission for or approval to.", sample: "The director authorized the budget increase for R&D.", alt: "Approve", altNuance: "Governance and managerial permission verb." },
-      { term: "Commission", type: "Verb", kr: "가동시키다 / 위탁하다", def: "Bring a plant, equipment, or ship into working condition.", sample: "Engineers will commission the new transformer bank next week.", alt: "Activate", altNuance: "Industrial engineering commissioning term." },
-      { term: "Disburse", type: "Verb", kr: "지불하다 / 집행하다", def: "Pay out money from a fund or budget.", sample: "Finance will disburse the project funds upon milestone completion.", alt: "Pay out", altNuance: "Financial disbursement vocabulary." },
-      { term: "Safeguard", type: "Verb", kr: "보호하다 / 지키다", def: "Protect from harm, risk, or loss.", sample: "Patent filings safeguard our proprietary textile formula.", alt: "Protect", altNuance: "Asset protection phrasing." },
-      { term: "Solicit", type: "Verb", kr: "요청하다 / 구하다", def: "Ask for or try to obtain something from someone.", sample: "We solicit feedback from all global procurement partners.", alt: "Request", altNuance: "Formal corporate inquiry verb." },
-      { term: "Transform", type: "Verb", kr: "변혁하다", def: "Make a thorough or dramatic change in form or appearance.", sample: "Digitalization will transform our supply chain operations.", alt: "Revamp", altNuance: "High-impact organizational verb." },
-      { term: "Unify", type: "Verb", kr: "통일하다", def: "Make or become united, uniform, or whole.", sample: "The merger unified regional sales networks.", alt: "Combine", altNuance: "Organizational consolidation verb." },
-      { term: "Yield", type: "Verb", kr: "산출하다 / 결실을 맺다", def: "Produce or provide a natural, financial, or technical result.", sample: "The upgrade will yield a 15% boost in energy efficiency.", alt: "Produce", altNuance: "Result and ROI oriented verb." },
-
-      // ==========================================
-      // 20 ADJECTIVES
-      // ==========================================
-      { term: "Accurate", type: "Adjective", kr: "정확한", def: "Correct in all details without error.", sample: "We need accurate measurements for production.", alt: "Exact", altNuance: "Accurate stresses freedom from errors." },
-      { term: "Substantial", type: "Adjective", kr: "상당한, 실질적인", def: "Large in size, value, importance, or degree.", sample: "We achieved a substantial reduction in material waste.", alt: "Big", altNuance: "Substantial is precise business vocabulary for data." },
-      { term: "Prohibitive", type: "Adjective", kr: "지나치게 높은", def: "So excessively high or restrictive that it prevents action.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
-      { term: "Paramount", type: "Adjective", kr: "최우선의, 중대한", def: "More important than anything else; supreme.", sample: "Maintaining data integrity remains of paramount importance.", alt: "Top priority", altNuance: "Paramount is formal executive vocabulary." },
-      { term: "Unflappable", type: "Adjective", kr: "흔들림 없는", def: "Remaining calm and controlled under high pressure.", sample: "Her unflappable leadership guided the team through the outage.", alt: "Calm", altNuance: "Unflappable highlights composure during crisis." },
-      { term: "Prevalent", type: "Adjective", kr: "널리 퍼진, 일반적인", def: "Widespread or commonly occurring in a industry.", sample: "Automated quality checks are increasingly prevalent.", alt: "Common", altNuance: "Prevalent describes established industry trends." },
-      { term: "Stringent", type: "Adjective", kr: "엄격한", def: "Strict, precise, and rigorously enforced.", sample: "Our plants follow stringent safety protocols.", alt: "Strict", altNuance: "Stringent is official quality compliance terminology." },
-      { term: "Comprehensive", type: "Adjective", kr: "포괄적인", def: "Including or dealing with all or nearly all elements.", sample: "We provided a comprehensive technical audit report.", alt: "Complete", altNuance: "Comprehensive stresses thorough coverage." },
-      { term: "Non-negotiable", type: "Adjective", kr: "협상 불가한", def: "Not open to discussion or modification.", sample: "Compliance with ISO standards is a non-negotiable clause.", alt: "Mandatory", altNuance: "Sets firm contractual boundaries." },
-      { term: "Cost-effective", type: "Adjective", kr: "비용 효율적인", def: "Economical in terms of the goods or services received for money spent.", sample: "Our turnkey transformer design is highly cost-effective.", alt: "Economical", altNuance: "Focuses on financial efficiency." },
-      { term: "Scalable", type: "Adjective", kr: "확장 가능한", def: "Capable of being easily expanded or upgraded.", sample: "Our cloud grid architecture offers a scalable solution.", alt: "Expandable", altNuance: "Modern tech and business growth vocabulary." },
-      { term: "Viable", type: "Adjective", kr: "실행 가능한 / 지속 가능한", def: "Capable of working successfully or developing into profit.", sample: "Dual sourcing is a commercially viable strategy.", alt: "Feasible", altNuance: "Business sustainability vocabulary." },
-      { term: "Robust", type: "Adjective", kr: "견고한 / 강건한", def: "Strong, healthy, and unlikely to break or fail.", sample: "We built a robust quality management framework.", alt: "Strong", altNuance: "Refers to resilience in systems or specs." },
-      { term: "Imperative", type: "Adjective", kr: "반드시 필요한 / 긴급한", def: "Of vital importance; crucial or mandatory.", sample: "It is imperative that we complete testing before Friday.", alt: "Crucial", altNuance: "High urgency business terminology." },
-      { term: "Pivotal", type: "Adjective", kr: "중추적인 / 결정적인", def: "Of crucial importance in relation to the development or success of something.", sample: "This partnership represents a pivotal moment for global sales.", alt: "Key", altNuance: "Strategic milestone vocabulary." },
-      { term: "Unilateral", type: "Adjective", kr: "일방적인", def: "Done by or affecting one person or party without agreement.", sample: "Unilateral price increases damaged client trust.", alt: "One-sided", altNuance: "Legal and contractual vocabulary." },
-      { term: "Feasible", type: "Adjective", kr: "실현 가능한", def: "Possible to do easily or conveniently.", sample: "Engineers confirmed the requested specs are technical feasible.", alt: "Possible", altNuance: "Practical technical assessment term." },
-      { term: "Rigorous", type: "Adjective", kr: "철저한 / 엄격한", def: "Extremely thorough, exhaustive, or accurate.", sample: "Our yarn undergoes rigorous quality testing.", alt: "Thorough", altNuance: "Quality control and audit phrasing." },
-      { term: "Substantive", type: "Adjective", kr: "실질적인 / 중요한", def: "Having a firm basis in reality; meaningful or important.", sample: "Both CEOs engaged in substantive deal discussions.", alt: "Meaningful", altNuance: "Executive discourse phrasing." },
-      { term: "Preeminent", type: "Adjective", kr: "탁월한 / 우수한", def: "Surpassing all others; distinguished in a field.", sample: "Hyosung is the preeminent global spandex manufacturer.", alt: "Leading", altNuance: "High-level branding vocabulary." },
-
-      // ==========================================
-      // 20 ADVERBS
-      // ==========================================
-      { term: "Promptly", type: "Adverb", kr: "신속히", def: "Without delay and on time.", sample: "Please respond promptly to client queries.", alt: "Quickly", altNuance: "Promptly carries professional courtesy." },
-      { term: "Seamlessly", type: "Adverb", kr: "매끄럽게", def: "Done smoothly without unexpected problems.", sample: "The system migrated seamlessly over the weekend.", alt: "Smoothly", altNuance: "Seamlessly stresses absence of friction." },
-      { term: "Expeditiously", type: "Adverb", kr: "지체 없이 신속히", def: "Executed with maximum institutional speed and efficiency.", sample: "Auditors resolved the compliance check expeditiously.", alt: "Quickly", altNuance: "Expeditiously carries C-suite formality." },
-      { term: "Inadvertently", type: "Adverb", kr: "무심코, 부주의하게", def: "Accidentally, without intentional planning.", sample: "The draft was inadvertently attached to the public email.", alt: "By mistake", altNuance: "Inadvertently is formal corporate vocabulary." },
-      { term: "Equitably", type: "Adverb", kr: "공정하게", def: "In a fair, impartial, and balanced manner.", sample: "Cost overruns were shared equitably between both firms.", alt: "Fairly", altNuance: "Equitably stresses balanced contractual fairness." },
-      { term: "Proactively", type: "Adverb", kr: "선제적으로", def: "Taking action by causing change rather than reacting.", sample: "Engineers proactively resolved potential thermal bottlenecks.", alt: "In advance", altNuance: "Proactively emphasizes initiative and foresight." },
-      { term: "Decisively", type: "Adverb", kr: "단호하게", def: "In a way that shows ability to make quick, clear decisions.", sample: "Management acted decisively to secure raw material supply.", alt: "Firmly", altNuance: "Decisively underscores decisive executive leadership." },
-      { term: "Unanimously", type: "Adverb", kr: "만장일치로", def: "With the agreement and consent of all people involved.", sample: "The board unanimously approved the expansion budget.", alt: "Fully agreed", altNuance: "Formal boardroom voting vocabulary." },
-      { term: "Rigorously", type: "Adverb", kr: "철저하게", def: "In an extremely thorough and careful way.", sample: "All transformer cores are rigorously tested prior to shipping.", alt: "Strictly", altNuance: "Quality assurance phrasing." },
-      { term: "Systematically", type: "Adverb", kr: "체계적으로", def: "According to a fixed plan or system; methodically.", sample: "We systematically audit all regional suppliers.", alt: "Methodically", altNuance: "Process discipline vocabulary." },
-      { term: "Strategically", type: "Adverb", kr: "전략적으로", def: "In a way that relates to long-term plans or aims.", sample: "The factory was strategically located near the port.", alt: "Planned", altNuance: "Corporate strategy vocabulary." },
-      { term: "Concurrently", type: "Adverb", kr: "동시에", def: "At the same time; simultaneously.", sample: "Software migration was executed concurrently with plant upgrades.", alt: "Simultaneously", altNuance: "Project schedule phrasing." },
-      { term: "Substantially", type: "Adverb", kr: "실질적으로 / 상당 부분", def: "To a great or significant degree.", sample: "Production costs dropped substantially after automation.", alt: "Significantly", altNuance: "Data and metrics phrasing." },
-      { term: "Significantly", type: "Adverb", kr: "현저하게", def: "In a sufficiently great or important way as to be worthy of attention.", sample: "Lead times were significantly reduced in Q2.", alt: "Noticeably", altNuance: "Standard reporting vocabulary." },
-      { term: "Methodically", type: "Adverb", kr: "조리 있게 / 방법론적으로", def: "In an orderly or systematic manner.", sample: "Engineers methodically analyzed the sensor telemetry.", alt: "Step-by-step", altNuance: "Analytical and scientific vocabulary." },
-      { term: "Unilaterally", type: "Adverb", kr: "일방적으로", def: "Used to indicate that an action is taken by one party without consent.", sample: "The buyer unilaterally canceled the purchase order.", alt: "Without consent", altNuance: "Legal and contractual dispute vocabulary." },
-      { term: "Pragmatically", type: "Adverb", kr: "실용주의적으로", def: "In a sensible and realistic way based on practical considerations.", sample: "The team pragmatically negotiated a short-term pricing concession.", alt: "Practically", altNuance: "Business compromise vocabulary." },
-      { term: "Transparently", type: "Adverb", kr: "투명하게", def: "In an open, honest, and clear manner.", sample: "We transparently disclosed all raw material cost breakdowns.", alt: "Openly", altNuance: "Governance and client relationship phrasing." },
-      { term: "Consistently", type: "Adverb", kr: "일관되게", def: "In every case or at every time; reliably.", sample: "Hyosung plants consistently meet global quality standards.", alt: "Reliably", altNuance: "Standard operational benchmark vocabulary." },
-      { term: "Adequately", type: "Adverb", kr: "적절하게 / 충분히", def: "To a satisfactory or sufficient degree.", sample: "Ensure the machinery is adequately lubricated before testing.", alt: "Sufficiently", altNuance: "Technical maintenance phrasing." }
-    ];
-
-    // ==========================================
-    // APP STATE & HELPER STORAGE WRAPPERS
-    // ==========================================
-    let currentLevel = 'Advanced';
-    let stage1Vocab = [];
-    let selectedIndices = new Set();
-    let currentModule = 'module1';
-
-    function safeGetStorage(key, fallback = null) {
-      try {
-        const val = localStorage.getItem(key);
-        return val ? JSON.parse(val) : fallback;
-      } catch (e) {
-        return fallback;
-      }
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
-    function safeSetStorage(key, value) {
-      try {
-        localStorage.setItem(key, JSON.stringify(value));
-      } catch (e) {}
+    function getSameTypeDistractors(targetItem, count = 3) {
+      const sameTypePool = masterFallbackPool.filter(x => x.type === targetItem.type && x.term.toLowerCase() !== targetItem.term.toLowerCase());
+      const shuffled = [...sameTypePool].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count).map(x => x.term);
     }
 
-    function getUsedWords() {
-      return safeGetStorage('hyosung_used_words_history', []);
-    }
-
-    function markWordAsUsed(term) {
-      const history = getUsedWords();
-      if (!history.includes(term)) {
-        history.push(term);
-        safeSetStorage('hyosung_used_words_history', history);
-      }
-    }
-
-    // ==========================================
-    // LEVEL SELECTION & STAGE 1 LOGIC
-    // ==========================================
-    function selectLevelAndStart(level) {
-      currentLevel = level;
-      const badge = document.getElementById('current-level-badge');
-      if (badge) {
-        badge.innerText = level;
-        badge.classList.remove('hidden');
-      }
-
-      document.getElementById('level-selection-screen').classList.add('hidden');
-      document.getElementById('stage1-review-screen').classList.remove('hidden');
-      document.getElementById('main-workspace').classList.add('hidden');
-
-      generateInitialStage1Vocab();
-    }
-
-    function showLandingPage() {
-      document.getElementById('level-selection-screen').classList.remove('hidden');
-      document.getElementById('stage1-review-screen').classList.add('hidden');
-      document.getElementById('main-workspace').classList.add('hidden');
-      document.getElementById('nav-export-btn').classList.add('hidden');
-    }
-
-    function generateInitialStage1Vocab() {
-      const used = getUsedWords();
-      
-      const filterByType = (type, count) => {
-        const available = masterFallbackPool.filter(item => item.type === type && !used.includes(item.term));
-        const pool = available.length >= count ? available : masterFallbackPool.filter(item => item.type === type);
-        const shuffled = [...pool].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, count);
-      };
-
-      const expressions = filterByType('Expression', 4);
-      const verbs = filterByType('Verb', 3);
-      const adjectives = filterByType('Adjective', 1);
-      const adverbs = filterByType('Adverb', 1);
-
-      stage1Vocab = [...expressions, ...verbs, ...adjectives, ...adverbs];
-      selectedIndices.clear();
-      renderStage1Cards();
-    }
-
-    // ==========================================
-    // STAGE 1 CARDS RENDER & REPLACEMENT
-    // ==========================================
-    function renderStage1Cards() {
-      const container = document.getElementById('stage1-cards-container');
-      if (!container) return;
-
-      container.innerHTML = stage1Vocab.map((item, index) => {
-        const isChecked = selectedIndices.has(index);
-        let badgeStyle = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-        if (item.type === 'Verb') badgeStyle = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-        if (item.type === 'Adjective') badgeStyle = 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-        if (item.type === 'Adverb') badgeStyle = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-
-        return `
-          <div class="glass-card p-5 rounded-2xl border ${isChecked ? 'border-amber-500/60 bg-amber-950/10' : 'border-slate-800'} space-y-3 transition-all relative">
-            <div class="flex items-start justify-between">
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${badgeStyle} uppercase tracking-wider">
-                ${item.type}
-              </span>
-              <input type="checkbox" onchange="toggleSelectStage1Index(${index})" ${isChecked ? 'checked' : ''} class="w-4 h-4 rounded border-slate-700 text-amber-500 focus:ring-0 cursor-pointer">
-            </div>
-
-            <div>
-              <div class="flex items-center justify-between">
-                <h4 class="text-base font-extrabold text-white">${item.term}</h4>
-                <button onclick="speakText('${item.term.replace(/'/g, "\\'")}')" class="text-xs text-slate-400 hover:text-emerald-400 p-1">
-                  <i class="fa-solid fa-volume-high"></i>
-                </button>
-              </div>
-              <p class="text-xs font-semibold text-emerald-400 font-mono mt-0.5">${item.kr}</p>
-            </div>
-
-            <p class="text-xs text-slate-300 leading-relaxed">${item.def}</p>
-
-            <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
-              <span class="text-[10px] text-slate-500 font-mono">Index #${index + 1}</span>
-              <button onclick="replaceStage1TermSingle(${index})" class="text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1">
-                <i class="fa-solid fa-rotate"></i> Replace
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      document.getElementById('selected-count').innerText = selectedIndices.size;
-    }
-
-    function toggleSelectStage1Index(index) {
-      if (selectedIndices.has(index)) selectedIndices.delete(index);
-      else selectedIndices.add(index);
-      renderStage1Cards();
-    }
-
-    function replaceStage1TermSingle(index) {
-      const oldItem = stage1Vocab[index];
-      markWordAsUsed(oldItem.term);
-
-      const used = getUsedWords();
-      const currentTerms = stage1Vocab.map(v => v.term);
-
-      const available = masterFallbackPool.filter(item => 
-        item.type === oldItem.type && 
-        !used.includes(item.term) && 
-        !currentTerms.includes(item.term)
-      );
-
-      const pool = available.length > 0 ? available : masterFallbackPool.filter(item => item.type === oldItem.type && !currentTerms.includes(item.term));
-      const newItem = pool[Math.floor(Math.random() * pool.length)];
-
-      stage1Vocab[index] = newItem;
-      selectedIndices.delete(index);
-      renderStage1Cards();
-    }
-
-    function replaceSelectedStage1Terms() {
-      if (selectedIndices.size === 0) return;
-      Array.from(selectedIndices).forEach(index => {
-        replaceStage1TermSingle(index);
-      });
-    }
-
-    // ==========================================
-    // STAGE 2 LESSON GENERATION
-    // ==========================================
-    function generateStage2Lesson() {
-      stage1Vocab.forEach(v => markWordAsUsed(v.term));
-
-      document.getElementById('stage1-review-screen').classList.add('hidden');
-      document.getElementById('main-workspace').classList.remove('hidden');
-      document.getElementById('nav-export-btn').classList.remove('hidden');
-
-      renderModule1Content();
-      renderModule2Content();
-      renderModule3Content();
-      renderModule4Content();
-      renderModule5Content();
-
-      switchTab('module1');
-    }
-
-    function switchTab(tabId) {
-      currentModule = tabId;
-      ['module1', 'module2', 'module3', 'module4', 'module5'].forEach(m => {
-        document.getElementById(`content-${m}`).classList.add('hidden');
-        const tabBtn = document.getElementById(`tab-${m}`);
-        if (tabBtn) {
-          tabBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800';
-        }
-      });
-
-      document.getElementById(`content-${tabId}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`tab-${tabId}`);
-      if (activeBtn) {
-        activeBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md';
-      }
-    }
-
-    // ==========================================
-    // MODULE 1 CONTENT RENDER
-    // ==========================================
-    function renderModule1Content() {
-      const container = document.getElementById('module1-vocab-grid');
-      if (!container) return;
-
-      container.innerHTML = stage1Vocab.map(item => `
-        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
-          <div class="flex justify-between items-center">
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase">
-              ${item.type}
-            </span>
-            <button onclick="speakText('${item.term.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-emerald-400 text-xs p-1">
-              <i class="fa-solid fa-volume-high"></i>
-            </button>
-          </div>
-          <div>
-            <h4 class="text-base font-extrabold text-white">${item.term}</h4>
-            <p class="text-xs font-semibold text-emerald-400 font-mono mt-0.5">${item.kr}</p>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">${item.def}</p>
-          <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-xs italic text-slate-300">
-            "${item.sample}"
-          </div>
-        </div>
-      `).join('');
-
-      const prepsContainer = document.getElementById('module1-prepositions');
-      prepsContainer.innerHTML = `
-        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
-          <div class="font-bold text-white">1. Pursuant to (~에 따라 / 계약에 의거하여)</div>
-          <p class="text-slate-400">"Pursuant to clause 4.2, all FAT test results must be filed prior to dispatch."</p>
-        </div>
-        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
-          <div class="font-bold text-white">2. In tandem with (~와 병행하여 / 발맞추어)</div>
-          <p class="text-slate-400">"We will scale up production in tandem with client site expansion."</p>
-        </div>
-        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
-          <div class="font-bold text-white">3. Subject to (~을 조건으로 하여)</div>
-          <p class="text-slate-400">"The volume discount is subject to final sign-off from procurement."</p>
-        </div>
-        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
-          <div class="font-bold text-white">4. In lieu of (~ 대신에)</div>
-          <p class="text-slate-400">"We offered extended warranty coverage in lieu of an upfront price reduction."</p>
-        </div>
-      `;
-
-      const patternsContainer = document.getElementById('module1-patterns');
-      patternsContainer.innerHTML = `
-        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
-          <div class="font-bold text-emerald-400">Pattern A: Strategic Value Frame</div>
-          <p class="font-mono text-slate-300">"We are prepared to [Action], provided that [Condition], thereby [Quantifiable Benefit]."</p>
-        </div>
-        <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
-          <div class="font-bold text-emerald-400">Pattern B: Conditional Pivot Frame</div>
-          <p class="font-mono text-slate-300">"While [Constraint] renders [Option] difficult, we can [Alternative] in tandem with [Secondary Value]."</p>
-        </div>
-      `;
-    }
-
-    // ==========================================
-    // MODULE 2: DIAGNOSTIC CHECK
-    // ==========================================
     function renderModule2Content() {
       const container = document.getElementById('diagnostic-quiz-container');
       if (!container) return;
 
       const v = stage1Vocab;
-      const questions = [
-        {
-          q: `Which term best completes: "Our leadership team met with regional representatives to __________ regarding contract terms"?`,
-          options: [v[0] ? v[0].term : "Reconcile differences", "unilateral mandate", "prohibitive fee", "liquidated damages"],
-          ans: 0,
-          exp: `${v[0] ? v[0].term : "This expression"} fits best as it addresses the need to align perspectives and resolve conflicting points.`
-        },
-        {
-          q: `Which phrase best fits: "Weekly status reports helped __________ regarding project milestone deadlines"?`,
-          options: ["amortize costs", v[1] ? v[1].term : "Alleviate concerns", "scope creep", "at a discount"],
-          ans: 1,
-          exp: `${v[1] ? v[1].term : "This expression"} means reducing anxiety or worry regarding project risks.`
-        },
-        {
-          q: `Which action verb fits best: "To __________ potential delivery delays, the factory activated backup lines early"?`,
-          options: ["solicit", "subsidize", v[4] ? v[4].term : "Preempt", "disburse"],
-          ans: 2,
-          exp: `${v[4] ? v[4].term : "This verb"} refers to taking proactive action to prevent an issue before it occurs.`
-        },
-        {
-          q: `Choose the correct business preposition: "All factory quality testing results were approved __________ contract specifications."`,
-          options: ["in lieu of", "pursuant to", "subject to", "at a premium"],
-          ans: 1,
-          exp: `"Pursuant to" means in accordance or compliance with contractual terms.`
-        },
-        {
-          q: `Select the term that fits: "Automating inventory tracking will help __________ across all global logistics hubs."`,
-          options: [v[2] ? v[2].term : "Streamline operations", "unilateral condition", "ballpark figure", "trade barrier"],
-          ans: 0,
-          exp: `${v[2] ? v[2].term : "This term"} emphasizes optimizing processes to eliminate inefficiency.`
-        },
-        {
-          q: `Which descriptor accurately fits: "Due to high safety standards, adhering to zero-defect protocols remains __________."`,
-          options: ["prohibitive", "inadvertent", v[7] ? v[7].term : "Non-negotiable", "subsidized"],
-          ans: 2,
-          exp: `${v[7] ? v[7].term : "This term"} describes mandatory requirements that cannot be compromised.`
-        },
-        {
-          q: `Choose the correct prepositional phrase: "We offered extended warranty coverage __________ an upfront price reduction."`,
-          options: ["pursuant to", "in lieu of", "subject to", "in tandem with"],
-          ans: 1,
-          exp: `"In lieu of" means in place of or as a substitute for something else.`
-        },
-        {
-          q: `Which adverb best completes: "Our engineering division __________ updated the firmware before dispatching the equipment"?`,
-          options: ["unilaterally", "prohibitively", v[8] ? v[8].term : "Proactively", "inadvertently"],
-          ans: 2,
-          exp: `${v[8] ? v[8].term : "This adverb"} highlights taking initiative in advance rather than reacting later.`
+      if (!v || v.length < 9) return;
+
+      // Dynamically select items from the current lesson suite
+      const targetIndices = [0, 1, 2, 3, 4, 5, 7, 8];
+      const questions = [];
+
+      targetIndices.forEach((vocabIdx) => {
+        const item = v[vocabIdx];
+        if (!item) return;
+
+        // Create sentence with blank directly from item's sample sentence
+        let sentence = item.sample;
+        const regex = new RegExp(escapeRegExp(item.term), 'gi');
+        if (regex.test(sentence)) {
+          sentence = sentence.replace(regex, '__________');
+        } else {
+          sentence = `The team agreed to __________ during the executive review process.`;
         }
-      ];
+
+        const distractors = getSameTypeDistractors(item, 3);
+        const rawOptions = [item.term, ...distractors];
+        
+        // Shuffle options and track correct answer index
+        const indexedOptions = rawOptions.map((opt, i) => ({ opt, isCorrect: i === 0 }));
+        indexedOptions.sort(() => 0.5 - Math.random());
+        
+        const options = indexedOptions.map(o => o.opt);
+        const ans = indexedOptions.findIndex(o => o.isCorrect);
+
+        questions.push({
+          q: `Fill in the blank (${item.type}): "${sentence}"`,
+          options: options,
+          ans: ans,
+          exp: `"${item.term}" (${item.kr}) is the correct term. Definition: ${item.def}`
+        });
+      });
 
       container.innerHTML = questions.map((q, qIdx) => `
         <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
@@ -912,159 +449,204 @@
       const container = document.getElementById('dialogue-script-container');
       if (!container) return;
 
-      const lines = [
-        { speaker: "Min-ho (Sales Director)", text: `Good morning, team. We need to ${stage1Vocab[0].term} with our European buyers regarding raw material lead times.` },
-        { speaker: "Dr. Müller (Client Director)", text: `We are concerned that potential delays will impact our Q3 production rollout.` },
-        { speaker: "Ji-won (Lead Engineer)", text: `Pursuant to our internal QA checks, we can ${stage1Vocab[4].term} quality variance by expediting factory testing.` },
-        { speaker: "Min-ho (Sales Director)", text: `Subject to board sign-off, we can offer extended support in tandem with flexible delivery schedules to ensure mutual gain.` }
-      ];
-
-      container.innerHTML = lines.map((l, i) => `
-        <div class="glass-card p-4 rounded-xl border border-slate-800 space-y-1">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-emerald-400">${l.speaker}</span>
-            <button onclick="speakText('${l.text.replace(/'/g, "\\'")}')" class="text-xs text-slate-400 hover:text-white p-1">
-              <i class="fa-solid fa-volume-high"></i>
-            </button>
-          </div>
-          <p class="text-xs text-slate-200 leading-relaxed font-mono">"${l.text}"</p>
-        </div>
-      `).join('');
-    }
-
-    function playFullDialogue() {
-      const lines = [
-        `Good morning, team. We need to ${stage1Vocab[0].term} with our European buyers regarding raw material lead times.`,
-        `We are concerned that potential delays will impact our Q3 production rollout.`,
-        `Pursuant to our internal QA checks, we can ${stage1Vocab[4].term} quality variance by expediting factory testing.`
-      ];
-      lines.forEach((txt, idx) => {
-        setTimeout(() => speakText(txt), idx * 4000);
-      });
-    }
-
-    // ==========================================
-    // MODULE 4: TRANSLATION WORKBENCH
-    // ==========================================
-    function renderModule4Content() {
-      const container = document.getElementById('translation-prompts-container');
-      if (!container) return;
-
       const v = stage1Vocab;
-      const term0 = v[0] ? v[0].term : 'Reconcile differences';
-      const term1 = v[1] ? v[1].term : 'Alleviate concerns';
-      const term2 = v[2] ? v[2].term : 'Streamline operations';
-      const term3 = v[3] ? v[3].term : 'Mitigate risks';
-      const term4 = v[4] ? v[4].term : 'Clarify';
-      const term5 = v[5] ? v[5].term : 'Verify';
-      const term6 = v[6] ? v[6].term : 'Coordinate';
-      const term7 = v[7] ? v[7].term : 'Accurate';
-      const term8 = v[8] ? v[8].term : 'Promptly';
+      if (!v || v.length < 9) return;
 
-      const prompts = [
+      // Extract items by category
+      const expressions = v.filter(x => x.type === 'Expression');
+      const verbs = v.filter(x => x.type === 'Verb');
+      const adjectives = v.filter(x => x.type === 'Adjective');
+      const adverbs = v.filter(x => x.type === 'Adverb');
+
+      const exp1 = expressions[0] || v[0];
+      const exp2 = expressions[1] || v[1];
+      const exp3 = expressions[2] || v[2];
+      const exp4 = expressions[3] || v[3];
+
+      const verb1 = verbs[0] || v[4];
+      const verb2 = verbs[1] || v[5];
+      const verb3 = verbs[2] || v[6];
+
+      const adj1 = adjectives[0] || v[7];
+      const adv1 = adverbs[0] || v[8];
+
+      // Cohesive 13-Line Connected B2B Script
+      const scriptLines = [
         {
-          kr: "규제 당국의 최종 승인을 받는 조건으로, 우리 회사는 계약에 의거하여 인프라 구축을 진행하기로 합의했습니다.",
-          target: "Subject to / Pursuant to",
-          model: "Subject to final regulatory approval, our company agreed to proceed with infrastructure setup pursuant to the master agreement."
+          speaker: "Min-ho (Hyosung Global Sales Lead)",
+          avatar: "👨‍💼",
+          role: "Seller",
+          text: `Good morning, Dr. Müller. Thank you for making time today. To ensure our upcoming supply agreement aligns with your regional targets, we want to address your operational requirements directly.`
         },
         {
-          kr: "우리는 새로운 생산 공정을 효율화함으로써 배송 기간을 단축하고 고객의 우려를 완화했습니다.",
-          target: `${term2} / ${term1}`,
-          model: `By focusing on how to ${term2.toLowerCase()}, we reduced delivery lead times and managed to ${term1.toLowerCase()}.`
+          speaker: "Dr. Müller (Client Procurement Director)",
+          avatar: "🏛️",
+          role: "Buyer",
+          text: `Thank you, Min-ho. Our priority today is securing reliable supply commitments without taking on excessive financial risk, especially given current market volatility.`
         },
         {
-          kr: "품질 보증 체크를 실시하여 출하 전 발생할 수 있는 잠재적 위험을 줄였습니다.",
-          target: `Prior to / ${term3}`,
-          model: `Prior to dispatch, our technical team executed QA checks to ${term3.toLowerCase()}.`
+          speaker: "Ji-won (Hyosung Technical Solutions Lead)",
+          avatar: "👩‍🔬",
+          role: "Engineering",
+          text: `Understood. <span class="text-amber-400 font-semibold underline decoration-amber-500/50">Pursuant to</span> our joint technical audit last week, our production team verified that our facility can fully meet your quality benchmarks.`
         },
         {
-          kr: "가격 할인 대신에, 우리는 모든 추가 주문에 대해 무료 기술 지원을 제공하기로 합의했습니다.",
-          target: "In lieu of / After-sales technical support",
-          model: "In lieu of a price discount, we agreed to provide complimentary after-sales technical support for all additional orders."
+          speaker: "Min-ho (Hyosung Global Sales Lead)",
+          avatar: "👨‍💼",
+          role: "Seller",
+          text: `To build on those technical results, our proposal demonstrates how we can <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp1.term}</span> across your regional plants, ensuring long-term consistency.`
         },
         {
-          kr: "새로운 스마트 센서를 기존 그리드에 통합함과 동시에, 가동률을 극대화했습니다.",
-          target: `In tandem with / ${term5}`,
-          model: `In tandem with integrating smart sensors into the existing grid, engineers worked to ${term5.toLowerCase()} operational uptime.`
+          speaker: "Dr. Müller (Client Procurement Director)",
+          avatar: "🏛️",
+          role: "Buyer",
+          text: `That is encouraging, but my procurement committee remains concerned about upfront financial commitments and rigid delivery schedules.`
         },
         {
-          kr: "계약 조건에 대한 명확한 설명을 요청한 후, 우리는 구매 계약서를 최종 작성했습니다.",
-          target: `${term4} / Finalize`,
-          model: `After asking the legal counsel to ${term4.toLowerCase()} the contract conditions, we finalized the purchase agreement.`
+          speaker: "Ji-won (Hyosung Technical Solutions Lead)",
+          avatar: "👩‍🔬",
+          role: "Engineering",
+          text: `We recognize those constraints. If we <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold border border-blue-500/30">${verb1.term}</span> our logistics timeline <span class="text-amber-400 font-semibold underline decoration-amber-500/50">in tandem with</span> your quarterly forecasts, the entire workflow becomes far more <span class="bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold border border-purple-500/30">${adj1.term}</span>.`
         },
         {
-          kr: "생산 일정을 각 부서와 조율하여 납기 지연을 방지했습니다.",
-          target: `${term6} / Lead time`,
-          model: `We worked to ${term6.toLowerCase()} production schedules across departments to prevent lead time delays.`
+          speaker: "Min-ho (Hyosung Global Sales Lead)",
+          avatar: "👨‍💼",
+          role: "Seller",
+          text: `Furthermore, <span class="text-amber-400 font-semibold underline decoration-amber-500/50">in lieu of</span> demanding a large initial capital outlay, we can <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold border border-blue-500/30">${verb2.term}</span> deployment expenses across a extended multi-year framework.`
         },
         {
-          kr: "모든 단일 제품이 엄격한 표준에 맞추어 제작되었음을 신속하게 검증해야 합니다.",
-          target: `In line with / ${term8}`,
-          model: `We must ${term8.toLowerCase()} ${term5.toLowerCase()} that every single unit is manufactured in line with stringent quality standards.`
+          speaker: "Dr. Müller (Client Procurement Director)",
+          avatar: "🏛️",
+          role: "Buyer",
+          text: `Spreading those expenses certainly eases our immediate budget pressure. However, how do you handle unexpected supply delays or compliance risks?`
         },
         {
-          kr: "할인된 가격으로 원자재를 공급하는 조건으로, 3년 장기 공급 계약을 체결했습니다.",
-          target: "At a discount / Subject to",
-          model: "Subject to a three-year long-term supply agreement, we offered to supply raw materials at a discount."
+          speaker: "Ji-won (Hyosung Technical Solutions Lead)",
+          avatar: "👩‍🔬",
+          role: "Engineering",
+          text: `Our engineering team will <span class="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold border border-amber-500/30">${adv1.term}</span> <span class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold border border-blue-500/30">${verb3.term}</span> real-time quality protocols, catching any variance before it affects your operations.`
         },
         {
-          kr: "이견을 조정하고 공정한 협상 결과를 도출하기 위해, 양사 임원진이 긴급 회의를 소집했습니다.",
-          target: `${term0} / Equitably`,
-          model: `Executive leaders convened an urgent meeting to ${term0.toLowerCase()} and structure terms equitably.`
+          speaker: "Min-ho (Hyosung Global Sales Lead)",
+          avatar: "👨‍💼",
+          role: "Seller",
+          text: `This approach allows us to <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp2.term}</span> effectively while establishing a clear framework to <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp3.term}</span>.`
+        },
+        {
+          speaker: "Dr. Müller (Client Procurement Director)",
+          avatar: "🏛️",
+          role: "Buyer",
+          text: `I appreciate this structured risk mitigation plan. <span class="text-amber-400 font-semibold underline decoration-amber-500/50">Subject to</span> our legal team's final review of the penalty clauses, this represents a very viable deal structure.`
+        },
+        {
+          speaker: "Min-ho (Hyosung Global Sales Lead)",
+          avatar: "👨‍💼",
+          role: "Seller",
+          text: `Excellent. We will incorporate these points into the master contract so both sides can achieve <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">${exp4.term}</span> by Friday.`
+        },
+        {
+          speaker: "Dr. Müller (Client Procurement Director)",
+          avatar: "🏛️",
+          role: "Buyer",
+          text: `Agreed. Forward the revised draft, and we will initiate internal approval immediately.`
         }
       ];
 
-      container.innerHTML = prompts.map((p, idx) => `
-        <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Prompt #${idx + 1}</span>
-            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">${p.target}</span>
+      // Render context header & script turns
+      container.innerHTML = `
+        <div class="glass-card p-4 rounded-xl border border-slate-800 bg-slate-900/60 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs">
+          <div>
+            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">Scenario Setting</span>
+            <p class="text-slate-300 mt-0.5">High-Stakes Contract Renewal & QA Strategy Session between Hyosung Executives and European Client Procurement.</p>
           </div>
-
-          <p class="text-sm font-semibold text-white bg-slate-950/60 p-3 rounded-xl border border-slate-800 font-mono">${p.kr}</p>
-
-          <textarea id="trans-input-${idx}" rows="2" placeholder="Type your executive English translation here..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none font-mono"></textarea>
-
-          <div class="flex justify-between items-center pt-2">
-            <button onclick="evaluateTranslation(${idx}, '${p.model.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold border border-slate-700">
-              Evaluate Translation
-            </button>
-          </div>
-
-          <div id="trans-feedback-${idx}" class="hidden p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
-            <!-- Dynamic Feedback -->
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-mono text-[10px] border border-slate-700">13 Turn Dialogue</span>
           </div>
         </div>
-      `).join('');
-    }
 
-    function evaluateTranslation(idx, modelAnswer) {
-      const userInput = document.getElementById(`trans-input-${idx}`).value;
-      const feedback = document.getElementById(`trans-feedback-${idx}`);
-      if (!feedback) return;
-
-      feedback.classList.remove('hidden');
-      feedback.innerHTML = `
-        <div class="font-bold text-emerald-400">Reference Model Answer:</div>
-        <p class="text-slate-300 font-mono">${modelAnswer}</p>
-        <div class="pt-2 border-t border-slate-800 text-slate-400">
-          <strong>Linguistic Review:</strong> Check for proper preposition placement, passive/active voice agreement, and correct article usage (<em>a, an, the</em>).
+        <div class="space-y-4">
+          ${scriptLines.map((line, idx) => `
+            <div class="glass-card p-4 rounded-2xl border border-slate-800/80 hover:border-slate-700 transition-all flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg flex-shrink-0 shadow-inner">
+                ${line.avatar}
+              </div>
+              <div class="flex-1 space-y-1">
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-white">${line.speaker}</span>
+                    <span class="text-[10px] px-2 py-0.2 rounded-full font-semibold ${
+                      line.role === 'Seller' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                      line.role === 'Buyer' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                      'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                    }">${line.role}</span>
+                  </div>
+                  <button onclick="speakText('${line.text.replace(/'/g, "\\'").replace(/<[^>]*>/g, '')}')" class="text-slate-400 hover:text-emerald-400 p-1 rounded transition-colors text-xs" title="Listen to turn">
+                    <i class="fa-solid fa-volume-high"></i>
+                  </button>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed font-sans">${line.text}</p>
+              </div>
+            </div>
+          `).join('')}
         </div>
       `;
     }
 
+    function playFullDialogue() {
+      const container = document.getElementById('dialogue-script-container');
+      if (!container) return;
+
+      const lines = container.querySelectorAll('.font-sans');
+      if (!lines.length) return;
+
+      let combinedText = "";
+      lines.forEach(l => {
+        combinedText += l.textContent + " ... ";
+      });
+
+      speakText(combinedText);
+    }
+
     // ==========================================
-    // MODULE 5: FINAL EXAM & SCORECARD
+    // MODULE 5: FINAL EXAM & SCORECARD (DYNAMICALLY BOUND)
     // ==========================================
     function renderModule5Content() {
       const container = document.getElementById('final-exam-container');
       if (!container) return;
 
-      const questions = [
-        { q: `Which term best completes: "We must __________ with the client to resolve delivery bottlenecks"?`, opts: [stage1Vocab[0].term, "unilateral rule", "ballpark figure", "scope creep"], ans: 0 },
-        { q: `Which preposition means "in compliance or accordance with"?`, opts: ["pursuant to", "in lieu of", "at a premium", "subject to"], ans: 0 },
-        { q: `Complete: "The contract discount is __________ final sign-off from management."`, opts: ["subject to", "prior to", "in tandem with", "pursuant to"], ans: 0 }
-      ];
+      const v = stage1Vocab;
+      if (!v || v.length < 9) return;
+
+      const targetIndices = [0, 1, 2, 3, 4, 5, 6, 7];
+      const questions = [];
+
+      targetIndices.forEach((vocabIdx) => {
+        const item = v[vocabIdx];
+        if (!item) return;
+
+        let sentence = item.sample;
+        const regex = new RegExp(escapeRegExp(item.term), 'gi');
+        if (regex.test(sentence)) {
+          sentence = sentence.replace(regex, '__________');
+        } else {
+          sentence = `Please __________ as agreed during our strategy meeting.`;
+        }
+
+        const distractors = getSameTypeDistractors(item, 3);
+        const rawOptions = [item.term, ...distractors];
+        
+        const indexedOptions = rawOptions.map((opt, i) => ({ opt, isCorrect: i === 0 }));
+        indexedOptions.sort(() => 0.5 - Math.random());
+        
+        const options = indexedOptions.map(o => o.opt);
+        const ans = indexedOptions.findIndex(o => o.isCorrect);
+
+        questions.push({
+          q: `Complete the executive sentence: "${sentence}"`,
+          opts: options,
+          ans: ans
+        });
+      });
 
       container.innerHTML = questions.map((q, idx) => `
         <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
