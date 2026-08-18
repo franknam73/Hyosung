@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hyosung Versatile Business English & Strategic Reframing Masterclass</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .mono-font { font-family: 'JetBrains Mono', monospace; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #090d16; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-blue-500/30 selection:text-blue-200">
+
+  <!-- HEADER & NAVIGATION -->
+  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur sticky top-0 z-50 px-4 sm:px-8 py-3.5 flex flex-col lg:flex-row justify-between items-center gap-3 shadow-xl">
+    <div class="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white font-black px-3 py-1 rounded-xl text-xs tracking-wider uppercase shadow-lg shadow-blue-950">
+          HYOSUNG B2B MASTERCLASS
+        </div>
+        <span class="text-xs text-slate-600 hidden sm:inline">|</span>
+        <div>
+          <h1 class="text-xs sm:text-sm font-bold tracking-tight text-slate-100">Hyosung Versatile Business English</h1>
+          <p class="text-[10px] text-slate-400">Strategic Reframing, Diplomatic Negotiation & High-Impact Expression</p>
+        </div>
+      </div>
+      
+      <!-- STATUS BADGE -->
+      <div id="status-badge" class="text-[11px] font-bold text-slate-400 bg-slate-950 px-3 py-1 rounded-full border border-slate-800 flex items-center gap-1.5 shrink-0">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="status-text">Active Training Session</span>
+      </div>
+    </div>
+    
+    <!-- MODULE TABS -->
+    <nav class="flex items-center gap-1 bg-slate-950 p-1 rounded-2xl border border-slate-800/90 text-xs overflow-x-auto max-w-full custom-scrollbar">
+      <button onclick="switchTab('vocab')" id="tab-vocab" class="px-3.5 py-1.5 rounded-xl font-semibold transition-all whitespace-nowrap bg-blue-600 text-white shadow-md">
+        1. Versatile Lexicon
+      </button>
+      <button onclick="switchTab('quiz')" id="tab-quiz" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+        2. Diagnostic Check
+      </button>
+      <button onclick="switchTab('dialogue')" id="tab-dialogue" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+        3. Strategic Simulation
+      </button>
+      <button onclick="switchTab('translation')" id="tab-translation" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+        4. Reframing Workbench
+      </button>
+      <button onclick="switchTab('final')" id="tab-final" class="px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+        5. Certification Exam
+      </button>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-6xl w-full mx-auto p-4 sm:p-6 flex-grow flex flex-col justify-start space-y-6">
+
+    <!-- PROFILE BAR -->
+    <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3.5 flex flex-col sm:flex-row justify-between items-center gap-3 shadow-md">
+      <div class="flex items-center gap-2.5 text-xs w-full sm:w-auto">
+        <span class="text-blue-400 font-bold uppercase tracking-wider text-[10px] bg-blue-950/80 px-2.5 py-1 rounded border border-blue-800/40">HYOSUNG PARTICIPANT</span>
+        <span class="text-slate-400 text-[11px]">Save & sync competency records:</span>
+      </div>
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <input type="text" id="student-name" placeholder="Participant Name (e.g., Min-su Kim)" onchange="saveProfile()" class="bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none w-full sm:w-48">
+        <select id="student-company" onchange="saveProfile()" class="bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none w-full sm:w-52">
+          <option value="Hyosung Heavy Industries - Power Systems">Hyosung Heavy Industries - Power Systems</option>
+          <option value="Hyosung TNC - Spandex / Textile">Hyosung TNC - Spandex / Textile</option>
+          <option value="Hyosung TNC - Industrial Materials">Hyosung TNC - Industrial Materials</option>
+          <option value="Hyosung Heavy Industries - Construction / EPC">Hyosung Heavy Industries - Construction / EPC</option>
+        </select>
+        <button onclick="saveProfile(true)" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all shrink-0 shadow-sm">
+          Save Progress
+        </button>
+      </div>
+    </div>
+
+    <!-- MODULE 1: VERSATILE LEXICON & PREPOSITIONS -->
+    <section id="module-vocab" class="space-y-6">
+      
+      <!-- HERO BANNER -->
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-10 -bottom-10 w-56 h-56 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-3xl space-y-2 relative z-10">
+          <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            MODULE 1: VERSATILE ADVANCED ENGLISH & DIPLOMATIC EXPRESSIONS
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Elevated Business Phrasings for Multi-Scenario Leadership</h2>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Move beyond standard industry terminology. Master high-impact expressions, strategic action verbs, and diplomatic reframing patterns that apply across client negotiations, cross-functional alignment, and conflict resolution.
+          </p>
+        </div>
+      </div>
+
+      <!-- LEXICON CARDS GRID -->
+      <div class="space-y-4">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">1. Core Versatile Business Terms (10 Key Terms)</h3>
+          <span class="text-[11px] text-slate-500 font-mono">Click speaker icon for audio pronunciation</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="vocab-cards-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- PREPOSITIONS & PATTERNS SECTION -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        
+        <!-- PREPOSITIONS -->
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-4 shadow-xl">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">2. Versatile High-Level Prepositions</h3>
+          
+          <div class="space-y-3 text-xs">
+            <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80">
+              <div class="flex justify-between font-bold text-blue-300 mb-1">
+                <span>In light of</span>
+                <span class="font-mono text-slate-400 text-[11px]">~에 비추어 볼 때, ~를 고려하여</span>
+              </div>
+              <p class="text-slate-300 italic text-[11px]">"<strong>In light of</strong> recent market fluctuations, we have re-evaluated our expansion timeline."</p>
+            </div>
+
+            <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80">
+              <div class="flex justify-between font-bold text-blue-300 mb-1">
+                <span>Notwithstanding</span>
+                <span class="font-mono text-slate-400 text-[11px]">~에도 불구하고</span>
+              </div>
+              <p class="text-slate-300 italic text-[11px]">"<strong>Notwithstanding</strong> severe supply chain bottlenecks, our team delivered the project ahead of schedule."</p>
+            </div>
+
+            <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80">
+              <div class="flex justify-between font-bold text-blue-300 mb-1">
+                <span>In alignment with</span>
+                <span class="font-mono text-slate-400 text-[11px]">~와 발맞추어, ~에 부합하여</span>
+              </div>
+              <p class="text-slate-300 italic text-[11px]">"Our strategic objectives are structured <strong>in alignment with</strong> global sustainability goals."</p>
+            </div>
+
+            <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80">
+              <div class="flex justify-between font-bold text-blue-300 mb-1">
+                <span>At the expense of</span>
+                <span class="font-mono text-slate-400 text-[11px]">~를 희생하면서 / 손상시키면서</span>
+              </div>
+              <p class="text-slate-300 italic text-[11px]">"We should never accelerate production velocity <strong>at the expense of</strong> product quality."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SENTENCE PATTERNS -->
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-4 shadow-xl">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-slate-800 pb-2">3. Strategic Reframing Sentence Patterns</h3>
+          
+          <div class="space-y-3 text-xs">
+            <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80 space-y-1.5">
+              <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">PATTERN A: The Diplomatic Counter-Pivot</span>
+              <p class="font-mono text-blue-300 text-[11px]">While [Current Constraint] presents challenges, [Strategic Action] allows us to [Target Advantage] without [Negative Side-effect].</p>
+              <p class="text-slate-400 italic text-[11px]">"While tight budgets present challenges, pivoting our marketing focus allows us to capture higher-margin leads without increasing total spend."</p>
+            </div>
+
+            <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80 space-y-1.5">
+              <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest block">PATTERN B: The Collaborative Compromise Frame</span>
+              <p class="font-mono text-blue-300 text-[11px]">In alignment with [Shared Goal], meeting [Counterparty] halfway on [Point A] will pave the way for [Key Benefit] moving forward.</p>
+              <p class="text-slate-400 italic text-[11px]">"In alignment with our long-term partnership, meeting the client halfway on warranty terms will pave the way for a multi-year master agreement."</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODULE 2: TECHNICAL DIAGNOSTIC CHECK -->
+    <section id="module-quiz" class="hidden space-y-6">
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
+        <div class="max-w-3xl space-y-2">
+          <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            MODULE 2: STRATEGIC EXPRESSION DIAGNOSTIC
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Versatile Vocabulary & Reframing Assessment</h2>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Verify your understanding of versatile prepositions, diplomatic reframing expressions, and strategic verbs before entering the war room simulation.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-6 shadow-xl">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 pb-4">
+          <div>
+            <h3 class="text-base font-bold text-white">Diagnostic Assessment</h3>
+            <p class="text-xs text-slate-400">Select the choice that best fits the professional scenario. Detailed feedback unlocks upon submission.</p>
+          </div>
+          <span id="quiz-score-badge" class="text-xs font-bold text-blue-400 bg-blue-950 px-3.5 py-1 rounded-full border border-blue-800/40">
+            Score: 0 / 5
+          </span>
+        </div>
+
+        <div id="diagnostic-quiz-container" class="space-y-4">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="flex justify-end pt-2">
+          <button onclick="gradeDiagnosticQuiz()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition-all shadow-md">
+            Evaluate Answers &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 3: STRATEGIC SIMULATION WAR ROOM -->
+    <section id="module-dialogue" class="hidden space-y-6">
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
+        <div class="flex justify-between items-center flex-wrap gap-2">
+          <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            MODULE 3: GLOBAL STRATEGIC WAR ROOM
+          </span>
+          <span class="text-xs font-mono text-slate-400">Setting: High-Stakes Partnership Alignment</span>
+        </div>
+        <h2 class="text-xl font-extrabold text-white">Resolving Deadlocks & Driving Alignment</h2>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Observe how Hyosung leaders use versatile business English to handle client pushback, navigate trade-offs, correct misunderstandings, and build long-term value.
+        </p>
+      </div>
+
+      <!-- AUDIO CONTROL BANNER -->
+      <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl flex justify-between items-center gap-3">
+        <div class="flex items-center gap-2 text-xs">
+          <span class="text-blue-400 font-bold">🎙 Speech Simulation:</span>
+          <span class="text-slate-400 text-[11px] hidden sm:inline">Click any character block to listen via Web Speech synth.</span>
+        </div>
+        <button onclick="playFullDialogue()" id="btn-play-all" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all shrink-0">
+          Play Full Audio Sequence
+        </button>
+      </div>
+
+      <!-- DIALOGUE THREAD -->
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-xl max-h-[600px] overflow-y-auto custom-scrollbar" id="dialogue-thread-container">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- MODULE 4: REFRAMING & TRANSLATION WORKBENCH -->
+    <section id="module-translation" class="hidden space-y-6">
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
+        <div class="max-w-3xl space-y-2">
+          <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            MODULE 4: DIPLOMATIC REFRAMING & TRANSLATION
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Korean-to-English Business Evaluator</h2>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Translate Korean business scenarios into polished, versatile executive English. Our evaluator checks prepositions, verb tenses, articles, and elevated collocations.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- TRANSLATION INPUT ZONE (7 COLS) -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+              <span class="text-xs font-bold text-blue-400 uppercase tracking-wider" id="trans-card-num">Prompt 1 of 5</span>
+              <span class="text-[10px] font-mono text-slate-500">Versatile Framing Check</span>
+            </div>
+
+            <!-- KOREAN PROMPT BOX -->
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Korean Source Prompt:</span>
+              <p id="trans-kr-text" class="text-xs sm:text-sm font-semibold text-slate-200 leading-relaxed">
+                "최근 예산 제약에도 불구하고, 우리는 핵심 프로젝트를 회수하기 위해 협상에서 절충안을 찾아야 합니다."
+              </p>
+            </div>
+
+            <!-- HINTS -->
+            <div class="flex flex-wrap gap-2 text-[10px] font-mono" id="trans-hints-container">
+              <!-- Populated by JS -->
+            </div>
+
+            <!-- INPUT TEXTAREA -->
+            <div class="space-y-2">
+              <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Polished Business English Translation:</label>
+              <textarea id="trans-user-input" rows="4" class="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl p-4 text-xs text-slate-100 placeholder-slate-600 focus:outline-none transition-all resize-none custom-scrollbar" placeholder="Type your elevated business translation here..."></textarea>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex justify-between items-center pt-2">
+              <button onclick="nextTranslationPrompt()" class="text-xs font-bold text-slate-500 hover:text-slate-300 transition-colors">
+                Skip Prompt
+              </button>
+              <button onclick="evaluateTranslation()" id="btn-eval-trans" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-md">
+                Evaluate Translation &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIAGNOSTIC EVALUATION PANEL & TRACKER (5 COLS) -->
+        <div class="lg:col-span-5 space-y-4">
+          
+          <!-- RESULT PANEL -->
+          <div id="eval-result-card" class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-xl">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2">Linguistic Analysis</h3>
+            <div id="eval-content" class="text-xs text-slate-400 space-y-2">
+              <p class="italic text-slate-500">Submit your translation to receive detailed feedback covering prepositions, collocations, verb tenses, and article precision.</p>
+            </div>
+          </div>
+
+          <!-- ACCURACY TRACKER -->
+          <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800 pb-2">Competency Tracker</h3>
+            
+            <div class="space-y-3 text-xs">
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-slate-300">Versatile Prepositions</span>
+                  <span id="tracker-prep-score" class="font-mono text-blue-400">100%</span>
+                </div>
+                <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
+                  <div id="tracker-prep-bar" class="bg-blue-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-slate-300">Executive Collocations</span>
+                  <span id="tracker-colloc-score" class="font-mono text-emerald-400">100%</span>
+                </div>
+                <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
+                  <div id="tracker-colloc-bar" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-slate-300">Articles (a / an / the)</span>
+                  <span id="tracker-art-score" class="font-mono text-sky-400">100%</span>
+                </div>
+                <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
+                  <div id="tracker-art-bar" class="bg-sky-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] mb-1">
+                  <span class="text-slate-300">Verb Precision & Tenses</span>
+                  <span id="tracker-tense-score" class="font-mono text-amber-400">100%</span>
+                </div>
+                <div class="w-full bg-slate-950 rounded-full h-1.5 border border-slate-800">
+                  <div id="tracker-tense-bar" class="bg-amber-500 h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODULE 5: CERTIFICATION ASSESSMENT -->
+    <section id="module-final" class="hidden space-y-6">
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950/50 to-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
+        <div class="max-w-3xl space-y-2">
+          <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            MODULE 5: FINAL HYOSUNG COMPETENCY ASSESSMENT
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Hyosung Business Communication Certification Exam</h2>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Demonstrate your mastery of versatile expressions, prepositions, strategic reframing, and diplomatic conflict resolution to earn your official certificate.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl space-y-6 shadow-xl">
+        <div id="final-quiz-container" class="space-y-6">
+          <!-- Final quiz populated via JS -->
+        </div>
+
+        <div class="flex justify-between items-center border-t border-slate-800 pt-6 flex-wrap gap-3">
+          <span class="text-xs text-slate-500 font-mono" id="final-status-text">Answer all 8 questions to evaluate.</span>
+          <button onclick="gradeFinalAssessment()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 px-8 rounded-xl text-xs transition-all shadow-lg shadow-blue-950">
+            Submit Assessment &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- REPORT CARD (HIDDEN UNTIL GRADED) -->
+      <div id="final-report-card" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-3xl space-y-6 shadow-2xl text-center">
+        <div class="inline-block bg-blue-500/10 text-blue-400 font-bold px-4 py-1.5 rounded-full text-xs border border-blue-500/20 uppercase tracking-widest">
+          HYOSUNG COMPETENCY SCORECARD
+        </div>
+        <h2 class="text-2xl font-extrabold text-white">Hyosung Global Business Communication Certificate</h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto">
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Final Score</span>
+            <span id="final-score-val" class="text-2xl font-bold text-blue-400">0 / 8</span>
+          </div>
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Accuracy</span>
+            <span id="final-acc-val" class="text-2xl font-bold text-emerald-400">0%</span>
+          </div>
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Level Granted</span>
+            <span id="final-level-val" class="text-xs font-bold text-sky-400 block pt-2">Global Strategic Communicator</span>
+          </div>
+        </div>
+
+        <p id="final-summary-text" class="text-xs text-slate-300 max-w-lg mx-auto leading-relaxed"></p>
+
+        <button onclick="resetWholeMasterclass()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition-all">
+          Restart Program
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // DATA MODEL FOR VERSATILE ADVANCED ENGLISH LEXICON
+    const vocabData = [
+      {
+        term: "Pave the way for",
+        kr: "시작을 유연하게 만들다 / 길을 열어주다",
+        def: "To create circumstances that make it easier for a deal, project, or agreement to happen.",
+        sample: "Successful pilot trials paved the way for a multi-year global supply contract.",
+        alt: "Facilitate",
+        altNuance: "'Pave the way for' implies overcoming historical obstacles to enable new growth, while 'facilitate' simply means making a process run smoothly."
+      },
+      {
+        term: "Break the impasse",
+        kr: "교착 상태를 깨다 / 수월하게 해결하다",
+        def: "To resolve a situation in which no progress can be made due to disagreement.",
+        sample: "Introducing a flexible milestone structure helped break the impasse during contract negotiations.",
+        alt: "Resolve a stalemate",
+        altNuance: "'Break the impasse' suggests active momentum and initiative, whereas 'resolve a stalemate' sounds more neutral or formal."
+      },
+      {
+        term: "Strike a balance",
+        kr: "절충안을 찾다 / 균형을 맞추다",
+        def: "To find a satisfactory compromise between two opposing demands or priorities.",
+        sample: "We must strike a balance between rapid market delivery and rigorous quality assurance.",
+        alt: "Compromise",
+        altNuance: "'Strike a balance' emphasizes achieving optimal harmony between choices, whereas 'compromise' can sometimes imply accepting a weaker result."
+      },
+      {
+        term: "Gain leverage",
+        kr: "유리한 고지를 점하다 / 영향력을 확보하다",
+        def: "To acquire an advantage that gives you power or influence over negotiations or outcomes.",
+        sample: "By expanding our local distribution hubs, we gained significant leverage in regional sales discussions.",
+        alt: "Strengthen our stance",
+        altNuance: "'Gain leverage' specifically refers to strategic bargaining power, whereas 'strengthen our stance' refers to holding a firm opinion."
+      },
+      {
+        term: "Set the record straight",
+        kr: "오해를 바로잡다 / 사실관계를 명확히 하다",
+        def: "To clarify a misunderstanding and state the true facts about a situation.",
+        sample: "Allow me to set the record straight regarding our plant capacity and production timeline.",
+        alt: "Clarify the facts",
+        altNuance: "'Set the record straight' carries strong diplomatic authority when correcting false assumptions or media reports."
+      },
+      {
+        term: "Meet someone halfway",
+        kr: "타협하다 / 양보하여 중간에서 만나다",
+        def: "To make mutual concessions with another party to reach an agreement.",
+        sample: "If the client is willing to extend the contract duration, we can meet them halfway on payment terms.",
+        alt: "Make concessions",
+        altNuance: "'Meet someone halfway' stresses equal mutual effort and partnership goodwill."
+      },
+      {
+        term: "Pivot",
+        kr: "유연하게 방향을 전환하다",
+        def: "To strategically change operational focus or strategy in response to new conditions.",
+        sample: "In response to rising raw material costs, we pivoted our strategy toward high-value specialized lines.",
+        alt: "Reorient",
+        altNuance: "'Pivot' implies an agile, intentional strategic shift while maintaining core strengths."
+      },
+      {
+        term: "Mitigate",
+        kr: "(위험·부작용을) 완화하다, 줄이다",
+        def: "To make a risk, problem, or negative impact less severe or damaging.",
+        sample: "Diversifying our logistics routes helped mitigate the impact of port congestion.",
+        alt: "Alleviate",
+        altNuance: "'Mitigate' is used for managing business and financial risk, while 'alleviate' is used for easing pain or stress."
+      },
+      {
+        term: "Reconcile",
+        kr: "(모순·견해차를) 조화시키다, 해결하다",
+        def: "To find a way in which two opposing points of view, figures, or targets can agree.",
+        sample: "Our team worked late into the evening to reconcile the conflicting budget projections.",
+        alt: "Harmonize",
+        altNuance: "'Reconcile' focuses on resolving actual discrepancies or data mismatches."
+      },
+      {
+        term: "Paramount",
+        kr: "최우선의, 가장 중요한",
+        def: "More important than anything else; supreme in rank or impact.",
+        sample: "Maintaining absolute structural integrity is paramount in high-voltage power engineering.",
+        alt: "Vital",
+        altNuance: "'Paramount' signifies the top priority that overrides all other secondary concerns."
+      }
+    ];
+
+    // DIAGNOSTIC QUIZ DATA
+    const diagnosticQuizData = [
+      {
+        q: "1. When two negotiating teams are stuck in a deadlock over warranty terms, introducing a flexible payment clause can help to __________.",
+        opts: ["break the impasse", "set the record straight", "pivot", "mitigate"],
+        correct: 0,
+        expl: "'Break the impasse' means overcoming a deadlock or stalemate in discussions."
+      },
+      {
+        q: "2. __________ recent disruptions in raw material pricing, we have adjusted our quarterly financial targets.",
+        opts: ["In light of", "Notwithstanding", "At the expense of", "In lieu of"],
+        correct: 0,
+        expl: "'In light of' means taking new information or circumstances into consideration."
+      },
+      {
+        q: "3. We should never accelerate shipping schedules __________ product safety and quality assurance.",
+        opts: ["at the expense of", "in alignment with", "notwithstanding", "in light of"],
+        correct: 0,
+        expl: "'At the expense of' means causing harm or sacrifice to another critical element."
+      },
+      {
+        q: "4. Successful trials at the customer's facility helped to __________ a multi-year master supply agreement.",
+        opts: ["pave the way for", "reconcile", "meet halfway", "set the record straight"],
+        correct: 0,
+        expl: "'Pave the way for' means creating favorable conditions that allow future success."
+      },
+      {
+        q: "5. __________ the tight delivery schedule, our engineering team completed all pre-shipment tests flawlessly.",
+        opts: ["Notwithstanding", "In light of", "Pursuant to", "At the expense of"],
+        correct: 0,
+        expl: "'Notwithstanding' means 'despite' or 'in spite of' severe constraints."
+      }
+    ];
+
+    // HYOSUNG TECHNICAL WAR ROOM DIALOGUE
+    const dialogueThread = [
+      {
+        speaker: "Min-su Kim",
+        role: "Hyosung Heavy Industries - Senior Manager",
+        time: "10:00 AM",
+        color: "blue",
+        text: "Good morning, everyone. In light of the recent grid expansion requirements in North America, we need to strike a balance between rapid delivery and thorough engineering testing. Maintaining product reliability is paramount."
+      },
+      {
+        speaker: "David Vance",
+        role: "US Utility Procurement Lead",
+        time: "10:03 AM",
+        color: "emerald",
+        text: "Thanks Min-su. We appreciate Hyosung's high quality, but our board is concerned about the 12-week manufacturing window. If we can't break the impasse on delivery timing, we might have to re-evaluate our options."
+      },
+      {
+        speaker: "Su-jin Park",
+        role: "Hyosung TNC - Global Sales Director",
+        time: "10:06 AM",
+        color: "cyan",
+        text: "If I may jump in regarding our broader supply partnership: Notwithstanding current shipping delays, Hyosung TNC has pivoted our logistics routes to ensure zero disruption. If we meet you halfway on regional warehousing, that will pave the way for a smooth rollout."
+      },
+      {
+        speaker: "Sarah Jenkins",
+        role: "European Brand Operations VP",
+        time: "10:10 AM",
+        color: "purple",
+        text: "That proactive flexibility is exactly why we partner with Hyosung. By setting the record straight on realistic timelines early, we can mitigate risk and maintain full alignment across both our engineering and commercial teams."
+      }
+    ];
+
+    // TRANSLATION PROMPTS
+    const translationPrompts = [
+      {
+        kr: "최근 예산 제약에도 불구하고, 우리는 프로젝트를 완료하기 위해 협상에서 절충안을 찾아야 합니다.",
+        model: "Notwithstanding recent budget constraints, we must strike a balance in negotiations to complete the project.",
+        targetPrep: "Notwithstanding",
+        hints: ["Preposition: Notwithstanding", "Expression: Strike a balance", "Verb: Complete"]
+      },
+      {
+        kr: "최근의 시장 변동성에 비추어 볼 때, 위험을 완화하는 것이 최우선 과제입니다.",
+        model: "In light of recent market volatility, mitigating risk is paramount.",
+        targetPrep: "In light of",
+        hints: ["Preposition: In light of", "Verb: Mitigate", "Adjective: Paramount"]
+      },
+      {
+        kr: "성공적인 현장 시운전은 장기 파트너십 구축을 위한 길을 열어주었습니다.",
+        model: "Successful site commissioning paved the way for establishing a long-term partnership.",
+        targetPrep: "Pave the way for",
+        hints: ["Expression: Pave the way for", "Noun: Commissioning", "Gerund: Establishing"]
+      },
+      {
+        kr: "우리는 품질을 희생하면서 납기를 단축해서는 안 됩니다.",
+        model: "We should not shorten delivery schedules at the expense of quality.",
+        targetPrep: "At the expense of",
+        hints: ["Preposition: At the expense of", "Verb: Shorten", "Noun: Quality"]
+      },
+      {
+        kr: "고객사의 유연성에 응답하여, 우리도 지불 조건에 대해 양보하여 타협할 용의가 있습니다.",
+        model: "In response to the customer's flexibility, we are willing to meet them halfway on payment terms.",
+        targetPrep: "In response to",
+        hints: ["Expression: Meet them halfway", "Preposition: On payment terms", "Adjective: Willing"]
+      }
+    ];
+
+    // FINAL QUIZ DATA
+    const finalQuizData = [
+      {
+        q: "1. Which expression means 'to create conditions that allow future success or partnership'?",
+        opts: ["Pave the way for", "Set the record straight", "Gain leverage"],
+        ans: 0
+      },
+      {
+        q: "2. Complete: '__________ recent cost increases, our plant maintained full operational efficiency.'",
+        opts: ["Notwithstanding", "At the expense of", "In lieu of"],
+        ans: 0
+      },
+      {
+        q: "3. Complete: 'We must __________ between speed and accuracy to avoid unnecessary rework.'",
+        opts: ["strike a balance", "break the impasse", "set the record straight"],
+        ans: 0
+      },
+      {
+        q: "4. What does 'Paramount' mean in an executive statement?",
+        opts: ["More important than anything else; top priority.", "Uncertain or risky.", "Minor and secondary."],
+        ans: 0
+      },
+      {
+        q: "5. 'In light of' is best translated into Korean as:",
+        opts: ["~에 비추어 볼 때 / ~를 고려하여", "~에도 불구하고", "~를 희생하면서"],
+        ans: 0
+      },
+      {
+        q: "6. Select the expression that means 'to make mutual concessions with another party':",
+        opts: ["Meet someone halfway", "Pave the way for", "Gain leverage"],
+        ans: 0
+      },
+      {
+        q: "7. 'Mitigate' is best used when talking about:",
+        opts: ["Reducing or softening negative risks and damage.", "Increasing sales prices.", "Delaying meeting schedules."],
+        ans: 0
+      },
+      {
+        q: "8. Complete: 'Never cut operational costs __________ employee safety.'",
+        opts: ["at the expense of", "in light of", "notwithstanding"],
+        ans: 0
+      }
+    ];
+
+    // GLOBAL APP STATE
+    window.appState = {
+      studentName: localStorage.getItem('hyosung_app_name') || '',
+      studentCompany: localStorage.getItem('hyosung_app_company') || 'Hyosung Heavy Industries - Power Systems',
+      diagnosticAnswers: {},
+      transIndex: 0,
+      transUserAnswers: {},
+      trackerScores: { prep: 100, colloc: 100, art: 100, tense: 100 },
+      finalAnswers: {}
+    };
+
+    // ON DOM LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('student-name').value = window.appState.studentName;
+      document.getElementById('student-company').value = window.appState.studentCompany;
+      renderVocabCards();
+      renderDiagnosticQuiz();
+      renderDialogueThread();
+      renderTranslationCard();
+      renderFinalQuiz();
+    });
+
+    // NAVIGATION
+    function switchTab(tabId) {
+      const tabs = ['vocab', 'quiz', 'dialogue', 'translation', 'final'];
+      tabs.forEach(t => {
+        document.getElementById(`module-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}`).className = "px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap";
+      });
+      document.getElementById(`module-${tabId}`).classList.remove('hidden');
+      document.getElementById(`tab-${tabId}`).className = "px-3.5 py-1.5 rounded-xl font-semibold transition-all whitespace-nowrap bg-blue-600 text-white shadow-md";
+    }
+
+    function saveProfile(notify = false) {
+      const name = document.getElementById('student-name').value.trim();
+      const company = document.getElementById('student-company').value;
+      window.appState.studentName = name;
+      window.appState.studentCompany = company;
+      localStorage.setItem('hyosung_app_name', name);
+      localStorage.setItem('hyosung_app_company', company);
+
+      if (notify) {
+        const badge = document.getElementById('status-text');
+        if (badge) {
+          badge.innerText = "Progress Saved ✓";
+          setTimeout(() => badge.innerText = "Active Training Session", 2000);
+        }
+      }
+    }
+
+    // RENDER VOCAB CARDS
+    function renderVocabCards() {
+      const grid = document.getElementById('vocab-cards-grid');
+      if (!grid) return;
+      grid.innerHTML = vocabData.map((v, i) => `
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3 shadow-md border-t-2 border-t-blue-500 hover:border-blue-400/80 transition-all">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-950/80 px-2 py-0.5 rounded border border-blue-800/40">TERM 0${i+1}</span>
+              <h4 class="text-base font-extrabold text-white mt-1">${v.term}</h4>
+            </div>
+            <button onclick="speakText('${v.term}')" class="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-blue-400 transition-colors" title="Listen Audio">
+              🔊
+            </button>
+          </div>
+          <p class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</p>
+          <p class="text-xs text-slate-300 leading-relaxed">${v.def}</p>
+          <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80 text-[11px] text-slate-400 italic">
+            "${v.sample}"
+          </div>
+          <div class="pt-2 border-t border-slate-800/60 flex justify-between items-center text-[10px]">
+            <span class="text-slate-500">Nuance vs: <strong class="text-slate-300">${v.alt}</strong></span>
+            <span class="text-blue-400 font-mono cursor-pointer hover:underline" onclick="alert('${v.alt}: ${v.altNuance}')">View Difference ℹ️</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // WEB SPEECH SYNTHESIS
+    function speakText(txt) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(txt);
+        utterance.rate = 0.9;
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // RENDER DIAGNOSTIC QUIZ
+    function renderDiagnosticQuiz() {
+      const container = document.getElementById('diagnostic-quiz-container');
+      if (!container) return;
+      container.innerHTML = diagnosticQuizData.map((item, idx) => `
+        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3 text-xs">
+          <div class="flex justify-between font-bold text-slate-300">
+            <span>Scenario ${idx + 1}</span>
+            <span id="diag-fb-${idx}" class="text-[10px] hidden"></span>
+          </div>
+          <p class="text-slate-200">${item.q}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${item.opts.map((opt, oIdx) => `
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:bg-slate-800/50 transition-colors">
+                <input type="radio" name="diag-${idx}" value="${oIdx}" onchange="selectDiagnosticAns(${idx}, ${oIdx})" class="accent-blue-500">
+                <span class="text-slate-300 font-medium">${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div id="diag-expl-${idx}" class="hidden p-2.5 rounded-lg bg-blue-950/40 border border-blue-800/40 text-[11px] text-blue-300">
+            ${item.expl}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectDiagnosticAns(qIdx, oIdx) {
+      window.appState.diagnosticAnswers[qIdx] = oIdx;
+    }
+
+    function gradeDiagnosticQuiz() {
+      let score = 0;
+      diagnosticQuizData.forEach((item, idx) => {
+        const userChoice = window.appState.diagnosticAnswers[idx];
+        const fb = document.getElementById(`diag-fb-${idx}`);
+        const expl = document.getElementById(`diag-expl-${idx}`);
+        if (expl) expl.classList.remove('hidden');
+        if (fb) fb.classList.remove('hidden');
+
+        if (userChoice === item.correct) {
+          score++;
+          if (fb) { fb.innerText = "✓ Correct"; fb.className = "text-[10px] font-bold text-emerald-400"; }
+        } else {
+          if (fb) { fb.innerText = "✗ Review"; fb.className = "text-[10px] font-bold text-rose-400"; }
+        }
+      });
+      document.getElementById('quiz-score-badge').innerText = `Score: ${score} / 5`;
+    }
+
+    // RENDER DIALOGUE THREAD
+    function renderDialogueThread() {
+      const container = document.getElementById('dialogue-thread-container');
+      if (!container) return;
+      container.innerHTML = dialogueThread.map((turn) => `
+        <div class="flex gap-3 cursor-pointer hover:bg-slate-950/50 p-2 rounded-2xl transition-colors" onclick="speakText('${turn.speaker} says: ${turn.text.replace(/'/g, "\\'")}')">
+          <div class="w-9 h-9 rounded-full bg-${turn.color}-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-md">
+            ${turn.speaker.charAt(0)}
+          </div>
+          <div class="space-y-1 bg-slate-950 p-4 rounded-2xl border border-slate-800 w-full text-xs">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-${turn.color}-400">${turn.speaker} <span class="text-[10px] text-slate-500 font-normal">(${turn.role})</span></span>
+              <span class="text-[10px] text-slate-500">${turn.time}</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">${turn.text}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function playFullDialogue() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        dialogueThread.forEach((turn) => {
+          const u = new SpeechSynthesisUtterance(`${turn.speaker}: ${turn.text}`);
+          u.rate = 0.92;
+          window.speechSynthesis.speak(u);
+        });
+      }
+    }
+
+    // TRANSLATION WORKBENCH LOGIC
+    function renderTranslationCard() {
+      const item = translationPrompts[window.appState.transIndex];
+      document.getElementById('trans-card-num').innerText = `Prompt ${window.appState.transIndex + 1} of 5`;
+      document.getElementById('trans-kr-text').innerText = `"${item.kr}"`;
+      document.getElementById('trans-user-input').value = window.appState.transUserAnswers[window.appState.transIndex] || "";
+      
+      const hintsContainer = document.getElementById('trans-hints-container');
+      hintsContainer.innerHTML = item.hints.map(h => `
+        <span class="bg-blue-950 text-blue-300 px-2.5 py-1 rounded-md border border-blue-800/40">${h}</span>
+      `).join('');
+
+      document.getElementById('eval-content').innerHTML = `<p class="italic text-slate-500">Submit your translation to receive detailed feedback covering prepositions, collocations, verb tenses, and article precision.</p>`;
+    }
+
+    function nextTranslationPrompt() {
+      window.appState.transIndex = (window.appState.transIndex + 1) % translationPrompts.length;
+      renderTranslationCard();
+    }
+
+    async function evaluateTranslation() {
+      const userText = document.getElementById('trans-user-input').value.trim();
+      if (userText.length < 5) {
+        document.getElementById('eval-content').innerHTML = `<p class="text-rose-400">Please type a complete sentence before submitting.</p>`;
+        return;
+      }
+
+      window.appState.transUserAnswers[window.appState.transIndex] = userText;
+      const item = translationPrompts[window.appState.transIndex];
+      const evalBox = document.getElementById('eval-content');
+
+      evalBox.innerHTML = `<div class="flex items-center gap-2 text-blue-400"><span class="animate-spin">🌀</span> Analyzing business English grammar, prepositions, collocations, and verb tenses...</div>`;
+
+      // Gemini API Integration with Fallback
+      try {
+        const apiKey = ""; // Provided runtime key
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+        const prompt = `Act as an expert Corporate Business English Coach. Analyze this student translation:
+Korean Source: "${item.kr}"
+Target Benchmark: "${item.model}"
+Student Output: "${userText}"
+
+Provide concise JSON with:
+1. "prepCorrect" (boolean)
+2. "collocCorrect" (boolean)
+3. "artCorrect" (boolean)
+4. "tenseCorrect" (boolean)
+5. "feedback" (2 concise sentences in polished business English)
+6. "improvedVersion" (polished executive English sentence)`;
+
+        const payload = {
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { responseMimeType: "application/json" }
+        };
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+          const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
+          renderEvalResult(parsed, item.model);
+          updateTracker(parsed);
+          return;
+        }
+      } catch (err) {
+        console.log("Using internal heuristic evaluator fallback...");
+      }
+
+      // Internal Fallback Evaluator
+      const lower = userText.toLowerCase();
+      const hasPrep = lower.includes(item.targetPrep.toLowerCase());
+      const fallbackParsed = {
+        prepCorrect: hasPrep,
+        collocCorrect: lower.includes("balance") || lower.includes("impasse") || lower.includes("pave") || lower.includes("leverage") || lower.includes("paramount"),
+        artCorrect: lower.includes("the ") || lower.includes("a ") || lower.includes("an "),
+        tenseCorrect: true,
+        feedback: "Solid technical framing! Ensure target prepositions and executive collocations match global business standards.",
+        improvedVersion: item.model
+      };
+
+      renderEvalResult(fallbackParsed, item.model);
+      updateTracker(fallbackParsed);
+    }
+
+    function renderEvalResult(res, reference) {
+      document.getElementById('eval-content').innerHTML = `
+        <div class="space-y-2 text-xs">
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest block">Executive Feedback:</span>
+            <p class="text-slate-200">${res.feedback}</p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">Benchmark Model Sentence:</span>
+            <p class="text-slate-100 font-mono text-[11px]">"${res.improvedVersion || reference}"</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-[10px] pt-1">
+            <span class="${res.prepCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Preposition: ${res.prepCorrect ? '✓ Accurate' : '✗ Review'}</span>
+            <span class="${res.collocCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Collocations: ${res.collocCorrect ? '✓ Natural' : '✗ Review'}</span>
+            <span class="${res.artCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Articles: ${res.artCorrect ? '✓ Accurate' : '✗ Review'}</span>
+            <span class="${res.tenseCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Verb Tense: ${res.tenseCorrect ? '✓ Consistent' : '✗ Review'}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateTracker(res) {
+      const t = window.appState.trackerScores;
+      if (!res.prepCorrect) t.prep = Math.max(40, t.prep - 15);
+      if (!res.collocCorrect) t.colloc = Math.max(40, t.colloc - 15);
+      if (!res.artCorrect) t.art = Math.max(40, t.art - 15);
+      if (!res.tenseCorrect) t.tense = Math.max(40, t.tense - 15);
+
+      document.getElementById('tracker-prep-score').innerText = `${t.prep}%`;
+      document.getElementById('tracker-prep-bar').style.width = `${t.prep}%`;
+
+      document.getElementById('tracker-colloc-score').innerText = `${t.colloc}%`;
+      document.getElementById('tracker-colloc-bar').style.width = `${t.colloc}%`;
+
+      document.getElementById('tracker-art-score').innerText = `${t.art}%`;
+      document.getElementById('tracker-art-bar').style.width = `${t.art}%`;
+
+      document.getElementById('tracker-tense-score').innerText = `${t.tense}%`;
+      document.getElementById('tracker-tense-bar').style.width = `${t.tense}%`;
+    }
+
+    // FINAL QUIZ LOGIC
+    function renderFinalQuiz() {
+      const container = document.getElementById('final-quiz-container');
+      if (!container) return;
+      container.innerHTML = finalQuizData.map((item, idx) => `
+        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3 text-xs">
+          <p class="font-bold text-slate-200">${item.q}</p>
+          <div class="space-y-2">
+            ${item.opts.map((opt, oIdx) => `
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:bg-slate-800/60 transition-colors">
+                <input type="radio" name="final-${idx}" value="${oIdx}" onchange="selectFinalAns(${idx}, ${oIdx})" class="accent-blue-500">
+                <span class="text-slate-300 font-medium">${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectFinalAns(qIdx, oIdx) {
+      window.appState.finalAnswers[qIdx] = oIdx;
+    }
+
+    function gradeFinalAssessment() {
+      let score = 0;
+      finalQuizData.forEach((item, idx) => {
+        if (window.appState.finalAnswers[idx] === item.ans) score++;
+      });
+
+      const acc = Math.round((score / finalQuizData.length) * 100);
+      document.getElementById('final-score-val').innerText = `${score} / ${finalQuizData.length}`;
+      document.getElementById('final-acc-val').innerText = `${acc}%`;
+
+      let summary = "Outstanding achievement! You have demonstrated high-level mastery of versatile business English expressions, prepositions, strategic reframing, and diplomatic conflict resolution.";
+      let level = "Senior Global Business Communicator";
+
+      if (acc < 75) {
+        summary = "Solid effort! Review Module 1 prepositions and Module 4 diplomatic reframing prompts to further sharpen your global business English fluency.";
+        level = "Global Business & Project Specialist";
+      }
+
+      document.getElementById('final-summary-text').innerText = summary;
+      document.getElementById('final-level-val').innerText = level;
+      document.getElementById('final-report-card').classList.remove('hidden');
+      document.getElementById('final-report-card').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetWholeMasterclass() {
+      window.appState.diagnosticAnswers = {};
+      window.appState.transIndex = 0;
+      window.appState.transUserAnswers = {};
+      window.appState.trackerScores = { prep: 100, colloc: 100, art: 100, tense: 100 };
+      window.appState.finalAnswers = {};
+
+      document.getElementById('final-report-card').classList.add('hidden');
+      switchTab('vocab');
+      renderDiagnosticQuiz();
+      renderTranslationCard();
+      renderFinalQuiz();
+    }
+  </script>
+</body>
+</html>
