@@ -766,13 +766,23 @@ Exclusion List: ${JSON.stringify(usedHistoryList)}`;
           const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
           const usedHistoryList = getUsedWordsHistory();
 
+          // Build explicit Part-of-Speech / Type requirements per slot
+          const typeRequirements = targetIndices.map((idx, pos) => {
+            const currentType = window.appState.vocabData[idx]?.type || "Expression";
+            return `Slot ${pos + 1}: MUST BE A(N) "${currentType.toUpperCase()}"`;
+          }).join('\n');
+
           const promptSystem = `Act as an expert Corporate English Curriculum Director for Hyosung Group.
 Generate EXACTLY ${count} NEW target vocabulary terms for Level: "${level}", Topic: "${topic}".
+STRICT PART-OF-SPEECH / TYPE MATCHING REQUIREMENT:
+Each replacement item MUST match the exact type of the original slot being replaced:
+${typeRequirements}
+
 STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringify(usedHistoryList)}`;
 
           const userQuery = `Return ONLY JSON array matching:
 [
-  ${Array(count).fill(`{ "term": "Phrase", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }`).join(',\n')}
+  ${targetIndices.map(idx => `{ "term": "Phrase", "type": "${window.appState.vocabData[idx]?.type || 'Expression'}", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }`).join(',\n')}
 ]`;
 
           const payload = {
@@ -793,7 +803,11 @@ STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringi
               const newTerms = JSON.parse(result.candidates[0].content.parts[0].text);
               if (Array.isArray(newTerms) && newTerms.length === count) {
                 targetIndices.forEach((vocabIdx, arrayIdx) => {
-                  window.appState.vocabData[vocabIdx] = newTerms[arrayIdx];
+                  const requiredType = window.appState.vocabData[vocabIdx]?.type || "Expression";
+                  window.appState.vocabData[vocabIdx] = {
+                    ...newTerms[arrayIdx],
+                    type: requiredType // Preserve exact original part of speech
+                  };
                 });
                 if (window.appState.selectedStage1Indices) window.appState.selectedStage1Indices.clear();
                 if (grid) grid.style.opacity = '1';
@@ -803,38 +817,55 @@ STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringi
             }
           }
         } catch (err) {
-          console.warn("API term replacement failed, utilizing level fallback pool...", err);
+          console.warn("API term replacement failed, utilizing typed fallback pool...", err);
         }
       }
 
-      // Offline / Fallback Replacement Engine
+      // Offline / Typed Fallback Replacement Engine
       const fallbackPools = {
         "Beginner": [
-          { term: "Clarify specifications", kr: "사양을 명확히 하다", def: "Explain technical or order details clearly.", sample: "Please clarify specifications before placing the factory order.", alt: "Explain", altNuance: "Clarify focuses on eliminating confusion." },
-          { term: "Verify dimensions", kr: "치수를 검증하다", def: "Check physical measurements against design plans.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
-          { term: "Arrange a call", kr: "통화를 주선하다", def: "Set up a phone or video discussion.", sample: "I will arrange a call with our technical lead tomorrow.", alt: "Schedule", altNuance: "Arrange includes setting up contact logistics." },
-          { term: "Process an order", kr: "주문을 처리하다", def: "Execute administrative steps to fulfill a request.", sample: "Our logistics team will process the order immediately.", alt: "Handle", altNuance: "Process follows formal corporate procedures." },
-          { term: "Review feedback", kr: "피드백을 검토하다", def: "Examine client remarks to improve results.", sample: "We will review client feedback during our weekly meeting.", alt: "Read", altNuance: "Review implies systematic analysis." }
+          { term: "Submit a formal inquiry", type: "Expression", kr: "공식 문의를 제출하다", def: "Send an official question to a department.", sample: "Please submit a formal inquiry to technical support.", alt: "Ask", altNuance: "Formal inquiry follows corporate process." },
+          { term: "Follow up on status", type: "Expression", kr: "진행 상황을 확인하다", def: "Check the current progress of a project.", sample: "I called to follow up on status regarding the order.", alt: "Check", altNuance: "Follow up implies structured tracking." },
+          { term: "Inquire about lead time", type: "Expression", kr: "납기를 문의하다", def: "Ask about expected delivery schedules.", sample: "Clients inquire about lead time for custom orders.", alt: "Ask about time", altNuance: "Inquire about lead time is B2B terminology." },
+          { term: "On behalf of management", type: "Expression", kr: "경영진을 대표하여", def: "Acting as an official representative.", sample: "I am writing on behalf of management.", alt: "For", altNuance: "Official corporate phrasing." },
+          { term: "Clarify", type: "Verb", kr: "명확히 하다", def: "Make a technical statement easy to understand.", sample: "Please clarify the contract terms before signing.", alt: "Explain", altNuance: "Clarify focuses on eliminating confusion." },
+          { term: "Verify", type: "Verb", kr: "검증하다", def: "Check measurements against requirements.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
+          { term: "Coordinate", type: "Verb", kr: "조율하다", def: "Organize actions across departments.", sample: "Please coordinate schedules with plant management.", alt: "Arrange", altNuance: "Coordinate stresses cross-team alignment." },
+          { term: "Accurate", type: "Adjective", kr: "정확한", def: "Correct in all details without error.", sample: "We need accurate measurements for production.", alt: "Exact", altNuance: "Accurate stresses freedom from errors." },
+          { term: "Promptly", type: "Adverb", kr: "신속히", def: "Without delay and on time.", sample: "Please respond promptly to client queries.", alt: "Quickly", altNuance: "Promptly carries professional courtesy." }
         ],
         "Intermediate": [
-          { term: "Reconcile differences", kr: "견해차를 조정하다", def: "Resolve conflicting viewpoints between teams.", sample: "We met to reconcile differences regarding delivery schedules.", alt: "Settle", altNuance: "Reconcile stresses finding common ground." },
-          { term: "Alleviate concerns", kr: "우려를 완화하다", def: "Reduce anxiety or worry regarding a project.", sample: "Providing weekly status reports helped alleviate client concerns.", alt: "Ease", altNuance: "Alleviate is standard corporate phrasing." },
-          { term: "Streamline operations", kr: "운영을 효율화하다", def: "Simplify processes to eliminate inefficiency.", sample: "Automating inventory tracking will streamline plant operations.", alt: "Simplify", altNuance: "Streamline focuses on speed and flow." },
-          { term: "Mitigate risks", kr: "위험을 줄이다", def: "Lessen potential damage or loss.", sample: "Dual-sourcing materials helps mitigate supply chain risks.", alt: "Reduce", altNuance: "Mitigate is risk-management terminology." },
-          { term: "Leverage advantages", kr: "이점을 활용하다", def: "Use competitive strengths effectively.", sample: "We must leverage our global distribution network.", alt: "Use", altNuance: "Leverage implies maximizing strategic value." }
+          { term: "Reconcile differences", type: "Expression", kr: "견해차를 조정하다", def: "Resolve conflicting viewpoints between teams.", sample: "We met to reconcile differences regarding delivery schedules.", alt: "Settle", altNuance: "Reconcile stresses finding common ground." },
+          { term: "Alleviate concerns", type: "Expression", kr: "우려를 완화하다", def: "Reduce anxiety or worry regarding a project.", sample: "Weekly status reports helped alleviate client concerns.", alt: "Ease", altNuance: "Alleviate is standard corporate phrasing." },
+          { term: "Streamline operations", type: "Expression", kr: "운영을 효율화하다", def: "Simplify processes to eliminate inefficiency.", sample: "Automating inventory tracking will streamline operations.", alt: "Simplify", altNuance: "Streamline focuses on speed and flow." },
+          { term: "Mitigate risks", type: "Expression", kr: "위험을 줄이다", def: "Lessen potential damage or loss.", sample: "Dual-sourcing helps mitigate supply chain risks.", alt: "Reduce", altNuance: "Mitigate is risk-management terminology." },
+          { term: "Consolidate", type: "Verb", kr: "통합하다", def: "Combine multiple items into a unified system.", sample: "We will consolidate shipping orders next week.", alt: "Merge", altNuance: "Consolidate emphasizes strengthening structure." },
+          { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital through sales.", sample: "Clients recoup investment within 90 days.", alt: "Recover", altNuance: "Recoup applies specifically to financial expenditure." },
+          { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Convert high-level plans into active workflows.", sample: "Engineers will operationalize the deployment plan.", alt: "Execute", altNuance: "Operationalize focuses on process building." },
+          { term: "Prohibitive", type: "Adjective", kr: "지나치게 높은", def: "Excessively high, preventing execution.", sample: "Air freight rates proved prohibitive for bulk orders.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
+          { term: "Seamlessly", type: "Adverb", kr: "매끄럽게", def: "Done smoothly without unexpected problems.", sample: "The system migrated seamlessly over the weekend.", alt: "Smoothly", altNuance: "Seamlessly stresses absence of friction." }
         ],
         "Advanced": [
-          { term: "Unilateral condition", kr: "일방적 조건", def: "A term imposed by one party without mutual debate.", sample: "We rejected the buyer's unilateral condition on price caps.", alt: "One-sided rule", altNuance: "Unilateral is legal/contractual phrasing." },
-          { term: "Prohibitive expenses", kr: "엄두도 못 낼 비용", def: "Costs so high that they prevent execution.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
-          { term: "Non-negotiable mandate", kr: "타협 불가한 지침", def: "An unalterable requirement set by leadership.", sample: "Zero-defect quality remains a non-negotiable mandate.", alt: "Strict rule", altNuance: "Mandate highlights corporate governance authority." },
-          { term: "Preempt delays", kr: "지연을 선제적으로 방지하다", def: "Take early action to prevent future schedule bottlenecks.", sample: "Pre-clearing customs documents helps preempt shipping delays.", alt: "Prevent", altNuance: "Preempt emphasizes strategic proactive action." },
-          { term: "Cultivate alignment", kr: "전략적 조율을 도모하다", def: "Nurture shared goals across international divisions.", sample: "Regional directors met to cultivate alignment on pricing.", alt: "Agree", altNuance: "Cultivate implies ongoing relationship building." }
+          { term: "Bridge the gap", type: "Expression", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
+          { term: "Raise a red flag", type: "Expression", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
+          { term: "Shift the narrative", type: "Expression", kr: "화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
+          { term: "Draw a hard line", type: "Expression", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
+          { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread capital costs over a contract period.", sample: "We can amortize setup fees over 36 months.", alt: "Divide", altNuance: "Amortize is financial accounting terminology." },
+          { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital or investments through revenue.", sample: "Clients recoup initial investment within 90 days.", alt: "Recover", altNuance: "Recoup specifically applies to financial expenditure." },
+          { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Convert high-level plans into active corporate workflows.", sample: "Engineers will operationalize the deployment plan immediately.", alt: "Execute", altNuance: "Operationalize focuses on systematic process building." },
+          { term: "Prohibitive", type: "Adjective", kr: "지나치게 높은", def: "So excessively high or restrictive that it prevents action.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
+          { term: "Promptly", type: "Adverb", kr: "신속하게", def: "Quickly, without delay, and precisely according to schedule.", sample: "Please review the draft contract and return revisions promptly.", alt: "Quickly", altNuance: "Promptly carries professional courtesy and punctuality." }
         ],
         "Professional": [
-          { term: "Fiduciary responsibility", kr: "선관주의 의무", def: "A legal obligation to act in the company's best interest.", sample: "The board fulfilled its fiduciary responsibility by auditing expenditure.", alt: "Duty", altNuance: "Fiduciary is official corporate law terminology." },
-          { term: "Institutional alignment", kr: "기관적 얼라인먼트", def: "Harmonizing goals across disparate enterprise divisions.", sample: "Cross-border mergers require deep institutional alignment.", alt: "Agreement", altNuance: "Institutional alignment refers to macro organization." },
-          { term: "Strategic hedging posture", kr: "전략적 헤징 태세", def: "Positioning assets to protect against macro volatility.", sample: "Maintaining multi-currency reserves reflects our strategic hedging posture.", alt: "Safety plan", altNuance: "Hedging posture is C-suite financial jargon." },
-          { term: "Value creation leverage", kr: "가치 창출 레버리지", def: "Strategic assets that multiply commercial return.", sample: "Proprietary green technology gives us immense value creation leverage.", alt: "Advantage", altNuance: "Focuses on multiplier effects on capital." }
+          { term: "Institutional alignment", type: "Expression", kr: "기관적 얼라인먼트", def: "Harmonizing goals across enterprise divisions.", sample: "Cross-border mergers require deep institutional alignment.", alt: "Agreement", altNuance: "Institutional alignment refers to macro organization." },
+          { term: "Unilateral condition", type: "Expression", kr: "일방적 조건", def: "A term imposed by one party without debate.", sample: "We rejected the buyer's unilateral condition on price caps.", alt: "One-sided rule", altNuance: "Unilateral is legal/contractual phrasing." },
+          { term: "Strategic hedging posture", type: "Expression", kr: "전략적 헤징 태세", def: "Positioning assets to protect against volatility.", sample: "Multi-currency reserves reflect our strategic hedging posture.", alt: "Safety plan", altNuance: "Hedging posture is C-suite financial jargon." },
+          { term: "Non-negotiable mandate", type: "Expression", kr: "타협 불가한 지침", def: "An unalterable requirement set by leadership.", sample: "Zero-defect quality remains a non-negotiable mandate.", alt: "Strict rule", altNuance: "Mandate highlights corporate governance authority." },
+          { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread setup fees over contract lifecycle.", sample: "We amortize equipment costs over five years.", alt: "Spread", altNuance: "Amortize is official accounting terminology." },
+          { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Execute strategic frameworks effectively.", sample: "We will operationalize the governance model in Q1.", alt: "Implement", altNuance: "Operationalize emphasizes structural workflows." },
+          { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover initial expenditures.", sample: "We recouped Capex investments within two years.", alt: "Recover", altNuance: "Recoup applies specifically to investments." },
+          { term: "Fiduciary", type: "Adjective", kr: "선관주의의", def: "Involving trust and financial responsibility.", sample: "The board has a fiduciary responsibility to shareholders.", alt: "Legal duty", altNuance: "Fiduciary is legal governance terminology." },
+          { term: "Expeditiously", type: "Adverb", kr: "지체 없이 신속히", def: "Executed with maximum institutional speed and efficiency.", sample: "Auditors resolved the compliance check expeditiously.", alt: "Quickly", altNuance: "Expeditiously carries C-suite formality." }
         ]
       };
 
@@ -842,25 +873,63 @@ STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringi
       const usedHistory = getUsedWordsHistory();
       const currentTermsInVocab = window.appState.vocabData.map(v => v.term.toLowerCase());
 
-      const validPool = pool.filter(item => 
-        !usedHistory.includes(item.term.toLowerCase()) && 
-        !currentTermsInVocab.includes(item.term.toLowerCase())
-      );
+      targetIndices.forEach((vocabIdx) => {
+        const targetType = window.appState.vocabData[vocabIdx]?.type || "Expression";
 
-      targetIndices.forEach((vocabIdx, arrayIdx) => {
-        if (validPool[arrayIdx]) {
-          window.appState.vocabData[vocabIdx] = validPool[arrayIdx];
+        // Filter pool strictly for items matching the exact Part of Speech / Type!
+        const matchingItem = pool.find(item => 
+          item.type === targetType &&
+          !usedHistory.includes(item.term.toLowerCase()) && 
+          !currentTermsInVocab.includes(item.term.toLowerCase())
+        );
+
+        if (matchingItem) {
+          window.appState.vocabData[vocabIdx] = { ...matchingItem };
+          currentTermsInVocab.push(matchingItem.term.toLowerCase());
         } else {
-          // Generate a dynamic placeholder term if the fallback pool runs dry
+          // Generate type-specific dynamic placeholder if fallback pool is exhausted
           const randId = Math.floor(Math.random() * 900) + 100;
-          window.appState.vocabData[vocabIdx] = {
-            term: `Optimize Framework #${randId}`,
-            kr: "프레임워크 최적화",
-            def: "Refine corporate operational workflows for maximum efficiency.",
-            sample: "We must optimize our operational framework before expanding internationally.",
-            alt: "Improve",
-            altNuance: "Optimize means achieving peak efficiency."
-          };
+          if (targetType === "Verb") {
+            window.appState.vocabData[vocabIdx] = {
+              term: `Optimize Step #${randId}`,
+              type: "Verb",
+              kr: "단계 최적화하다",
+              def: "Refine a specific operational step for maximum output.",
+              sample: "We must optimize step procedures before production begins.",
+              alt: "Improve",
+              altNuance: "Optimize means achieving peak functional efficiency."
+            };
+          } else if (targetType === "Adjective") {
+            window.appState.vocabData[vocabIdx] = {
+              term: `Streamlined #${randId}`,
+              type: "Adjective",
+              kr: "효율화된",
+              def: "Designed to be smooth and free of unnecessary steps.",
+              sample: "Our streamlined process reduces delivery lead times.",
+              alt: "Simple",
+              altNuance: "Streamlined emphasizes removing friction."
+            };
+          } else if (targetType === "Adverb") {
+            window.appState.vocabData[vocabIdx] = {
+              term: `Systematically #${randId}`,
+              type: "Adverb",
+              kr: "체계적으로",
+              def: "Done according to a fixed, organized plan.",
+              sample: "We systematically audit all incoming materials.",
+              alt: "Methodically",
+              altNuance: "Systematically emphasizes adherence to system."
+            };
+          } else {
+            window.appState.vocabData[vocabIdx] = {
+              term: `Strategic Alignment #${randId}`,
+              type: "Expression",
+              kr: "전략적 조율",
+              def: "Harmonizing corporate goals across divisions.",
+              sample: "Achieving strategic alignment is crucial for global expansion.",
+              alt: "Agreement",
+              altNuance: "Strategic alignment focuses on macro goals."
+            };
+          }
         }
       });
 
