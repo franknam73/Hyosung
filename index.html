@@ -195,7 +195,7 @@
               <span id="selected-count-badge" class="bg-amber-950 text-amber-300 font-mono text-[10px] px-2 py-0.5 rounded-full border border-amber-700/50">0</span>
             </button>
             <button onclick="regenerateStage1Vocab()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 rounded-xl transition-all border border-slate-700">
-              🔄 Re-Roll All 10 Words
+              🔄 Re-Roll All 9 Items
             </button>
             <button onclick="proceedToStage2Build()" id="btn-proceed-stage2" class="bg-gradient-to-r from-emerald-500 via-teal-600 to-blue-600 hover:from-emerald-400 hover:to-blue-500 text-white font-bold text-xs px-6 py-2 rounded-xl transition-all shadow-lg shadow-emerald-950 border border-emerald-400/30">
               🚀 Build Complete Lesson Suite &rarr;
@@ -206,7 +206,7 @@
 
       <div class="space-y-4">
         <div class="flex justify-between items-center flex-wrap gap-2">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">10 Target Vocabulary & Expressions (Select items to swap)</h3>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400">9 Target Items (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb)</h3>
           <button onclick="toggleSelectAllStage1()" class="text-[11px] text-slate-400 hover:text-white font-mono underline transition-colors">
             Select All / Deselect All
           </button>
@@ -580,7 +580,7 @@
 
       const grid = document.getElementById('stage1-vocab-preview-grid');
       if (grid) {
-        grid.innerHTML = `<div class="col-span-1 md:col-span-2 p-12 text-center text-cyan-400 space-y-3 bg-slate-900 rounded-3xl border border-slate-800"><span class="animate-spin text-2xl block">🌀</span><p class="font-bold">Loading ${level} Vocabulary Suite...</p></div>`;
+        grid.innerHTML = `<div class="col-span-1 md:col-span-2 p-12 text-center text-cyan-400 space-y-3 bg-slate-900 rounded-3xl border border-slate-800"><span class="animate-spin text-2xl block">🌀</span><p class="font-bold">Loading ${level} Vocabulary Suite (4 Expressions, 3 Verbs, 1 Adjective, 1 Adverb)...</p></div>`;
       }
 
       const apiKey = getApiKey();
@@ -590,7 +590,12 @@
           const usedHistoryList = getUsedWordsHistory();
 
           const promptSystem = `Act as an expert Corporate English Curriculum Director for Hyosung Group.
-Generate 10 target vocabulary terms, 4 prepositions, and 2 sentence patterns for Level: "${level}", Topic: "${topic}".
+Generate EXACTLY 9 target items for Level: "${level}", Topic: "${topic}".
+STRICT COMPOSITION BREAKDOWN (MUST MATCH EXACTLY):
+- 4 Business Expressions (idioms, multi-word phrases, or diplomatic reframing patterns)
+- 3 Action Verbs
+- 1 Adjective
+- 1 Adverb
 Exclusion List: ${JSON.stringify(usedHistoryList)}`;
 
           const userQuery = `Return ONLY JSON matching:
@@ -598,7 +603,15 @@ Exclusion List: ${JSON.stringify(usedHistoryList)}`;
   "lessonTitle": "Catchy Title for ${level} Level",
   "lessonSubtitle": "Subtitle focusing on ${topic}",
   "vocabData": [
-    { "term": "Phrase", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }
+    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Expression", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Verb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Verb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Verb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Adjective", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" },
+    { "term": "Term/Phrase", "type": "Adverb", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }
   ],
   "prepositionsData": [
     { "term": "Prepositional Phrase", "kr": "Korean Translation", "sample": "Example sentence" }
@@ -653,12 +666,19 @@ Exclusion List: ${JSON.stringify(usedHistoryList)}`;
 
       grid.innerHTML = window.appState.vocabData.map((v, i) => {
         const isSelected = window.appState.selectedStage1Indices.has(i);
+        const typeBadgeColor = v.type === 'Expression' ? 'bg-indigo-950 text-indigo-300 border-indigo-800/50' :
+                               v.type === 'Verb' ? 'bg-emerald-950 text-emerald-300 border-emerald-800/50' :
+                               v.type === 'Adjective' ? 'bg-amber-950 text-amber-300 border-amber-800/50' :
+                               v.type === 'Adverb' ? 'bg-purple-950 text-purple-300 border-purple-800/50' :
+                               'bg-blue-950 text-blue-300 border-blue-800/50';
+        const typeLabel = v.type ? v.type.toUpperCase() : 'ITEM';
+
         return `
           <div class="bg-slate-900 border ${isSelected ? 'border-amber-500 bg-amber-950/10 ring-1 ring-amber-500/50' : 'border-slate-800'} p-5 rounded-2xl space-y-2 shadow-md border-t-2 border-t-blue-500 relative transition-all">
             <div class="flex justify-between items-start gap-2">
               <label class="flex items-center gap-2 cursor-pointer text-[11px] font-mono text-slate-300">
                 <input type="checkbox" onchange="toggleStage1Selection(${i})" ${isSelected ? 'checked' : ''} class="rounded border-slate-700 text-amber-500 focus:ring-amber-500 bg-slate-950 w-4 h-4">
-                <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-950 px-2 py-0.5 rounded border border-blue-800/40">TERM ${i < 9 ? '0' + (i+1) : (i+1)}</span>
+                <span class="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border ${typeBadgeColor}">${i < 8 ? '0' + (i+1) : (i+1)} • ${typeLabel}</span>
               </label>
               
               <div class="flex items-center gap-2">
@@ -1235,11 +1255,15 @@ STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringi
     function loadStage1Fallback(level) {
       if (level === "Beginner") {
         window.appState.vocabData = [
-          { term: "Coordinate schedules", kr: "일정을 조정하다", def: "Organize meeting times across team members.", sample: "Please coordinate schedules with the plant manager.", alt: "Arrange", altNuance: "Coordinate stresses alignment between multiple people." },
-          { term: "Confirm details", kr: "세부 사항을 확인하다", def: "Verify that information is accurate and final.", sample: "We need to confirm details before sending the invoice.", alt: "Double-check", altNuance: "Confirm implies official validation." },
-          { term: "Submit a request", kr: "요청서를 제출하다", def: "Formally hand in an application or query.", sample: "Please submit a request through the internal portal.", alt: "Apply", altNuance: "Submit a request is standard operational B2B phrasing." },
-          { term: "Follow up on", kr: "~에 대해 후속 조치를 취하다", def: "Check the status of an ongoing topic.", sample: "I am calling to follow up on yesterday's shipment status.", alt: "Check on", altNuance: "Follow up implies systematic business action." },
-          { term: "Inquire about", kr: "~에 대해 문의하다", def: "Ask for information in a professional manner.", sample: "Clients frequently inquire about our delivery lead times.", alt: "Ask about", altNuance: "Inquire about is more formal." }
+          { term: "Submit a request", type: "Expression", kr: "요청서를 제출하다", def: "Formally hand in an application or query.", sample: "Please submit a request through the internal portal.", alt: "Apply", altNuance: "Submit a request is standard operational B2B phrasing." },
+          { term: "Follow up on", type: "Expression", kr: "~에 대해 후속 조치를 취하다", def: "Check the status of an ongoing topic.", sample: "I am calling to follow up on yesterday's shipment status.", alt: "Check on", altNuance: "Follow up implies systematic business action." },
+          { term: "Inquire about", type: "Expression", kr: "~에 대해 문의하다", def: "Ask for information in a professional manner.", sample: "Clients frequently inquire about our delivery lead times.", alt: "Ask about", altNuance: "Inquire about is more formal." },
+          { term: "On behalf of", type: "Expression", kr: "~를 대리하여 / 대표하여", def: "Representing a colleague, department, or company.", sample: "I am reaching out on behalf of our sales director.", alt: "For", altNuance: "On behalf of is official corporate phrasing." },
+          { term: "Coordinate", type: "Verb", kr: "조율하다, 조정하다", def: "Organize activities or meeting times across team members.", sample: "Please coordinate schedules with the plant manager.", alt: "Arrange", altNuance: "Coordinate stresses alignment between multiple people." },
+          { term: "Confirm", type: "Verb", kr: "확인하다, 확정짓다", def: "Verify that information is accurate and final.", sample: "We need to confirm details before sending the invoice.", alt: "Double-check", altNuance: "Confirm implies official validation." },
+          { term: "Verify", type: "Verb", kr: "검증하다", def: "Check physical measurements or data against plans.", sample: "Engineers will verify dimensions prior to assembly.", alt: "Check", altNuance: "Verify implies official technical measurement." },
+          { term: "Secure", type: "Adjective", kr: "안전한, 보안이 철저한", def: "Safe from unauthorized access or risk.", sample: "Please use a secure email address for company business.", alt: "Safe", altNuance: "Secure implies technical or operational protection." },
+          { term: "Properly", type: "Adverb", kr: "올바르게, 정상적으로", def: "Correctly, fully, and according to specifications.", sample: "Ensure the sensor is properly installed before launching.", alt: "Correctly", altNuance: "Properly implies meeting functional standards." }
         ];
         window.appState.prepositionsData = [
           { term: "In advance", kr: "사전에 / 미리", sample: "Please submit all attendance requests in advance." },
@@ -1250,11 +1274,15 @@ STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringi
         ];
       } else {
         window.appState.vocabData = [
-          { term: "Bridge the gap", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
-          { term: "Raise a red flag", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
-          { term: "Shift the narrative", kr: "여론/화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
-          { term: "Draw a hard line", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
-          { term: "Break the stalemate", kr: "교착 상태를 풀다", def: "Resolve a deadlock through creative terms.", sample: "Earnout clauses helped break the stalemate in negotiations.", alt: "Resolve", altNuance: "Focuses on unblocking stalled talks." }
+          { term: "Bridge the gap", type: "Expression", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
+          { term: "Raise a red flag", type: "Expression", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
+          { term: "Shift the narrative", type: "Expression", kr: "여론/화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
+          { term: "Draw a hard line", type: "Expression", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
+          { term: "Amortize", type: "Verb", kr: "분할 상각하다", def: "Spread capital or implementation costs over a contract period.", sample: "We can amortize setup fees over 36 months.", alt: "Divide", altNuance: "Amortize is financial accounting terminology." },
+          { term: "Operationalize", type: "Verb", kr: "실행 체계화하다", def: "Convert high-level plans into active corporate workflows.", sample: "Engineers will operationalize the deployment plan immediately.", alt: "Execute", altNuance: "Operationalize focuses on systematic process building." },
+          { term: "Recoup", type: "Verb", kr: "회수하다", def: "Recover spent capital or investments through revenue.", sample: "Clients recoup their initial investment within 90 days.", alt: "Recover", altNuance: "Recoup specifically applies to financial expenditure." },
+          { term: "Prohibitive", type: "Adjective", kr: "망설이게 만드는, 지나치게 높은", def: "So excessively high or restrictive that it prevents action.", sample: "Air freight rates proved prohibitive for bulk shipments.", alt: "Expensive", altNuance: "Prohibitive implies blocking action completely." },
+          { term: "Promptly", type: "Adverb", kr: "지체 없이, 신속하게", def: "Quickly, without delay, and precisely according to schedule.", sample: "Please review the draft contract and return revisions promptly.", alt: "Quickly", altNuance: "Promptly carries professional courtesy and punctuality." }
         ];
         window.appState.prepositionsData = [
           { term: "Subject to", kr: "~을 조건으로 하는", sample: "The discount is subject to final board approval." },
@@ -1268,23 +1296,42 @@ STRICT EXCLUSION LIST (DO NOT USE ANY OF THESE WORDS OR PHRASES): ${JSON.stringi
       window.appState.stage1Ready = true;
       renderStage1Preview();
     }
+    function renderVocabCards() {
+      const container = document.getElementById('vocab-cards-grid');
+      if (!container) return;
+      container.innerHTML = window.appState.vocabData.map((v, i) => {
+        const typeBadgeColor = v.type === 'Expression' ? 'bg-indigo-950 text-indigo-300 border-indigo-800/50' :
+                               v.type === 'Verb' ? 'bg-emerald-950 text-emerald-300 border-emerald-800/50' :
+                               v.type === 'Adjective' ? 'bg-amber-950 text-amber-300 border-amber-800/50' :
+                               v.type === 'Adverb' ? 'bg-purple-950 text-purple-300 border-purple-800/50' :
+                               'bg-blue-950 text-blue-300 border-blue-800/40';
+        const typeLabel = v.type ? v.type.toUpperCase() : 'ITEM';
 
-    function loadStage2Fallback() {
-      window.appState.diagnosticQuizData = [
-        { q: "1. When negotiating stuck terms, introducing milestone payments helps to __________.", opts: ["break the stalemate", "set the record straight", "pivot", "mitigate"], correct: 0, expl: "'Break the stalemate' means resolving a negotiation deadlock." },
-        { q: "2. __________ recent disruptions, we adjusted financial targets.", opts: ["In light of", "Notwithstanding", "At the expense of", "In lieu of"], correct: 0, expl: "'In light of' means taking new info into account." }
-      ];
-      window.appState.dialogueThread = [
-        { speaker: "Min-su Kim", role: "Hyosung - Senior Manager", time: "10:00 AM", color: "blue", text: "Good morning. In light of North American requirements, we must strike a balance between delivery and thorough testing." },
-        { speaker: "David Vance", role: "US Procurement Lead", time: "10:03 AM", color: "emerald", text: "We appreciate Hyosung's quality. If we can't break the stalemate on delivery timing, we must explore alternative options." }
-      ];
-      window.appState.translationPrompts = [
-        { kr: "최근 예산 제약에도 불구하고, 우리는 절충안을 찾아야 합니다.", model: "Notwithstanding recent budget constraints, we must strike a balance.", targetPrep: "Notwithstanding", hints: ["Notwithstanding", "Strike a balance"] }
-      ];
-      window.appState.finalQuizData = [
-        { q: "1. Which expression means 'to create conditions for future success'?", opts: ["Pave the way for", "Set the record straight", "Gain leverage"], ans: 0 },
-        { q: "2. Complete: '__________ recent cost increases, our plant maintained efficiency.'", opts: ["Notwithstanding", "At the expense of", "In lieu of"], ans: 0 }
-      ];
+        return `
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-3xl space-y-3 shadow-xl relative group hover:border-blue-500/50 transition-all">
+          <div class="flex justify-between items-start">
+            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded border ${typeBadgeColor}">${i < 8 ? '0' + (i+1) : (i+1)} • ${typeLabel}</span>
+            <button onclick="speakText('${v.term.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-blue-400 transition-colors text-sm" title="Listen">🔊</button>
+          </div>
+          <div>
+            <h4 class="text-base font-extrabold text-white flex items-center justify-between">
+              <span>${v.term}</span>
+              <span class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</span>
+            </h4>
+            <p class="text-xs text-slate-300 mt-1">${v.def}</p>
+          </div>
+          <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80 space-y-1">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">In Context:</span>
+            <p class="text-xs text-slate-300 italic">"${v.sample}"</p>
+          </div>
+          ${v.alt ? `
+            <div class="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-1.5">
+              <span class="text-amber-400 font-bold shrink-0">vs. ${v.alt}:</span>
+              <span class="text-slate-400">${v.altNuance}</span>
+            </div>
+          ` : ''}
+        </div>
+      `}).join('');
     }
   </script>
 </body>
