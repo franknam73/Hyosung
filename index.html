@@ -609,11 +609,37 @@
   </div>
 
   <script>
+    // SAFE STORAGE HELPERS (Prevents SecurityError in sandboxed or restricted environments)
+    function safeGetStorage(key, defaultValue = null) {
+      try {
+        const val = localStorage.getItem(key);
+        return val !== null ? val : defaultValue;
+      } catch (e) {
+        return defaultValue;
+      }
+    }
+
+    function safeSetStorage(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        console.warn("LocalStorage write prevented:", e);
+      }
+    }
+
+    function safeRemoveStorage(key) {
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {
+        console.warn("LocalStorage remove prevented:", e);
+      }
+    }
+
     // GLOBAL APP STATE & HISTORY MANAGEMENT
     window.appState = {
       level: "Advanced",
-      studentName: localStorage.getItem('hyosung_app_name') || '',
-      studentCompany: localStorage.getItem('hyosung_app_company') || 'Hyosung Heavy Industries - Power Systems',
+      studentName: safeGetStorage('hyosung_app_name', ''),
+      studentCompany: safeGetStorage('hyosung_app_company', 'Hyosung Heavy Industries - Power Systems'),
       lessonTitle: "Hyosung Versatile Business English",
       lessonSubtitle: "Strategic Reframing, Diplomatic Negotiation & High-Impact Expression",
       currentTopic: "General B2B",
@@ -636,7 +662,7 @@
     // HISTORY MEMORY FUNCTIONS (PREVENT WORD REPETITION)
     function getUsedWordsHistory() {
       try {
-        const hist = localStorage.getItem('hyosung_used_words_history');
+        const hist = safeGetStorage('hyosung_used_words_history', null);
         return hist ? JSON.parse(hist) : [];
       } catch (e) {
         return [];
@@ -647,26 +673,30 @@
       const currentHistory = getUsedWordsHistory();
       const newCleanWords = wordsArray.map(w => w.toLowerCase().trim()).filter(w => w.length > 0);
       const updated = Array.from(new Set([...currentHistory, ...newCleanWords]));
-      localStorage.setItem('hyosung_used_words_history', JSON.stringify(updated));
+      safeSetStorage('hyosung_used_words_history', JSON.stringify(updated));
       updateHistoryBadgeUI();
     }
 
     function clearWordHistory() {
-      localStorage.removeItem('hyosung_used_words_history');
+      safeRemoveStorage('hyosung_used_words_history');
       updateHistoryBadgeUI();
       alert("✓ Word history memory cleared. New generations can use any terms.");
     }
 
     function updateHistoryBadgeUI() {
       const count = getUsedWordsHistory().length;
-      document.getElementById('history-count-text').innerText = `${count} Terms Logged`;
-      document.getElementById('history-terms-count').innerText = `${count} words in exclusion memory`;
+      const countBadge = document.getElementById('history-count-text');
+      const countTerms = document.getElementById('history-terms-count');
+      if (countBadge) countBadge.innerText = `${count} Terms Logged`;
+      if (countTerms) countTerms.innerText = `${count} words in exclusion memory`;
     }
 
     // INIT APP ON DOM LOAD
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('student-name').value = window.appState.studentName;
-      document.getElementById('student-company').value = window.appState.studentCompany;
+      const nameInput = document.getElementById('student-name');
+      const companySelect = document.getElementById('student-company');
+      if (nameInput) nameInput.value = window.appState.studentName;
+      if (companySelect) companySelect.value = window.appState.studentCompany;
       updateHistoryBadgeUI();
 
       // Show landing screen on start
@@ -674,18 +704,27 @@
     });
 
     function showLevelSelector() {
-      document.getElementById('level-selection-screen').classList.remove('hidden');
-      document.getElementById('stage1-review-screen').classList.add('hidden');
-      document.getElementById('masterclass-workspace').classList.add('hidden');
+      const screenLanding = document.getElementById('level-selection-screen');
+      const screenStage1 = document.getElementById('stage1-review-screen');
+      const screenWorkspace = document.getElementById('masterclass-workspace');
+      
+      if (screenLanding) screenLanding.classList.remove('hidden');
+      if (screenStage1) screenStage1.classList.add('hidden');
+      if (screenWorkspace) screenWorkspace.classList.add('hidden');
+      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function selectLevelAndStart(selectedLevel) {
+    function selectLevelAndStart(selectedLevel, customTopic = null) {
       window.appState.level = selectedLevel;
-      const topic = document.getElementById('landing-topic-input').value.trim() || "Hyosung Business Operations";
+      const topicInput = document.getElementById('landing-topic-input');
+      const landingTopic = topicInput ? topicInput.value.trim() : "";
+      const topic = customTopic || landingTopic || "Hyosung Business Operations";
       window.appState.currentTopic = topic;
       
-      document.getElementById('current-level-tag').innerText = selectedLevel;
+      const tag = document.getElementById('current-level-tag');
+      if (tag) tag.innerText = selectedLevel;
+      
       generateStage1Vocab(selectedLevel, topic);
     }
 
@@ -693,27 +732,34 @@
     function switchTab(tabId) {
       const tabs = ['vocab', 'quiz', 'dialogue', 'translation', 'final'];
       tabs.forEach(t => {
-        document.getElementById(`module-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}`).className = "px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap";
+        const mod = document.getElementById(`module-${t}`);
+        const tabBtn = document.getElementById(`tab-${t}`);
+        if (mod) mod.classList.add('hidden');
+        if (tabBtn) tabBtn.className = "px-3.5 py-1.5 rounded-xl font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap";
       });
-      document.getElementById(`module-${tabId}`).classList.remove('hidden');
-      document.getElementById(`tab-${tabId}`).className = "px-3.5 py-1.5 rounded-xl font-semibold transition-all whitespace-nowrap bg-blue-600 text-white shadow-md";
+      const targetMod = document.getElementById(`module-${tabId}`);
+      const targetTab = document.getElementById(`tab-${tabId}`);
+      if (targetMod) targetMod.classList.remove('hidden');
+      if (targetTab) targetTab.className = "px-3.5 py-1.5 rounded-xl font-semibold transition-all whitespace-nowrap bg-blue-600 text-white shadow-md";
     }
 
     function saveProfile(notify = false) {
-      const name = document.getElementById('student-name').value.trim();
-      const company = document.getElementById('student-company').value;
+      const nameEl = document.getElementById('student-name');
+      const companyEl = document.getElementById('student-company');
+      const name = nameEl ? nameEl.value.trim() : '';
+      const company = companyEl ? companyEl.value : '';
+      
       window.appState.studentName = name;
       window.appState.studentCompany = company;
-      localStorage.setItem('hyosung_app_name', name);
-      localStorage.setItem('hyosung_app_company', company);
+      safeSetStorage('hyosung_app_name', name);
+      safeSetStorage('hyosung_app_company', company);
 
       if (notify) alert("✓ Progress profile saved!");
     }
 
     // EXPONENTIAL BACKOFF FETCH FOR GEMINI API
-    async function fetchWithBackoff(url, options, maxRetries = 3) {
-      let delay = 1000;
+    async function fetchWithBackoff(url, options, maxRetries = 2) {
+      let delay = 800;
       for (let i = 0; i < maxRetries; i++) {
         try {
           const response = await fetch(url, options);
@@ -734,16 +780,26 @@
 
     // STAGE 1: GENERATE VOCABULARY & EXCLUDE HISTORY
     async function generateStage1Vocab(level, topic) {
-      document.getElementById('level-selection-screen').classList.add('hidden');
-      document.getElementById('stage1-review-screen').classList.remove('hidden');
-      document.getElementById('masterclass-workspace').classList.add('hidden');
+      const screenLanding = document.getElementById('level-selection-screen');
+      const screenStage1 = document.getElementById('stage1-review-screen');
+      const screenWorkspace = document.getElementById('masterclass-workspace');
 
-      document.getElementById('stage1-level-badge').innerText = `STAGE 1: ${level.toUpperCase()} LEVEL LEXICON PREVIEW`;
-      document.getElementById('stage1-topic-badge').innerText = `Domain: ${topic}`;
-      document.getElementById('stage1-title-text').innerText = `${level} Level Target Vocabulary Suite`;
+      if (screenLanding) screenLanding.classList.add('hidden');
+      if (screenStage1) screenStage1.classList.remove('hidden');
+      if (screenWorkspace) screenWorkspace.classList.add('hidden');
+
+      const badgeLevel = document.getElementById('stage1-level-badge');
+      const badgeTopic = document.getElementById('stage1-topic-badge');
+      const textTitle = document.getElementById('stage1-title-text');
+      
+      if (badgeLevel) badgeLevel.innerText = `STAGE 1: ${level.toUpperCase()} LEVEL LEXICON PREVIEW`;
+      if (badgeTopic) badgeTopic.innerText = `Domain: ${topic}`;
+      if (textTitle) textTitle.innerText = `${level} Level Target Vocabulary Suite`;
 
       const grid = document.getElementById('stage1-vocab-preview-grid');
-      grid.innerHTML = `<div class="col-span-2 p-12 text-center text-cyan-400 space-y-3 bg-slate-900 rounded-3xl border border-slate-800"><span class="animate-spin text-2xl block">🌀</span><p class="font-bold">Generating ${level} Vocabulary Suite (Enforcing Zero-Repetition)...</p><p class="text-xs text-slate-500">Excluding ${getUsedWordsHistory().length} previously logged terms...</p></div>`;
+      if (grid) {
+        grid.innerHTML = `<div class="col-span-1 md:col-span-2 p-12 text-center text-cyan-400 space-y-3 bg-slate-900 rounded-3xl border border-slate-800"><span class="animate-spin text-2xl block">🌀</span><p class="font-bold">Generating ${level} Vocabulary Suite (Enforcing Zero-Repetition)...</p><p class="text-xs text-slate-500">Excluding ${getUsedWordsHistory().length} previously logged terms...</p></div>`;
+      }
 
       const usedHistoryList = getUsedWordsHistory();
 
@@ -771,10 +827,10 @@ LEVEL GUIDANCE:
   "lessonSubtitle": "Subtitle focusing on ${topic}",
   "vocabData": [
     { "term": "Phrase or Term", "kr": "Korean Meaning", "def": "Clear Definition", "sample": "Example sentence", "alt": "Alternative Word", "altNuance": "Nuance vs alternative" }
-  ], // EXACTLY 10 items
+  ],
   "prepositionsData": [
     { "term": "Prepositional Phrase", "kr": "Korean Translation", "sample": "Example sentence" }
-  ], // EXACTLY 4 items
+  ],
   "patternsData": [
     { "title": "PATTERN A: Name", "color": "emerald", "pattern": "Formula [Placeholder]", "sample": "Example sentence" },
     { "title": "PATTERN B: Name", "color": "purple", "pattern": "Formula [Placeholder]", "sample": "Example sentence" }
@@ -793,22 +849,24 @@ LEVEL GUIDANCE:
           body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
-        if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-          const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-          
-          window.appState.lessonTitle = parsed.lessonTitle || `${level} Business English`;
-          window.appState.lessonSubtitle = parsed.lessonSubtitle || topic;
-          window.appState.vocabData = parsed.vocabData || [];
-          window.appState.prepositionsData = parsed.prepositionsData || [];
-          window.appState.patternsData = parsed.patternsData || [];
-          window.appState.stage1Ready = true;
+        if (response && response.ok) {
+          const result = await response.json();
+          if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+            const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
+            
+            window.appState.lessonTitle = parsed.lessonTitle || `${level} Business English`;
+            window.appState.lessonSubtitle = parsed.lessonSubtitle || topic;
+            window.appState.vocabData = parsed.vocabData || [];
+            window.appState.prepositionsData = parsed.prepositionsData || [];
+            window.appState.patternsData = parsed.patternsData || [];
+            window.appState.stage1Ready = true;
 
-          renderStage1Preview();
-          return;
+            renderStage1Preview();
+            return;
+          }
         }
       } catch (err) {
-        console.error("Stage 1 AI Generation failed, using default fallback...", err);
+        console.warn("Stage 1 AI Generation failed or bypassed, loading fallback...", err);
       }
 
       // Fallback if API unavailable
@@ -817,6 +875,7 @@ LEVEL GUIDANCE:
 
     function renderStage1Preview() {
       const grid = document.getElementById('stage1-vocab-preview-grid');
+      if (!grid) return;
       grid.innerHTML = window.appState.vocabData.map((v, i) => `
         <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-2 shadow-md border-t-2 border-t-blue-500">
           <div class="flex justify-between items-start">
@@ -839,8 +898,10 @@ LEVEL GUIDANCE:
       if (!window.appState.stage1Ready) return;
 
       const btn = document.getElementById('btn-proceed-stage2');
-      btn.disabled = true;
-      btn.innerText = "🌀 Building Full Lesson Suite...";
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = "🌀 Building Full Lesson Suite...";
+      }
 
       // Log target terms to exclusion history immediately
       const termsToSave = window.appState.vocabData.map(v => v.term);
@@ -859,7 +920,7 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
 {
   "diagnosticQuizData": [
     { "q": "Question string?", "opts": ["Opt 0", "Opt 1", "Opt 2", "Opt 3"], "correct": 0, "expl": "Explanation" }
-  ], // EXACTLY 5 items
+  ],
   "dialogueThread": [
     { "speaker": "Name 1", "role": "Role Title", "time": "10:00 AM", "color": "blue", "text": "Spoken line." },
     { "speaker": "Name 2", "role": "Role Title", "time": "10:03 AM", "color": "emerald", "text": "Spoken line." },
@@ -868,10 +929,10 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
   ],
   "translationPrompts": [
     { "kr": "Korean sentence", "model": "Polished English benchmark", "targetPrep": "Target Preposition", "hints": ["Hint 1", "Hint 2"] }
-  ], // EXACTLY 5 items
+  ],
   "finalQuizData": [
     { "q": "Question string?", "opts": ["Choice A", "Choice B", "Choice C"], "ans": 0 }
-  ] // EXACTLY 8 items
+  ]
 }`;
 
         const payload = {
@@ -886,22 +947,26 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
           body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
-        if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-          const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-          window.appState.diagnosticQuizData = parsed.diagnosticQuizData || [];
-          window.appState.dialogueThread = parsed.dialogueThread || [];
-          window.appState.translationPrompts = parsed.translationPrompts || [];
-          window.appState.finalQuizData = parsed.finalQuizData || [];
+        if (response && response.ok) {
+          const result = await response.json();
+          if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+            const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
+            window.appState.diagnosticQuizData = parsed.diagnosticQuizData || [];
+            window.appState.dialogueThread = parsed.dialogueThread || [];
+            window.appState.translationPrompts = parsed.translationPrompts || [];
+            window.appState.finalQuizData = parsed.finalQuizData || [];
 
-          launchMasterclassWorkspace();
-          return;
+            launchMasterclassWorkspace();
+            return;
+          }
         }
       } catch (err) {
-        console.error("Stage 2 build failed, using fallback...", err);
+        console.warn("Stage 2 build failed, using fallback...", err);
       } finally {
-        btn.disabled = false;
-        btn.innerText = "🚀 Build Complete Lesson Suite →";
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = "🚀 Build Complete Lesson Suite →";
+        }
       }
 
       loadStage2Fallback();
@@ -909,15 +974,25 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
     }
 
     function launchMasterclassWorkspace() {
-      document.getElementById('stage1-review-screen').classList.add('hidden');
-      document.getElementById('masterclass-workspace').classList.remove('hidden');
+      const screenStage1 = document.getElementById('stage1-review-screen');
+      const screenWorkspace = document.getElementById('masterclass-workspace');
+      
+      if (screenStage1) screenStage1.classList.add('hidden');
+      if (screenWorkspace) screenWorkspace.classList.remove('hidden');
 
-      document.getElementById('app-title-display').innerText = window.appState.lessonTitle;
-      document.getElementById('app-subtitle-display').innerText = window.appState.lessonSubtitle;
-      document.getElementById('hero-title').innerText = window.appState.lessonTitle;
-      document.getElementById('hero-desc').innerText = window.appState.lessonSubtitle;
-      document.getElementById('active-level-pill').innerText = `MODULE 1: ${window.appState.level.toUpperCase()} LEVEL LEXICON`;
-      document.getElementById('lesson-source-tag').innerText = `Level: ${window.appState.level}`;
+      const appTitle = document.getElementById('app-title-display');
+      const appSub = document.getElementById('app-subtitle-display');
+      const heroTitle = document.getElementById('hero-title');
+      const heroDesc = document.getElementById('hero-desc');
+      const levelPill = document.getElementById('active-level-pill');
+      const sourceTag = document.getElementById('lesson-source-tag');
+
+      if (appTitle) appTitle.innerText = window.appState.lessonTitle;
+      if (appSub) appSub.innerText = window.appState.lessonSubtitle;
+      if (heroTitle) heroTitle.innerText = window.appState.lessonTitle;
+      if (heroDesc) heroDesc.innerText = window.appState.lessonSubtitle;
+      if (levelPill) levelPill.innerText = `MODULE 1: ${window.appState.level.toUpperCase()} LEVEL LEXICON`;
+      if (sourceTag) sourceTag.innerText = `Level: ${window.appState.level}`;
 
       renderVocabCards();
       renderPrepositionsAndPatterns();
@@ -930,370 +1005,132 @@ Prepositions: ${JSON.stringify(window.appState.prepositionsData.map(p => p.term)
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // RENDER FUNCTIONS
-    function renderVocabCards() {
-      const grid = document.getElementById('vocab-cards-grid');
-      if (!grid) return;
-      grid.innerHTML = window.appState.vocabData.map((v, i) => `
-        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3 shadow-md border-t-2 border-t-blue-500 hover:border-blue-400/80 transition-all">
-          <div class="flex justify-between items-start">
-            <div>
-              <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest bg-blue-950/80 px-2 py-0.5 rounded border border-blue-800/40">TERM ${i < 9 ? '0' + (i+1) : (i+1)}</span>
-              <h4 class="text-base font-extrabold text-white mt-1">${v.term}</h4>
-            </div>
-            <button onclick="speakText('${v.term}')" class="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-blue-400 transition-colors" title="Listen Audio">
-              🔊
-            </button>
-          </div>
-          <p class="text-xs font-semibold text-blue-300 font-mono">${v.kr}</p>
-          <p class="text-xs text-slate-300 leading-relaxed">${v.def}</p>
-          <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80 text-[11px] text-slate-400 italic">
-            "${v.sample}"
-          </div>
-          <div class="pt-2 border-t border-slate-800/60 flex justify-between items-center text-[10px]">
-            <span class="text-slate-500">Nuance vs: <strong class="text-slate-300">${v.alt || 'Alternative'}</strong></span>
-            <button class="text-blue-400 font-mono hover:underline text-left" onclick="alert('${(v.alt || 'Alt').replace(/'/g, "\\'")}: ${(v.altNuance || 'Nuance details').replace(/'/g, "\\'")}')">View Difference ℹ️</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderPrepositionsAndPatterns() {
-      const prepContainer = document.getElementById('prepositions-container');
-      if (prepContainer) {
-        prepContainer.innerHTML = window.appState.prepositionsData.map(p => `
-          <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80">
-            <div class="flex justify-between font-bold text-blue-300 mb-1">
-              <span>${p.term}</span>
-              <span class="font-mono text-slate-400 text-[11px]">${p.kr}</span>
-            </div>
-            <p class="text-slate-300 italic text-[11px]">"${p.sample}"</p>
-          </div>
-        `).join('');
-      }
-
-      const patContainer = document.getElementById('patterns-container');
-      if (patContainer) {
-        patContainer.innerHTML = window.appState.patternsData.map(pt => `
-          <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800/80 space-y-1.5">
-            <span class="text-[10px] font-bold text-${pt.color || 'emerald'}-400 uppercase tracking-widest block">${pt.title}</span>
-            <p class="font-mono text-blue-300 text-[11px]">${pt.pattern}</p>
-            <p class="text-slate-400 italic text-[11px]">"${pt.sample}"</p>
-          </div>
-        `).join('');
-      }
-    }
-
-    function speakText(txt) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(txt);
-        utterance.rate = 0.9;
-        utterance.lang = 'en-US';
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-
-    function renderDiagnosticQuiz() {
-      const container = document.getElementById('diagnostic-quiz-container');
-      if (!container) return;
-      container.innerHTML = window.appState.diagnosticQuizData.map((item, idx) => `
-        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3 text-xs">
-          <div class="flex justify-between font-bold text-slate-300">
-            <span>Scenario ${idx + 1}</span>
-            <span id="diag-fb-${idx}" class="text-[10px] hidden"></span>
-          </div>
-          <p class="text-slate-200">${item.q}</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            ${item.opts.map((opt, oIdx) => `
-              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:bg-slate-800/50 transition-colors">
-                <input type="radio" name="diag-${idx}" value="${oIdx}" onchange="selectDiagnosticAns(${idx}, ${oIdx})" class="accent-blue-500">
-                <span class="text-slate-300 font-medium">${opt}</span>
-              </label>
-            `).join('')}
-          </div>
-          <div id="diag-expl-${idx}" class="hidden p-2.5 rounded-lg bg-blue-950/40 border border-blue-800/40 text-[11px] text-blue-300">
-            ${item.expl}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function selectDiagnosticAns(qIdx, oIdx) {
-      window.appState.diagnosticAnswers[qIdx] = oIdx;
-    }
-
-    function gradeDiagnosticQuiz() {
-      let score = 0;
-      window.appState.diagnosticQuizData.forEach((item, idx) => {
-        const userChoice = window.appState.diagnosticAnswers[idx];
-        const fb = document.getElementById(`diag-fb-${idx}`);
-        const expl = document.getElementById(`diag-expl-${idx}`);
-        if (expl) expl.classList.remove('hidden');
-        if (fb) fb.classList.remove('hidden');
-
-        if (userChoice === item.correct) {
-          score++;
-          if (fb) { fb.innerText = "✓ Correct"; fb.className = "text-[10px] font-bold text-emerald-400"; }
-        } else {
-          if (fb) { fb.innerText = "✗ Review"; fb.className = "text-[10px] font-bold text-rose-400"; }
-        }
-      });
-      document.getElementById('quiz-score-badge').innerText = `Score: ${score} / ${window.appState.diagnosticQuizData.length}`;
-    }
-
-    function renderDialogueThread() {
-      const container = document.getElementById('dialogue-thread-container');
-      if (!container) return;
-      container.innerHTML = window.appState.dialogueThread.map((turn) => `
-        <div class="flex gap-3 cursor-pointer hover:bg-slate-950/50 p-2 rounded-2xl transition-colors" onclick="speakText('${turn.speaker.replace(/'/g, "\\'")} says: ${turn.text.replace(/'/g, "\\')}')">
-          <div class="w-9 h-9 rounded-full bg-${turn.color || 'blue'}-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-md">
-            ${turn.speaker.charAt(0)}
-          </div>
-          <div class="space-y-1 bg-slate-950 p-4 rounded-2xl border border-slate-800 w-full text-xs">
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-${turn.color || 'blue'}-400">${turn.speaker} <span class="text-[10px] text-slate-500 font-normal">(${turn.role})</span></span>
-              <span class="text-[10px] text-slate-500">${turn.time}</span>
-            </div>
-            <p class="text-slate-200 leading-relaxed">${turn.text}</p>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function playFullDialogue() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        window.appState.dialogueThread.forEach((turn) => {
-          const u = new SpeechSynthesisUtterance(`${turn.speaker}: ${turn.text}`);
-          u.rate = 0.92;
-          window.speechSynthesis.speak(u);
-        });
-      }
-    }
-
-    // TRANSLATION WORKBENCH
-    function renderTranslationCard() {
-      const item = window.appState.translationPrompts[window.appState.transIndex];
-      if (!item) return;
-
-      document.getElementById('trans-card-num').innerText = `Prompt ${window.appState.transIndex + 1} of ${window.appState.translationPrompts.length}`;
-      document.getElementById('trans-kr-text').innerText = `"${item.kr}"`;
-      document.getElementById('trans-user-input').value = window.appState.transUserAnswers[window.appState.transIndex] || "";
-      
-      const hintsContainer = document.getElementById('trans-hints-container');
-      hintsContainer.innerHTML = (item.hints || []).map(h => `
-        <span class="bg-blue-950 text-blue-300 px-2.5 py-1 rounded-md border border-blue-800/40">${h}</span>
-      `).join('');
-
-      document.getElementById('eval-content').innerHTML = `<p class="italic text-slate-500">Submit your translation to receive detailed feedback covering prepositions, collocations, verb tenses, and article precision.</p>`;
-    }
-
-    function nextTranslationPrompt() {
-      window.appState.transIndex = (window.appState.transIndex + 1) % window.appState.translationPrompts.length;
-      renderTranslationCard();
-    }
-
-    async function evaluateTranslation() {
-      const userText = document.getElementById('trans-user-input').value.trim();
-      if (userText.length < 4) {
-        document.getElementById('eval-content').innerHTML = `<p class="text-rose-400">Please type a complete sentence before submitting.</p>`;
-        return;
-      }
-
-      window.appState.transUserAnswers[window.appState.transIndex] = userText;
-      const item = window.appState.translationPrompts[window.appState.transIndex];
-      const evalBox = document.getElementById('eval-content');
-
-      evalBox.innerHTML = `<div class="flex items-center gap-2 text-blue-400"><span class="animate-spin">🌀</span> Analyzing business English grammar, prepositions, collocations, and verb tenses...</div>`;
-
-      try {
-        const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-
-        const prompt = `Act as an expert Corporate Business English Coach. Analyze this student translation:
-Korean Source: "${item.kr}"
-Target Benchmark: "${item.model}"
-Student Output: "${userText}"
-
-Provide concise JSON with:
-1. "prepCorrect" (boolean)
-2. "collocCorrect" (boolean)
-3. "artCorrect" (boolean)
-4. "tenseCorrect" (boolean)
-5. "feedback" (2 concise sentences in polished business English)
-6. "improvedVersion" (polished executive English sentence)`;
-
-        const payload = {
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: "application/json" }
-        };
-
-        const response = await fetchWithBackoff(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const result = await response.json();
-        if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-          const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-          renderEvalResult(parsed, item.model);
-          updateTracker(parsed);
-          return;
-        }
-      } catch (err) {
-        console.log("Using internal fallback evaluator...", err);
-      }
-
-      // Fallback
-      const lower = userText.toLowerCase();
-      const fallbackParsed = {
-        prepCorrect: item.targetPrep ? lower.includes(item.targetPrep.toLowerCase()) : true,
-        collocCorrect: true,
-        artCorrect: lower.includes("the ") || lower.includes("a ") || lower.includes("an "),
-        tenseCorrect: true,
-        feedback: "Solid technical framing! Ensure target prepositions and executive collocations match global business standards.",
-        improvedVersion: item.model
-      };
-
-      renderEvalResult(fallbackParsed, item.model);
-      updateTracker(fallbackParsed);
-    }
-
-    function renderEvalResult(res, reference) {
-      document.getElementById('eval-content').innerHTML = `
-        <div class="space-y-2 text-xs">
-          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest block">Executive Feedback:</span>
-            <p class="text-slate-200">${res.feedback}</p>
-          </div>
-
-          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">Benchmark Model Sentence:</span>
-            <p class="text-slate-100 font-mono text-[11px]">"${res.improvedVersion || reference}"</p>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2 text-[10px] pt-1">
-            <span class="${res.prepCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Preposition: ${res.prepCorrect ? '✓ Accurate' : '✗ Review'}</span>
-            <span class="${res.collocCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Collocations: ${res.collocCorrect ? '✓ Natural' : '✗ Review'}</span>
-            <span class="${res.artCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Articles: ${res.artCorrect ? '✓ Accurate' : '✗ Review'}</span>
-            <span class="${res.tenseCorrect ? 'text-blue-400' : 'text-rose-400'} font-bold">Verb Tense: ${res.tenseCorrect ? '✓ Consistent' : '✗ Review'}</span>
-          </div>
-        </div>
-      `;
-    }
-
-    function updateTracker(res) {
-      const t = window.appState.trackerScores;
-      if (!res.prepCorrect) t.prep = Math.max(40, t.prep - 15);
-      if (!res.collocCorrect) t.colloc = Math.max(40, t.colloc - 15);
-      if (!res.artCorrect) t.art = Math.max(40, t.art - 15);
-      if (!res.tenseCorrect) t.tense = Math.max(40, t.tense - 15);
-
-      document.getElementById('tracker-prep-score').innerText = `${t.prep}%`;
-      document.getElementById('tracker-prep-bar').style.width = `${t.prep}%`;
-
-      document.getElementById('tracker-colloc-score').innerText = `${t.colloc}%`;
-      document.getElementById('tracker-colloc-bar').style.width = `${t.colloc}%`;
-
-      document.getElementById('tracker-art-score').innerText = `${t.art}%`;
-      document.getElementById('tracker-art-bar').style.width = `${t.art}%`;
-
-      document.getElementById('tracker-tense-score').innerText = `${t.tense}%`;
-      document.getElementById('tracker-tense-bar').style.width = `${t.tense}%`;
-    }
-
-    // FINAL QUIZ LOGIC
-    function renderFinalQuiz() {
-      const container = document.getElementById('final-quiz-container');
-      if (!container) return;
-      container.innerHTML = window.appState.finalQuizData.map((item, idx) => `
-        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3 text-xs">
-          <p class="font-bold text-slate-200">${item.q}</p>
-          <div class="space-y-2">
-            ${item.opts.map((opt, oIdx) => `
-              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:bg-slate-800/60 transition-colors">
-                <input type="radio" name="final-${idx}" value="${oIdx}" onchange="selectFinalAns(${idx}, ${oIdx})" class="accent-blue-500">
-                <span class="text-slate-300 font-medium">${opt}</span>
-              </label>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function selectFinalAns(qIdx, oIdx) {
-      window.appState.finalAnswers[qIdx] = oIdx;
-    }
-
-    function gradeFinalAssessment() {
-      let score = 0;
-      window.appState.finalQuizData.forEach((item, idx) => {
-        if (window.appState.finalAnswers[idx] === item.ans) score++;
-      });
-
-      const acc = Math.round((score / window.appState.finalQuizData.length) * 100);
-      document.getElementById('final-score-val').innerText = `${score} / ${window.appState.finalQuizData.length}`;
-      document.getElementById('final-acc-val').innerText = `${acc}%`;
-
-      let summary = `Outstanding achievement in ${window.appState.level} Business Communication! You have demonstrated high mastery of target expressions, prepositions, and diplomatic reframing.`;
-      let level = `Hyosung ${window.appState.level} Global Communicator`;
-
-      document.getElementById('final-summary-text').innerText = summary;
-      document.getElementById('final-level-val').innerText = level;
-      document.getElementById('final-report-card').classList.remove('hidden');
-      document.getElementById('final-report-card').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // GENERATOR MODAL FUNCTIONS
+    // MODAL HANDLERS
     function openGeneratorModal() {
-      document.getElementById('ai-modal').classList.remove('hidden');
+      const modal = document.getElementById('ai-modal');
+      if (modal) modal.classList.remove('hidden');
     }
 
     function closeAiModal() {
-      document.getElementById('ai-modal').classList.add('hidden');
-      document.getElementById('ai-loading-box').classList.add('hidden');
+      const modal = document.getElementById('ai-modal');
+      const loadBox = document.getElementById('ai-loading-box');
+      if (modal) modal.classList.add('hidden');
+      if (loadBox) loadBox.classList.add('hidden');
     }
 
     function triggerModalStage1Gen() {
-      const level = document.getElementById('modal-level-select').value;
-      const topic = document.getElementById('ai-topic-input').value.trim() || "Hyosung Operations";
+      const levelSel = document.getElementById('modal-level-select');
+      const topicInp = document.getElementById('ai-topic-input');
+      const level = levelSel ? levelSel.value : 'Advanced';
+      const topic = topicInp ? topicInp.value.trim() : "Hyosung Operations";
       closeAiModal();
-      selectLevelAndStart(level);
+      selectLevelAndStart(level, topic);
     }
 
-    // FALLBACK GENERATION DATA
+    // LEVEL-TAILORED FALLBACK DATA GENERATORS
     function loadStage1Fallback(level) {
-      window.appState.vocabData = [
-        { term: "Pave the way for", kr: "길을 열어주다", def: "Create circumstances that make a deal easier.", sample: "Successful trials paved the way for a master agreement.", alt: "Facilitate", altNuance: "Pave the way implies overcoming obstacles." },
-        { term: "Break the impasse", kr: "교착 상태를 깨다", def: "Resolve a situation where no progress is being made.", sample: "Introducing milestone payments helped break the impasse.", alt: "Resolve stalemate", altNuance: "Break the impasse stresses momentum." },
-        { term: "Strike a balance", kr: "절충안을 찾다", def: "Find a compromise between opposing priorities.", sample: "We must strike a balance between speed and quality.", alt: "Compromise", altNuance: "Emphasizes optimal harmony." },
-        { term: "Gain leverage", kr: "유리한 고지를 점하다", def: "Acquire advantage in negotiations.", sample: "Expanding local hubs gave us significant leverage.", alt: "Strengthen stance", altNuance: "Refers specifically to bargaining power." },
-        { term: "Set the record straight", kr: "오해를 바로잡다", def: "Clarify a misunderstanding.", sample: "Allow me to set the record straight regarding plant capacity.", alt: "Clarify facts", altNuance: "Carries strong authority when correcting false reports." },
-        { term: "Meet halfway", kr: "타협하다", def: "Make mutual concessions.", sample: "We can meet them halfway on warranty terms.", alt: "Concede", altNuance: "Stresses equal mutual goodwill." },
-        { term: "Pivot", kr: "방향을 전환하다", def: "Strategically change focus.", sample: "We pivoted toward high-value fiber lines.", alt: "Reorient", altNuance: "Implies agile intentional shift." },
-        { term: "Mitigate", kr: "완화하다", def: "Make a risk less severe.", sample: "Diversifying routes helped mitigate delays.", alt: "Alleviate", altNuance: "Used for financial/operational risks." },
-        { term: "Reconcile", kr: "조화시키다", def: "Find a way for opposing views to agree.", sample: "We reconciled conflicting budget projections.", alt: "Harmonize", altNuance: "Focuses on data discrepancies." },
-        { term: "Paramount", kr: "최우선의", def: "Supreme in impact.", sample: "Maintaining structural integrity is paramount.", alt: "Vital", altNuance: "Overrides secondary concerns." }
-      ];
-      window.appState.prepositionsData = [
-        { term: "In light of", kr: "~를 고려하여", sample: "In light of market shifts, we adjusted targets." },
-        { term: "Notwithstanding", kr: "~에도 불구하고", sample: "Notwithstanding bottlenecks, we delivered on time." },
-        { term: "In alignment with", kr: "~와 발맞추어", sample: "Our goals are structured in alignment with client needs." },
-        { term: "At the expense of", kr: "~를 희생하면서", sample: "Never increase speed at the expense of quality." }
-      ];
-      window.appState.patternsData = [
-        { title: "PATTERN A: The Counter-Pivot", color: "emerald", pattern: "While [Constraint] presents challenges, [Action] allows us to [Benefit].", sample: "While tight budgets present challenges, pivoting focus allows us to capture higher lead margin." },
-        { title: "PATTERN B: The Compromise Frame", color: "purple", pattern: "In alignment with [Goal], meeting halfway on [Point A] paves the way for [Benefit].", sample: "In alignment with shared goals, meeting halfway on terms paves the way for agreement." }
-      ];
+      if (level === "Beginner") {
+        window.appState.vocabData = [
+          { term: "Coordinate schedules", kr: "일정을 조정하다", def: "Organize meeting times across team members.", sample: "Please coordinate schedules with the plant manager.", alt: "Arrange", altNuance: "Coordinate stresses alignment between multiple people." },
+          { term: "Confirm details", kr: "세부 사항을 확인하다", def: "Verify that information is accurate and final.", sample: "We need to confirm details before sending the invoice.", alt: "Double-check", altNuance: "Confirm implies official validation." },
+          { term: "Submit a request", kr: "요청서를 제출하다", def: "Formally hand in an application or query.", sample: "Please submit a request through the internal portal.", alt: "Apply", altNuance: "Submit a request is standard operational B2B phrasing." },
+          { term: "Follow up on", kr: "~에 대해 후속 조치를 취하다", def: "Check the status of an ongoing topic.", sample: "I am calling to follow up on yesterday's shipment status.", alt: "Check on", altNuance: "Follow up implies systematic business action." },
+          { term: "Inquire about", kr: "~에 대해 문의하다", def: "Ask for information in a professional manner.", sample: "Clients frequently inquire about our delivery lead times.", alt: "Ask about", altNuance: "Inquire about is more formal." },
+          { term: "Address an issue", kr: "문제를 처리/해결하다", def: "Take direct action to solve a problem.", sample: "Our engineering lead will address the issue immediately.", alt: "Fix", altNuance: "Address carries a broader strategic scope." },
+          { term: "Provide an update", kr: "업데이트/현황을 공유하다", def: "Share the latest status report.", sample: "I will provide an update by the end of business today.", alt: "Report", altNuance: "Provide an update sounds collaborative." },
+          { term: "Draft a proposal", kr: "제안서를 작성하다", def: "Write an initial business proposal.", sample: "We drafted a proposal for the power plant project.", alt: "Write", altNuance: "Draft emphasizes creating a formal document." },
+          { term: "Request clarification", kr: "명확한 설명을 요청하다", def: "Ask for simpler or clearer explanation.", sample: "We requested clarification on the warranty terms.", alt: "Ask for help", altNuance: "Focuses specifically on resolving ambiguity." },
+          { term: "Reach a decision", kr: "결정에 도달하다", def: "Finalize a strategic or operational choice.", sample: "The committee reached a decision after reviewing quotes.", alt: "Decide", altNuance: "Highlights consensus building." }
+        ];
+        window.appState.prepositionsData = [
+          { term: "In advance", kr: "사전에 / 미리", sample: "Please submit all attendance requests in advance." },
+          { term: "On time", kr: "정각에 / 제때에", sample: "The Changwon shipment was dispatched on time." },
+          { term: "By the deadline", kr: "마감 시한까지", sample: "All engineering specs must be finalized by the deadline." },
+          { term: "In accordance with", kr: "~에 따라서", sample: "We built the transformer in accordance with specifications." }
+        ];
+        window.appState.patternsData = [
+          { title: "PATTERN A: Professional Request", color: "emerald", pattern: "Could you please [Action] in order to [Goal]?", sample: "Could you please confirm details in order to dispatch the goods?" },
+          { title: "PATTERN B: Status Update Frame", color: "purple", pattern: "I am writing to follow up on [Topic] in accordance with [Agreement].", sample: "I am writing to follow up on delivery in accordance with our contract." }
+        ];
+      } else if (level === "Intermediate") {
+        window.appState.vocabData = [
+          { term: "Pave the way for", kr: "길을 열어주다", def: "Create circumstances that make a deal easier.", sample: "Successful trials paved the way for a master agreement.", alt: "Facilitate", altNuance: "Pave the way implies overcoming obstacles." },
+          { term: "Break the impasse", kr: "교착 상태를 깨다", def: "Resolve a situation where no progress is being made.", sample: "Introducing milestone payments helped break the impasse.", alt: "Resolve stalemate", altNuance: "Break the impasse stresses momentum." },
+          { term: "Strike a balance", kr: "절충안을 찾다", def: "Find a compromise between opposing priorities.", sample: "We must strike a balance between speed and quality.", alt: "Compromise", altNuance: "Emphasizes optimal harmony." },
+          { term: "Gain leverage", kr: "유리한 고지를 점하다", def: "Acquire advantage in negotiations.", sample: "Expanding local hubs gave us significant leverage.", alt: "Strengthen stance", altNuance: "Refers specifically to bargaining power." },
+          { term: "Set the record straight", kr: "오해를 바로잡다", def: "Clarify a misunderstanding.", sample: "Allow me to set the record straight regarding plant capacity.", alt: "Clarify facts", altNuance: "Carries strong authority when correcting false reports." },
+          { term: "Meet halfway", kr: "타협하다", def: "Make mutual concessions.", sample: "We can meet them halfway on warranty terms.", alt: "Concede", altNuance: "Stresses equal mutual goodwill." },
+          { term: "Pivot", kr: "방향을 전환하다", def: "Strategically change focus.", sample: "We pivoted toward high-value fiber lines.", alt: "Reorient", altNuance: "Implies agile intentional shift." },
+          { term: "Mitigate", kr: "완화하다", def: "Make a risk less severe.", sample: "Diversifying routes helped mitigate delays.", alt: "Alleviate", altNuance: "Used for financial/operational risks." },
+          { term: "Reconcile", kr: "조화시키다", def: "Find a way for opposing views to agree.", sample: "We reconciled conflicting budget projections.", alt: "Harmonize", altNuance: "Focuses on data discrepancies." },
+          { term: "Paramount", kr: "최우선의", def: "Supreme in impact.", sample: "Maintaining structural integrity is paramount.", alt: "Vital", altNuance: "Overrides secondary concerns." }
+        ];
+        window.appState.prepositionsData = [
+          { term: "In light of", kr: "~를 고려하여", sample: "In light of market shifts, we adjusted targets." },
+          { term: "Notwithstanding", kr: "~에도 불구하고", sample: "Notwithstanding bottlenecks, we delivered on time." },
+          { term: "In alignment with", kr: "~와 발맞추어", sample: "Our goals are structured in alignment with client needs." },
+          { term: "At the expense of", kr: "~를 희생하면서", sample: "Never increase speed at the expense of quality." }
+        ];
+        window.appState.patternsData = [
+          { title: "PATTERN A: The Counter-Pivot", color: "emerald", pattern: "While [Constraint] presents challenges, [Action] allows us to [Benefit].", sample: "While tight budgets present challenges, pivoting focus allows us to capture higher lead margin." },
+          { title: "PATTERN B: The Compromise Frame", color: "purple", pattern: "In alignment with [Goal], meeting halfway on [Point A] paves the way for [Benefit].", sample: "In alignment with shared goals, meeting halfway on terms paves the way for agreement." }
+        ];
+      } else if (level === "Professional") {
+        window.appState.vocabData = [
+          { term: "Orchestrate consensus", kr: "합의를 총괄 조율하다", def: "Complexly unite diverse leadership views.", sample: "The CEO orchestrated consensus across international hubs.", alt: "Align", altNuance: "Implies masterful executive coordination." },
+          { term: "Foster strategic buy-in", kr: "전략적 동의를 도출하다", def: "Cultivate deep stakeholder alignment.", sample: "Securing board buy-in is essential for joint ventures.", alt: "Get approval", altNuance: "Focuses on active commitment." },
+          { term: "Differentiate positioning", kr: "포지셔닝을 차별화하다", def: "Establish unique competitive value.", sample: "We differentiate our positioning through green tech.", alt: "Stand out", altNuance: "Strategic marketing terminology." },
+          { term: "Scale incrementally", kr: "단계별로 확장하다", def: "Expand volume without cost spikes.", sample: "We plan to scale capacity incrementally across Q3.", alt: "Grow slowly", altNuance: "Emphasizes risk-controlled growth." },
+          { term: "Exercise fiduciary duty", kr: "신임 의무를 다하다", def: "Act with legal and economic responsibility.", sample: "The board must exercise fiduciary duty during audits.", alt: "Manage well", altNuance: "Formal legal governance phrase." },
+          { term: "Navigate regulatory hurdles", kr: "규제 장벽을 헤쳐나가다", def: "Overcome legal compliance obstacles.", sample: "Our legal team navigated regulatory hurdles smoothly.", alt: "Bypass laws", altNuance: "Stresses lawful adaptation." },
+          { term: "De-escalate friction", kr: "갈등을 완화하다", def: "Reduce tension between contracting leads.", sample: "Clear terms help de-escalate friction during delays.", alt: "Calm down", altNuance: "Focuses on executive composure." },
+          { term: "Reconcile discrepancies", kr: "불일치를 조정하다", def: "Harmonize conflicting financial metrics.", sample: "Auditors reconciled discrepancies in inventory data.", alt: "Fix errors", altNuance: "Accounting precision." },
+          { term: "Formulate governance policy", kr: "거버넌스 정책을 수립하다", def: "Establish corporate compliance framework.", sample: "We formulated governance policy for overseas plants.", alt: "Set rules", altNuance: "Board-level policy creation." },
+          { term: "Institutionalize best practices", kr: "모범 사례를 제도화하다", def: "Embed operational standards permanently.", sample: "We institutionalized best practices across all factories.", alt: "Standardize", altNuance: "Long-term organizational impact." }
+        ];
+        window.appState.prepositionsData = [
+          { term: "Pursuant to", kr: "~에 따라서 / ~에 근거하여", sample: "Pursuant to clause 4, payment will be released upon test completion." },
+          { term: "Pending board sign-off", kr: "이사회 최종 승인 대기 중", sample: "The contract remains pending board sign-off." },
+          { term: "In deference to", kr: "~를 존중하여", sample: "In deference to regional norms, we revised negotiation guidelines." },
+          { term: "Under the auspices of", kr: "~의 후원/지휘 하에", sample: "The audit was conducted under the auspices of risk governance." }
+        ];
+        window.appState.patternsData = [
+          { title: "PATTERN A: The Executive Directive", color: "emerald", pattern: "Pursuant to [Policy], we must reconcile discrepancies in order to [Outcome].", sample: "Pursuant to risk directives, we must reconcile discrepancies to protect valuation." },
+          { title: "PATTERN B: Strategic Alignment Frame", color: "purple", pattern: "Pending [Milestone], fostering buy-in on [Key Area] allows us to [Strategic Objective].", sample: "Pending final sign-off, fostering buy-in allows us to scale incrementally." }
+        ];
+      } else {
+        // DEFAULT ADVANCED FALLBACK
+        window.appState.vocabData = [
+          { term: "Bridge the gap", kr: "격차를 줄이다", def: "Eliminate a disparity between targets or views.", sample: "We restructured pricing to bridge the gap between expectations.", alt: "Reconcile", altNuance: "Bridge the gap emphasizes connecting two points." },
+          { term: "Raise a red flag", kr: "경고 신호를 보내다", def: "Signal a critical risk or vulnerability.", sample: "Offshore debt liabilities raised a red flag for auditors.", alt: "Flag issue", altNuance: "Carries strong urgency." },
+          { term: "Shift the narrative", kr: "여론/화두를 전환하다", def: "Alter public focus around a situation.", sample: "The CEO shifted the narrative toward long-term R&D.", alt: "Pivot", altNuance: "Refers specifically to communication framing." },
+          { term: "Draw a hard line", kr: "단호한 기준을 설정하다", def: "Establish non-negotiable boundaries.", sample: "We are drawing a hard line on patent ownership.", alt: "Refuse", altNuance: "Sets firm contractual parameters." },
+          { term: "Break the stalemate", kr: "교착 상태를 풀다", def: "Resolve a deadlock through creative terms.", sample: "Earnout clauses helped break the stalemate in negotiations.", alt: "Resolve", altNuance: "Focuses on unblocking stalled talks." },
+          { term: "Drive a hard bargain", kr: "끈질기게 이익을 주장하다", def: "Negotiate aggressively for maximum gain.", sample: "Their procurement lead drives a hard bargain.", alt: "Push hard", altNuance: "Describes high-stakes commercial style." },
+          { term: "Capitalize on", kr: "기회로 활용하다", def: "Leverage a trend or market gap for profit.", sample: "We capitalized on surging demand for green fiber.", alt: "Exploit", altNuance: "Positive corporate opportunity leverage." },
+          { term: "Consolidate resources", kr: "자원을 통합하다", def: "Unite disparate operational units.", sample: "Consolidating regional logistics lowered overhead.", alt: "Combine", altNuance: "Focuses on efficiency gains." },
+          { term: "Operationalize workflow", kr: "워크플로우를 실질적으로 가동하다", def: "Convert plans into working execution.", sample: "Engineers operationalized the deployment framework.", alt: "Execute", altNuance: "Translates theory into process." },
+          { term: "Amortize costs", kr: "비용을 분할 상각하다", def: "Spread expenses across a contract lifecycle.", sample: "We amortized setup fees across 36 months.", alt: "Spread out", altNuance: "Accounting term for capital distribution." }
+        ];
+        window.appState.prepositionsData = [
+          { term: "Subject to", kr: "~을 조건으로 하는", sample: "The discount is subject to final board approval." },
+          { term: "In tandem with", kr: "~와 병행하여", sample: "Software rollout proceeded in tandem with hardware upgrades." },
+          { term: "In lieu of", kr: "~ 대신에", sample: "We accepted a longer contract in lieu of cash rebates." },
+          { term: "At a premium", kr: "프리미엄/할증을 붙여", sample: "Customized engineering units are priced at a premium." }
+        ];
+        window.appState.patternsData = [
+          { title: "PATTERN A: The Strategic Value Frame", color: "emerald", pattern: "Subject to [Condition], amortizing costs across [Period] secures [Benefit].", sample: "Subject to board approval, amortizing costs across 3 years secures margins." },
+          { title: "PATTERN B: Conditional Concession Pivot", color: "purple", pattern: "While [Constraint] presents challenges, we can [Alternative] in tandem with [Secondary Value].", sample: "While tight budgets present challenges, we can operationalize tiers in tandem with support." }
+        ];
+      }
+
       window.appState.stage1Ready = true;
       renderStage1Preview();
     }
 
     function loadStage2Fallback() {
       window.appState.diagnosticQuizData = [
-        { q: "1. When two negotiating teams are stuck, flexible terms help to __________.", opts: ["break the impasse", "set the record straight", "pivot", "mitigate"], correct: 0, expl: "'Break the impasse' means overcoming a deadlock." },
+        { q: "1. When negotiating stuck terms, introducing milestone payments helps to __________.", opts: ["break the stalemate", "set the record straight", "pivot", "mitigate"], correct: 0, expl: "'Break the stalemate' means resolving a negotiation deadlock." },
         { q: "2. __________ recent disruptions, we adjusted financial targets.", opts: ["In light of", "Notwithstanding", "At the expense of", "In lieu of"], correct: 0, expl: "'In light of' means taking new info into account." },
         { q: "3. Never accelerate schedules __________ product quality.", opts: ["at the expense of", "in alignment with", "notwithstanding", "in light of"], correct: 0, expl: "'At the expense of' means causing sacrifice to another element." },
         { q: "4. Successful trials helped to __________ a multi-year master agreement.", opts: ["pave the way for", "reconcile", "meet halfway", "set the record straight"], correct: 0, expl: "'Pave the way for' creates favorable future conditions." },
@@ -1301,7 +1138,7 @@ Provide concise JSON with:
       ];
       window.appState.dialogueThread = [
         { speaker: "Min-su Kim", role: "Hyosung - Senior Manager", time: "10:00 AM", color: "blue", text: "Good morning. In light of North American requirements, we must strike a balance between delivery and thorough testing." },
-        { speaker: "David Vance", role: "US Procurement Lead", time: "10:03 AM", color: "emerald", text: "We appreciate Hyosung's quality. If we can't break the impasse on delivery timing, we must explore alternative options." },
+        { speaker: "David Vance", role: "US Procurement Lead", time: "10:03 AM", color: "emerald", text: "We appreciate Hyosung's quality. If we can't break the stalemate on delivery timing, we must explore alternative options." },
         { speaker: "Su-jin Park", role: "Hyosung - Global Sales Director", time: "10:06 AM", color: "cyan", text: "Notwithstanding current shipping delays, Hyosung pivoted logistics routes. Meeting you halfway on warehousing paves the way for rollout." },
         { speaker: "Sarah Jenkins", role: "European Operations VP", time: "10:10 AM", color: "purple", text: "That flexibility is why we partner with Hyosung. Setting the record straight early helps mitigate risk across teams." }
       ];
@@ -1312,7 +1149,7 @@ Provide concise JSON with:
       window.appState.finalQuizData = [
         { q: "1. Which expression means 'to create conditions for future success'?", opts: ["Pave the way for", "Set the record straight", "Gain leverage"], ans: 0 },
         { q: "2. Complete: '__________ recent cost increases, our plant maintained efficiency.'", opts: ["Notwithstanding", "At the expense of", "In lieu of"], ans: 0 },
-        { q: "3. Complete: 'We must __________ between speed and accuracy.'", opts: ["strike a balance", "break the impasse", "set the record straight"], ans: 0 },
+        { q: "3. Complete: 'We must __________ between speed and accuracy.'", opts: ["strike a balance", "break the stalemate", "set the record straight"], ans: 0 },
         { q: "4. What does 'Paramount' mean?", opts: ["Top priority overriding secondary concerns.", "Uncertain.", "Secondary."], ans: 0 },
         { q: "5. 'In light of' means:", opts: ["~를 고려하여", "~에도 불구하고", "~를 희생하여"], ans: 0 },
         { q: "6. Expression for 'making mutual concessions':", opts: ["Meet someone halfway", "Pave the way for", "Gain leverage"], ans: 0 },
